@@ -144,16 +144,16 @@
               <!-- speed-dial social icons -->
               <transition name="fade">
                 <div v-if="isContactMenuOpen" class="absolute bottom-full left-0 mb-3 flex flex-col items-center gap-3 z-40">
-                  <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" class="h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black" title="LinkedIn">
+                  <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" class="icon-social h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black" title="LinkedIn">
                     <i data-lucide="linkedin" class="h-5 w-5"></i>
                   </a>
-                  <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" class="h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black" title="Email">
+                  <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" class="icon-social h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black" title="Email">
                     <i data-lucide="mail" class="h-5 w-5"></i>
                   </a>
                 </div>
               </transition>
 
-              <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1 relative z-40', isContactMenuOpen ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-black hover:text-brand-gold hover:border-[#e7e2dc]']" title="06. Let's Connect">
+              <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1 relative z-40', isContactMenuOpen ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="06. Let's Connect">
                 <i data-lucide="contact" class="h-5 w-5"></i>
               </button>
             </div>
@@ -195,10 +195,10 @@
             <!-- FLOATING SOCIAL BUTTONS — sits beside the white card on the cream background, scrolls with the card, never overlaps other content -->
             <div v-if="mainPageContent.linkedinUrl || chefProfileState.contactEmail"
                  class="hidden lg:flex absolute bottom-0 right-0 translate-x-[76px] xl:translate-x-[92px] z-20 flex-col items-center gap-2.5 bg-white/70 backdrop-blur-md border border-neutral-200/60 rounded-full py-4 px-2 shadow-[0_15px_35px_-8px_rgba(0,0,0,0.1)]">
-              <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" title="LinkedIn" class="h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
+              <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" title="LinkedIn" class="icon-social h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
                 <i data-lucide="linkedin" class="h-4 w-4"></i>
               </a>
-              <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" title="Email" class="h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
+              <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" title="Email" class="icon-social h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
                 <i data-lucide="mail" class="h-4 w-4"></i>
               </a>
             </div>
@@ -323,7 +323,7 @@
                   <div class="flex flex-wrap gap-1.5 justify-center">
                     <button v-for="cat in [{id:'all', label:'Semua'}, {id:'people-culture', label:'People Culture'}, {id:'employer-branding', label:'Employer Branding'}, {id:'people-analytics', label:'People Analytics'}, {id:'organizational-development', label:'Organizational Development'}]" 
                             :key="cat.id" @click="selectedCategory = cat.id" 
-                            :class="['chip-raised px-4 py-1.5 text-xs font-medium tracking-wide rounded-full transition-all duration-300 focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'chip-active text-brand-gold-dark' : 'text-brand-muted hover:text-black']">
+                            :class="['pill-press px-4 py-1.5 text-xs font-medium tracking-wide rounded-full focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'pill-press-active text-brand-gold-dark' : 'text-brand-muted hover:text-black']">
                       {{cat.label}}
                     </button>
                   </div>

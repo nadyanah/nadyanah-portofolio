@@ -66,6 +66,35 @@ body {
   overflow-x: hidden;
 }
 
+/* Kill native browser tap-highlight / focus-ring artifacts on buttons —
+   this is what shows up as an unwanted flash of a black border/box on
+   press on some browsers/devices, on top of our own custom styling. */
+button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* ===== Social icon color fix — LinkedIn/email icons were being forced
+   solid black by the site-wide text-color override below (because their
+   idle class was text-brand-muted / text-neutral-*, both caught by that
+   rule). This restores the same muted gray the nav dock icons use, so
+   social icons match the rest of the icon set instead of standing out. ===== */
+.icon-social[class*="text-brand-muted"],
+.icon-social[class*="text-neutral-"] {
+  color: #737373 !important;
+}
+.icon-social:hover {
+  color: #000000 !important;
+}
+
 /* Hide scrollbars on elements that opt in (e.g. horizontal chip rows) */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -163,6 +192,15 @@ body {
 }
 .pill-press:active {
   transform: scale(0.98);
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.14),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+}
+/* ===== Persistent "selected" state for .pill-press — used by the category
+   filter chips so the currently-selected chip stays pressed-in, while
+   hover/click feel on all chips is identical to the top bar Profile/
+   Background/Portofolio/Sertifikat buttons (same .pill-press class). ===== */
+.pill-press.pill-press-active {
   box-shadow:
     inset 2px 2px 5px rgba(44, 40, 37, 0.14),
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);
