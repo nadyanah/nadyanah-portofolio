@@ -152,7 +152,13 @@ body {
   box-shadow:
     3px 3px 6px rgba(44, 40, 37, 0.10),
     -3px -3px 6px rgba(255, 255, 255, 0.9);
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pill-press:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    5px 6px 12px rgba(44, 40, 37, 0.14),
+    -4px -4px 10px rgba(255, 255, 255, 0.95);
 }
 .pill-press:active {
   transform: scale(0.98);
