@@ -44,15 +44,17 @@
      --font-serif  -> class "font-serif"  (semua judul/heading — ±30 tempat)
      --font-mono   -> class "font-mono"   (label uppercase kecil, tag, harga)
      --font-hand   -> class "font-hand"   (aksen tulisan tangan, mis. "click")
-     --font-hero   -> class ".hand-title" (judul beranda "My Hidden Gem...")
-     --font-brand  -> class ".brand-name" (nama "nadyanah" & nama lengkap)
+     --font-hero   -> class ".hand-title" (judul beranda "My Hidden Gem Portofolio")
+     --font-brand  -> class ".brand-name" (logo "nadyanah" di top bar non-beranda)
+     --font-name   -> class ".name-title" (nama "Nadya Nanda Adisty Hadian" di beranda)
      ========================================================================== */
   --font-sans: "Outfit", sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
   --font-hand: "Caveat", cursive;
   --font-hero: "Fontby-en", var(--font-hand);
-  --font-brand: "Fontby-n", var(--font-serif);
+  --font-brand: "Fontby-en", var(--font-serif);
+  --font-name: var(--font-sans);
 }
 
 body {
@@ -93,9 +95,14 @@ body {
   transition-duration: 400ms;
 }
 
-/* ===== Brand wordmark "nadyanah" & nama lengkap di beranda ===== */
+/* ===== Brand wordmark "nadyanah" (top bar non-beranda) ===== */
 .brand-name {
   font-family: var(--font-brand);
+}
+
+/* ===== Nama "Nadya Nanda Adisty Hadian" di beranda ===== */
+.name-title {
+  font-family: var(--font-name);
 }
 
 /* ===== Hand-drawn hero headline on the beranda (echoes "meet the world of woset") ===== */
