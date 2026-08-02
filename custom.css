@@ -403,22 +403,33 @@ body,
 .mobile-tab-item:active {
   transform: scale(0.94);
 }
-.mobile-tab-item.mobile-tab-active {
-  color: var(--color-brand-gold-dark);
-}
-/* the site-wide "force text black" rule further down would otherwise
-   override the muted/active tab-bar colors above — keep this bar exempt */
-.mobile-tab-item,
-.mobile-tab-item.mobile-tab-active {
+/* !important here because the site-wide "force text black" rule further
+   down the file would otherwise override these tab-bar colors */
+.mobile-tab-item {
   color: #9a948a !important;
 }
 .mobile-tab-item.mobile-tab-active {
   color: var(--color-brand-gold-dark) !important;
 }
-/* reserves the height of the fixed bar so page content can scroll clear of it */
+.mobile-tab-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  min-width: 40px;
+  padding: 0 8px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.mobile-tab-item.mobile-tab-active .mobile-tab-icon-wrap {
+  background-color: rgba(160, 120, 80, 0.16);
+  color: var(--color-brand-gold-dark);
+}
+/* reserves the height of the fixed bar + the floating pill row above it,
+   so page content can scroll clear of both */
 .mobile-tab-bar-spacer {
-  height: 66px;
-  height: calc(66px + env(safe-area-inset-bottom, 0px));
+  height: 122px;
+  height: calc(122px + env(safe-area-inset-bottom, 0px));
 }
 
 /* ===== Revert: floating nav dock icons (home/profile/book/search/certificate)

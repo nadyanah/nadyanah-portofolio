@@ -162,29 +162,39 @@
         </div>
       </div>
 
+      <!-- FLOATING "TIMBUL" QUICK-ACCESS PILLS — sits just above the mobile tab
+           bar. Same raised white pill / press-in-on-tap (mendelep) style as the
+           existing .pill-press buttons used elsewhere on the site. -->
+      <div class="lg:hidden fixed bottom-[76px] inset-x-0 z-40 flex items-center justify-center gap-3 px-4 pointer-events-none">
+        <button @click="switchTab('menu')" class="pill-press pointer-events-auto text-[11px] font-mono font-semibold tracking-widest uppercase text-black cursor-pointer focus:outline-none">Portofolio</button>
+        <button @click="switchTab('certificate')" class="pill-press pointer-events-auto text-[11px] font-mono font-semibold tracking-widest uppercase text-black cursor-pointer focus:outline-none">Sertifikat</button>
+      </div>
+
       <!-- MOBILE / TABLET BOTTOM TAB BAR — replaces the floating dock below the
            lg breakpoint with a fixed, full-width, app-style tab bar (icon + label),
-           same tabs/logic as the desktop dock above, just a different look. -->
-      <div v-if="activeTab !== 'home'" class="mobile-tab-bar lg:hidden fixed bottom-0 inset-x-0 z-40">
+           same tabs/logic as the desktop dock above, just a different look.
+           Unlike the desktop dock, this stays visible on the beranda too, since
+           the mobile home top bar no longer carries its own nav links. -->
+      <div class="mobile-tab-bar lg:hidden fixed bottom-0 inset-x-0 z-40">
         <div class="flex items-stretch w-full">
           <button @click="switchTab('home')" :class="['mobile-tab-item', activeTab === 'home' ? 'mobile-tab-active' : '']">
-            <i data-lucide="home" class="h-5 w-5"></i>
+            <span class="mobile-tab-icon-wrap"><i data-lucide="home" class="h-5 w-5"></i></span>
             <span>Home</span>
           </button>
           <button @click="switchTab('chef')" :class="['mobile-tab-item', activeTab === 'chef' ? 'mobile-tab-active' : '']">
-            <i data-lucide="user" class="h-5 w-5"></i>
+            <span class="mobile-tab-icon-wrap"><i data-lucide="user" class="h-5 w-5"></i></span>
             <span>Profile</span>
           </button>
           <button @click="switchTab('background')" :class="['mobile-tab-item', activeTab === 'background' ? 'mobile-tab-active' : '']">
-            <i data-lucide="book-open" class="h-5 w-5"></i>
+            <span class="mobile-tab-icon-wrap"><i data-lucide="book-open" class="h-5 w-5"></i></span>
             <span>Kisah</span>
           </button>
           <button @click="switchTab('menu')" :class="['mobile-tab-item', activeTab === 'menu' ? 'mobile-tab-active' : '']">
-            <i data-lucide="search" class="h-5 w-5"></i>
+            <span class="mobile-tab-icon-wrap"><i data-lucide="search" class="h-5 w-5"></i></span>
             <span>Karya</span>
           </button>
           <button @click="switchTab('certificate')" :class="['mobile-tab-item', activeTab === 'certificate' ? 'mobile-tab-active' : '']">
-            <i data-lucide="badge-check" class="h-5 w-5"></i>
+            <span class="mobile-tab-icon-wrap"><i data-lucide="badge-check" class="h-5 w-5"></i></span>
             <span>Sertif.</span>
           </button>
           <div class="relative flex-1 flex">
@@ -204,7 +214,7 @@
             </transition>
 
             <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['mobile-tab-item', isContactMenuOpen ? 'mobile-tab-active' : '']">
-              <i data-lucide="contact" class="h-5 w-5"></i>
+              <span class="mobile-tab-icon-wrap"><i data-lucide="contact" class="h-5 w-5"></i></span>
               <span>Kontak</span>
             </button>
           </div>
@@ -212,28 +222,32 @@
       </div>
 
       <!-- spacer so page content isn't hidden behind the fixed mobile tab bar -->
-      <div v-if="activeTab !== 'home'" class="mobile-tab-bar-spacer lg:hidden"></div>
+      <div class="mobile-tab-bar-spacer lg:hidden"></div>
+
 
       <main :class="activeTab === 'home' ? 'max-w-[1600px]' : 'max-w-7xl'" class="w-full mx-auto px-4 sm:px-6 lg:px-8 mt-2 lg:mt-4 pt-10 lg:pt-0">
         
         <!-- HOME PAGE -->
         <div v-if="activeTab === 'home'" class="flex flex-col gap-3 w-full items-center fade-in-up">
 
-          <!-- HOME TOP BAR (only on beranda) -->
-          <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center gap-3 pb-2.5 mb-1 border-b border-neutral-200/70">
-            <div class="flex items-center gap-6 sm:gap-10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-muted justify-self-start">
+          <!-- HOME TOP BAR (only on beranda). On mobile/tablet (below lg) the
+               Profile/Background/Portofolio/Sertifikat pill links are hidden —
+               those pages are reached instead via the fixed bottom tab bar,
+               so the mobile top bar shows just the title, centered. -->
+          <div class="w-full grid grid-cols-[1fr_auto_1fr] lg:grid-cols-[1fr_auto_1fr] items-center gap-3 pb-2.5 mb-1 border-b border-neutral-200/70">
+            <div class="hidden lg:flex items-center gap-6 sm:gap-10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-muted justify-self-start">
               <button @click="switchTab('chef')" class="pill-press hover:text-black transition-colors cursor-pointer focus:outline-none">Profile</button>
-              <button @click="switchTab('background')" class="pill-press hidden sm:inline hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
+              <button @click="switchTab('background')" class="pill-press hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
             </div>
 
-            <h1 @click="handleNameClick" class="hand-title text-center text-xl sm:text-2xl text-black select-none cursor-default justify-self-center">
+            <h1 @click="handleNameClick" class="hand-title text-center text-xl sm:text-2xl text-black select-none cursor-default justify-self-center col-start-1 col-end-4 lg:col-start-2 lg:col-end-3">
               {{ mainPageContent.title }}
             </h1>
 
-            <div class="flex items-center gap-5 sm:gap-8 text-brand-muted justify-self-end">
+            <div class="hidden lg:flex items-center gap-5 sm:gap-8 text-brand-muted justify-self-end">
               <div class="flex items-center gap-6 sm:gap-10">
-                <button @click="switchTab('menu')" class="pill-press hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
-                <button @click="switchTab('certificate')" class="pill-press hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
+                <button @click="switchTab('menu')" class="pill-press text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
+                <button @click="switchTab('certificate')" class="pill-press text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
               </div>
             </div>
           </div>
