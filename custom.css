@@ -199,6 +199,18 @@ body {
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
 
+/* ===== Career timeline dot markers (halaman Background) — pure white
+   circle with black ring, pops up "timbul" on hover to invite interaction. ===== */
+.career-dot {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.career-dot:hover {
+  transform: scale(1.25);
+  box-shadow:
+    3px 3px 8px rgba(44, 40, 37, 0.18),
+    -2px -2px 6px rgba(255, 255, 255, 0.9);
+}
 /* ===== Brand wordmark "nadyanah" (top bar non-beranda) ===== */
 .brand-name {
   font-family: var(--font-brand);

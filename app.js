@@ -386,7 +386,7 @@ const app = createApp({
 
     // "timeline" type section helpers
     const handleSectionEntryAdd = (sectionIdx) => {
-      chefForm.value.sections[sectionIdx].entries.push({ heading: "", subheading: "", period: "", bullets: [""] });
+      chefForm.value.sections[sectionIdx].entries.push({ heading: "", subheading: "", period: "", description: "", bullets: [""] });
     };
     const handleSectionEntryRemove = (sectionIdx, entryIdx) => chefForm.value.sections[sectionIdx].entries.splice(entryIdx, 1);
     const handleSectionEntryBulletAdd = (sectionIdx, entryIdx) => chefForm.value.sections[sectionIdx].entries[entryIdx].bullets.push("");
@@ -517,6 +517,16 @@ const app = createApp({
 
     const currentDish = computed(() => portfolioMenu.value[currentSlideIndex.value] || portfolioMenu.value[0]);
 
+    // Entri "Perjalanan Karier" untuk halaman Background — diambil dari section
+    // "Professional Experience" (type: timeline) di data profil, supaya satu
+    // sumber data yang sama dipakai di halaman Profile & Background.
+    const careerEntries = computed(() => {
+      const sections = chefProfileState.value.sections || [];
+      const experienceSection = sections.find(s => s.id === "experience");
+      if (!experienceSection || !experienceSection.entries) return [];
+      return experienceSection.entries;
+    });
+
     const handlePrevSlide = () => {
       if (portfolioMenu.value.length === 0) return;
       currentSlideIndex.value = currentSlideIndex.value === 0 ? portfolioMenu.value.length - 1 : currentSlideIndex.value - 1;
@@ -581,7 +591,7 @@ const app = createApp({
       activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, searchQuery, selectedDish, openDishDetails,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,
       certificateMenu, selectedCertificate, openCertificate,
-      isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide,
+      isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm,
       handleAddField, handleRemoveField, handleFieldChange,

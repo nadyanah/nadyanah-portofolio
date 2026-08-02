@@ -261,10 +261,10 @@
         <div v-if="activeTab !== 'home' && activeTab !== 'admin'" class="py-6 fade-in-up text-left">
            <div class="mb-8 relative flex items-center justify-center border-b border-neutral-200/80 pb-4">
               <div class="absolute left-0">
-                <span class="brand-name italic text-2xl sm:text-3xl text-black select-none">nadyanah</span>
+                <span class="brand-name text-2xl sm:text-3xl text-black select-none">nadyanah</span>
               </div>
               <div class="absolute right-0">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-brand-gold font-bold">{{ {chef:'02. Profile', background:'03. Background', menu:'04. Selected Works (Portofolio)', certificate:'05. Certificates'}[activeTab] }}</span>
+                <span class="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-gold font-bold">{{ {chef:'02. Profile', background:'03. Background', menu:'04. Selected Works (Portofolio)', certificate:'05. Certificates'}[activeTab] }}</span>
               </div>
             </div>
 
@@ -331,12 +331,35 @@
             </div>
 
             <!-- BACKGROUND TAB -->
-            <div v-if="activeTab === 'background'" class="max-w-4xl mx-auto text-left fade-in-up">
+            <div v-if="activeTab === 'background'" class="max-w-3xl mx-auto text-left fade-in-up">
               <div class="bg-white rounded-3xl border border-neutral-200/60 p-6 md:p-10 shadow-sm">
-                <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-4">Perjalanan &amp; Latar Belakang</h2>
-                <p class="text-sm text-brand-muted leading-relaxed">
-                  Halaman ini masih kosong dan siap diisi dengan cerita perjalanan karier, pendidikan, atau latar belakang profesional. Kasih tau aja isinya mau seperti apa, nanti dibantu susun & desain kontennya.
-                </p>
+                <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-1">Perjalanan Karier</h2>
+                <p class="text-xs text-brand-muted mb-9">Jejak langkah profesional dari waktu ke waktu.</p>
+
+                <!-- EMPTY STATE -->
+                <div v-if="!careerEntries || careerEntries.length === 0" class="text-xs text-brand-muted italic">
+                  Belum ada data perjalanan karier.
+                </div>
+
+                <!-- TIMELINE -->
+                <div v-else class="relative pl-9">
+                  <!-- vertical dashed connector line -->
+                  <div class="absolute left-[7px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
+
+                  <div v-for="(entry, idx) in careerEntries" :key="'career-'+idx" class="relative pb-11 last:pb-0">
+                    <!-- node dot -->
+                    <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2 border-black"></span>
+
+                    <span class="inline-block px-3 py-1 rounded-full border border-neutral-200 text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5">
+                      {{entry.period}}
+                    </span>
+                    <p class="text-base md:text-lg font-serif font-medium text-black">{{entry.heading}}</p>
+                    <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
+                    <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2.5 max-w-xl">
+                      {{entry.description}}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1189,6 +1212,7 @@
                               <input type="text" v-model="entry.heading" placeholder="Judul, contoh: Posisi / Gelar" class="w-full px-3 py-1.5 bg-neutral-50/60 border border-neutral-200 rounded-lg focus:outline-none" />
                               <input type="text" v-model="entry.subheading" placeholder="Sub-judul, contoh: Perusahaan / Institusi" class="w-full px-3 py-1.5 bg-neutral-50/60 border border-neutral-200 rounded-lg focus:outline-none" />
                               <input type="text" v-model="entry.period" placeholder="Periode, contoh: 2020 - Sekarang" class="w-full px-3 py-1.5 bg-neutral-50/60 border border-neutral-200 rounded-lg focus:outline-none" />
+                              <textarea rows="2" v-model="entry.description" placeholder="Deskripsi singkat (opsional, tampil italic di halaman Background)" class="w-full px-3 py-1.5 bg-neutral-50/60 border border-neutral-200 rounded-lg focus:outline-none resize-none text-xs"></textarea>
                               <div class="space-y-1.5 pt-1">
                                 <div class="flex justify-between items-center">
                                   <span class="text-[10px] font-bold text-brand-muted uppercase tracking-wide">Poin (opsional)</span>
