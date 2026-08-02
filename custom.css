@@ -7,6 +7,20 @@
    custom fonts, brand color variables, animations, and one-off components
    like the sliding drawer.
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Mono&display=swap');
+@font-face {
+  font-family: 'Fontby-en';  /* nama bebas, ini yang kamu pakai di CSS */
+  src: url('fonts/Fontby-en.otf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fontby-n';  /* nama bebas, ini yang kamu pakai di CSS */
+  src: url('fonts/n.otf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Caveat:wght@500..700&display=swap');
 
@@ -72,7 +86,7 @@ body {
 
 /* ===== Hand-drawn hero headline on the beranda (echoes "meet the world of woset") ===== */
 .hand-title {
-  font-family: var(--font-hand);
+  font-family: 'Fontby-en', var(--font-hand);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0.01em;
