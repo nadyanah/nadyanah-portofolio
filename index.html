@@ -164,13 +164,13 @@
         <div v-if="activeTab === 'home'" class="flex flex-col gap-3 w-full items-center fade-in-up">
 
           <!-- HOME TOP BAR (only on beranda) -->
-          <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center gap-3 pb-5 mb-2 border-b border-neutral-200/70">
+          <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center gap-3 pb-2.5 mb-1 border-b border-neutral-200/70">
             <div class="flex items-center gap-6 sm:gap-10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-muted justify-self-start">
               <button @click="switchTab('chef')" class="pill-press hover:text-black transition-colors cursor-pointer focus:outline-none">Profile</button>
               <button @click="switchTab('background')" class="pill-press hidden sm:inline hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
             </div>
 
-            <h1 @click="handleNameClick" class="hand-title text-center text-2xl sm:text-3xl text-black select-none cursor-default justify-self-center">
+            <h1 @click="handleNameClick" class="hand-title text-center text-xl sm:text-2xl text-black select-none cursor-default justify-self-center">
               {{ mainPageContent.title }}
             </h1>
 

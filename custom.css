@@ -145,7 +145,7 @@ body {
    Sertifikat) — permanently raised pill, same "timbul" look as the
    chips/dock/search, and "mendelep" (press-in) on click/tap. ===== */
 .pill-press {
-  padding: 5px 14px;
+  padding: 4px 14px;
   border-radius: 999px;
   background: var(--color-brand-cream);
   border: 1px solid #e7e2dc;
