@@ -141,6 +141,22 @@ body {
     -3px -3px 8px rgba(255, 255, 255, 0.9);
 }
 
+/* ===== Home top bar text links (Profile / Background / Portofolio /
+   Sertifikat) — plain text by default, but "mendelep" (press-in) into
+   a raised pill the moment you click/tap, same feel as the chips/dock. ===== */
+.pill-press {
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+.pill-press:active {
+  background: #FFFFFF;
+  border-color: #e7e2dc;
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.14),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+}
 /* ===== Floating nav dock buttons (home/profile/etc) — pure white,
    "timbul" raised circle when idle. Active tab = pressed in (inset
    shadow) instead of a solid brown/gold fill. ===== */

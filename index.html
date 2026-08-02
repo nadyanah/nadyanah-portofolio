@@ -166,8 +166,8 @@
           <!-- HOME TOP BAR (only on beranda) -->
           <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center gap-3 pb-5 mb-2 border-b border-neutral-200/70">
             <div class="flex items-center gap-6 sm:gap-10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-muted justify-self-start">
-              <button @click="switchTab('chef')" class="hover:text-black transition-colors cursor-pointer focus:outline-none">Profile</button>
-              <button @click="switchTab('background')" class="hidden sm:inline hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
+              <button @click="switchTab('chef')" class="pill-press hover:text-black transition-colors cursor-pointer focus:outline-none">Profile</button>
+              <button @click="switchTab('background')" class="pill-press hidden sm:inline hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
             </div>
 
             <h1 @click="handleNameClick" class="hand-title text-center text-2xl sm:text-3xl text-black select-none cursor-default justify-self-center">
@@ -176,8 +176,8 @@
 
             <div class="flex items-center gap-5 sm:gap-8 text-brand-muted justify-self-end">
               <div class="flex items-center gap-6 sm:gap-10">
-                <button @click="switchTab('menu')" class="hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
-                <button @click="switchTab('certificate')" class="hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
+                <button @click="switchTab('menu')" class="pill-press hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
+                <button @click="switchTab('certificate')" class="pill-press hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
               </div>
             </div>
           </div>
