@@ -161,7 +161,7 @@
         </div>
       </div>
 
-      <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 lg:mt-4 pt-10 lg:pt-0">
+      <main :class="activeTab === 'home' ? 'max-w-[1600px]' : 'max-w-7xl'" class="w-full mx-auto px-4 sm:px-6 lg:px-8 mt-2 lg:mt-4 pt-10 lg:pt-0">
         
         <!-- HOME PAGE -->
         <div v-if="activeTab === 'home'" class="flex flex-col gap-3 w-full items-center fade-in-up">
@@ -185,7 +185,12 @@
             </div>
           </div>
 
-          <div class="w-full py-6 md:py-8 px-6 md:px-10 bg-white rounded-[32px] border border-neutral-100/50 shadow-[0_15px_50px_rgba(0,0,0,0.03)] flex flex-col gap-2 relative">
+          <!-- TWO SEPARATE WHITE SHAPES, SIDE BY SIDE — makes use of the empty
+               space on either side that used to just be cream background. -->
+          <div class="w-full flex flex-col xl:flex-row gap-6 items-stretch">
+
+          <!-- SHAPE 1: existing profile + portfolio highlight card -->
+          <div class="flex-1 py-6 md:py-8 px-6 md:px-10 bg-white rounded-[32px] border border-neutral-100/50 shadow-[0_15px_50px_rgba(0,0,0,0.03)] flex flex-col gap-2 relative">
 
             <!-- FLOATING SOCIAL BUTTONS — sits beside the white card on the cream background, scrolls with the card, never overlaps other content -->
             <div v-if="mainPageContent.linkedinUrl || chefProfileState.contactEmail"
@@ -253,6 +258,50 @@
                 </button>
               </div>
             </div>
+          </div>
+          </div>
+
+          <!-- SHAPE 2: NEW — dedicated career timeline card. Outer shell is white
+               "timbul" (matches SHAPE 1's card treatment), with an inner cream
+               inset panel (matches the HIGHLIGHT PORTOFOLIO MENU slider look)
+               wrapping the timeline itself. -->
+          <div class="w-full xl:w-[380px] shrink-0 self-stretch py-6 md:py-8 px-6 md:px-10 bg-white rounded-[32px] border border-neutral-100/50 shadow-[0_15px_50px_rgba(0,0,0,0.03)] flex flex-col">
+
+            <div class="w-full h-full flex-1 bg-brand-cream rounded-[28px] p-5 flex flex-col border border-neutral-200/50 shadow-inner">
+
+              <div class="w-full text-center mb-4 relative">
+                <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase font-bold">PERJALANAN KARIER</span>
+                <div class="h-1 w-12 bg-neutral-300 mx-auto mt-2 rounded-full"></div>
+              </div>
+
+              <!-- EMPTY STATE -->
+              <div v-if="!careerEntries || careerEntries.length === 0" class="text-xs text-brand-muted italic py-6 text-center">
+                Belum ada data perjalanan karier.
+              </div>
+
+              <!-- TIMELINE (scrolls internally if it grows taller than the card, page itself never scrolls) -->
+              <div v-else class="relative pl-9 w-full max-h-[500px] overflow-y-auto no-scrollbar pr-1">
+                <!-- vertical dashed connector line -->
+                <div class="absolute left-[7px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
+
+                <div v-for="(entry, idx) in careerEntries" :key="'home-career-'+idx" class="relative pb-8 last:pb-0">
+                  <!-- node dot -->
+                  <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2 border-black"></span>
+
+                  <span class="inline-block px-3 py-1 rounded-full border border-neutral-200 text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5">
+                    {{entry.period}}
+                  </span>
+                  <p class="text-base font-serif font-medium text-black">{{entry.heading}}</p>
+                  <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
+                  <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2">
+                    {{entry.description}}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
           </div>
         </div>
         </div>
