@@ -130,10 +130,10 @@
               <i data-lucide="user" class="h-5 w-5"></i>
             </button>
             <button @click="switchTab('background')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="03. Background">
-              <i data-lucide="book-open" class="h-5 w-5"></i>
+              <i data-lucide="route" class="h-5 w-5"></i>
             </button>
             <button @click="switchTab('menu')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="04. Selected Works (Portofolio)">
-              <i data-lucide="search" class="h-5 w-5"></i>
+              <i data-lucide="book-open" class="h-5 w-5"></i>
             </button>
             <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="05. Certificates">
               <i data-lucide="badge-check" class="h-5 w-5"></i>
@@ -180,11 +180,11 @@
             <span>Profile</span>
           </button>
           <button @click="switchTab('background')" :class="['mobile-tab-item', activeTab === 'background' ? 'mobile-tab-active' : '']">
-            <i data-lucide="book-open" class="h-5 w-5"></i>
+            <i data-lucide="route" class="h-5 w-5"></i>
             <span>Kisah</span>
           </button>
           <button @click="switchTab('menu')" :class="['mobile-tab-item', activeTab === 'menu' ? 'mobile-tab-active' : '']">
-            <i data-lucide="search" class="h-5 w-5"></i>
+            <i data-lucide="book-open" class="h-5 w-5"></i>
             <span>Karya</span>
           </button>
           <button @click="switchTab('certificate')" :class="['mobile-tab-item', activeTab === 'certificate' ? 'mobile-tab-active' : '']">
@@ -401,7 +401,7 @@
                </div>
                
                <div v-if="filteredMenu.length === 0" class="text-center py-20 bg-brand-bone rounded-3xl border border-dashed border-neutral-300">
-                  <i data-lucide="utensils" class="h-10 w-10 text-brand-gold/40 mx-auto mb-3"></i>
+                  <i data-lucide="search-x" class="h-10 w-10 text-brand-gold/40 mx-auto mb-3"></i>
                   <h3 class="text-lg font-serif font-medium text-black">Resep tidak ditemukan</h3>
                </div>
                
@@ -861,7 +861,7 @@
                   <div><div class="font-bold text-xs leading-normal">Kelola Sertifikat ({{certificateMenu.length}})</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'certificate' ? 'text-black/60' : 'text-brand-muted']">Kredensial &amp; sertifikasi</div></div>
                 </button>
                 <button @click="adminTab = 'chef'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'chef' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'chef' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="chef-hat" class="h-4 w-4"></i></div>
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'chef' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="id-card" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Profil Saya</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'chef' ? 'text-black/60' : 'text-brand-muted']">Identitas diri</div></div>
                 </button>
                 <button @click="adminTab = 'homepage'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'homepage' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
