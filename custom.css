@@ -142,17 +142,20 @@ body {
 }
 
 /* ===== Home top bar text links (Profile / Background / Portofolio /
-   Sertifikat) — plain text by default, but "mendelep" (press-in) into
-   a raised pill the moment you click/tap, same feel as the chips/dock. ===== */
+   Sertifikat) — permanently raised pill, same "timbul" look as the
+   chips/dock/search, and "mendelep" (press-in) on click/tap. ===== */
 .pill-press {
   padding: 5px 14px;
   border-radius: 999px;
-  border: 1px solid transparent;
+  background: var(--color-brand-cream);
+  border: 1px solid #e7e2dc;
+  box-shadow:
+    3px 3px 6px rgba(44, 40, 37, 0.10),
+    -3px -3px 6px rgba(255, 255, 255, 0.9);
   transition: all 0.15s ease;
 }
 .pill-press:active {
-  background: #FFFFFF;
-  border-color: #e7e2dc;
+  transform: scale(0.98);
   box-shadow:
     inset 2px 2px 5px rgba(44, 40, 37, 0.14),
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);

@@ -52,6 +52,7 @@ const app = createApp({
     const homepageForm = ref({});
     const homepagePhotoUploading = ref(false);
     const chefAvatarUploading = ref(false);
+    const chefHeaderBgUploading = ref(false);
 
     // FORM STATES
     const formName = ref("");
@@ -295,6 +296,25 @@ const app = createApp({
     };
     const handleChefAvatarRemove = () => {
       chefForm.value.avatar = "";
+    };
+    const handleChefHeaderBgUpload = async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        alert("File harus berupa gambar (JPG/PNG/dll).");
+        return;
+      }
+      chefHeaderBgUploading.value = true;
+      try {
+        chefForm.value.headerBackground = await window.db.uploadImage(file, "chef");
+      } catch (err) {
+        alert("Gagal upload background. Cek koneksi internet kamu.");
+      } finally {
+        chefHeaderBgUploading.value = false;
+      }
+    };
+    const handleChefHeaderBgRemove = () => {
+      chefForm.value.headerBackground = "";
     };
     const handleChefArrayAddField = (field) => {
       if (!Array.isArray(chefForm.value[field])) chefForm.value[field] = [];
@@ -557,6 +577,7 @@ const app = createApp({
       handleSectionEntryAdd, handleSectionEntryRemove, handleSectionEntryBulletAdd, handleSectionEntryBulletRemove,
       handleHomepageSubmit, handleHomepagePhotoUpload, handleHomepagePhotoRemove, homepagePhotoUploading, handleChefFormSubmit, handleResetToDefaults,
       chefAvatarUploading, handleChefAvatarUpload, handleChefAvatarRemove,
+      chefHeaderBgUploading, handleChefHeaderBgUpload, handleChefHeaderBgRemove,
       formName, formRole, formMessage, formStars, formDishLiked, guestbookSuccess, handleAddGuestbook, handleLikeEntry,
       password, showPassword, loginError, loginSuccess, handleLogin, handleLogout,
       dataLoading, dataLoadError
