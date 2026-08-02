@@ -160,6 +160,25 @@ body {
     inset 2px 2px 5px rgba(44, 40, 37, 0.14),
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
+/* ===== Flexible "timbul" raised button — same white/raised + press-in
+   effect as .pill-press, but without fixed padding/border-radius, so it
+   can be sized freely with Tailwind utilities (w-full, py-2.5, rounded-xl,
+   etc). Used for full-width buttons like the login modal's "Masuk". ===== */
+.btn-raised {
+  background: #FFFFFF;
+  border: 1px solid #e7e2dc;
+  box-shadow:
+    3px 3px 6px rgba(44, 40, 37, 0.10),
+    -3px -3px 6px rgba(255, 255, 255, 0.9);
+  transition: all 0.15s ease;
+}
+.btn-raised:active {
+  transform: scale(0.98);
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.14),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+}
+
 /* ===== Floating nav dock buttons (home/profile/etc) — pure white,
    "timbul" raised circle when idle. Active tab = pressed in (inset
    shadow) instead of a solid brown/gold fill. ===== */

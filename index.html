@@ -344,7 +344,7 @@
                 <!-- LANDSCAPE HEADER BANNER -->
                 <div class="relative px-6 md:px-10 pt-10 pb-8 overflow-hidden"
                      :class="!chefProfileState.headerBackground ? 'bg-brand-bone/70' : ''"
-                     :style="chefProfileState.headerBackground ? { backgroundImage: 'linear-gradient(rgba(252,250,247,0.45), rgba(252,250,247,0.45)), url(' + chefProfileState.headerBackground + ')', backgroundSize: 'cover', backgroundPosition: 'center' } : {}">
+                     :style="chefProfileState.headerBackground ? { backgroundImage: 'url(' + chefProfileState.headerBackground + ')', backgroundSize: 'cover', backgroundPosition: 'center' } : {}">
                   <div class="relative flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
                     <div class="relative w-28 sm:w-28 md:w-32 lg:w-36 aspect-[3/4] rounded-xl overflow-hidden border-2 border-white shadow-lg flex-shrink-0 -rotate-2">
                       <img :src="chefProfileState.avatar" class="w-full h-full object-cover" />
@@ -661,14 +661,14 @@
 
         <!-- ADMIN TAB -->
         <div v-if="activeTab === 'admin' && isAdminLoggedIn" class="max-w-5xl mx-auto text-left">
-          <div class="bg-white rounded-[32px] border border-neutral-200/60 p-6 md:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.02)] min-h-[600px] text-left">
+          <div class="bg-white rounded-[32px] border border-neutral-200/60 p-6 md:p-8 shadow-sm min-h-[600px] text-left">
             <!-- Admin Panel Header -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-neutral-100 pb-6 mb-6">
               <div>
-                <span class="text-[10px] font-mono tracking-widest text-neutral-400 font-bold uppercase">
+                <span class="text-[10px] font-sans tracking-widest text-neutral-400 font-bold uppercase">
                   Chief Culture Chef Dashboard
                 </span>
-                <h2 class="text-3xl font-serif font-medium text-black">
+                <h2 class="text-3xl font-sans font-medium text-black">
                   Ruang Kerja Admin
                 </h2>
               </div>
@@ -676,7 +676,7 @@
               <div class="flex flex-wrap gap-2">
                 <button
                   @click="switchTab('home')"
-                  class="flex items-center gap-1.5 px-4 py-2 bg-neutral-100 hover:bg-neutral-200 text-black text-xs font-mono rounded-full border border-neutral-200 transition-all cursor-pointer font-bold"
+                  class="pill-press flex items-center gap-1.5 px-4 py-2 text-black text-xs font-sans transition-all cursor-pointer font-bold"
                 >
                   <i data-lucide="home" class="h-3.5 w-3.5"></i>
                   <span>Lihat Web</span>
@@ -684,7 +684,7 @@
 
                 <button
                   @click="handleResetToDefaults"
-                  class="flex items-center gap-1.5 px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-mono rounded-full border border-amber-200 transition-all cursor-pointer font-bold"
+                  class="pill-press flex items-center gap-1.5 px-4 py-2 text-amber-800 text-xs font-sans transition-all cursor-pointer font-bold"
                   title="Reset all customized inputs back to initial template values"
                 >
                   <i data-lucide="refresh-ccw" class="h-3.5 w-3.5 animate-spin-hover"></i>
@@ -693,7 +693,7 @@
 
                 <button
                   @click="handleLogout"
-                  class="flex items-center gap-1.5 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-mono rounded-full border border-red-200 transition-all cursor-pointer font-bold"
+                  class="pill-press flex items-center gap-1.5 px-4 py-2 text-red-600 text-xs font-sans transition-all cursor-pointer font-bold"
                 >
                   <i data-lucide="log-out" class="h-3.5 w-3.5"></i>
                   <span>Log Out</span>
@@ -705,30 +705,30 @@
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
               <!-- Sidebar Tabs -->
               <div class="lg:col-span-1 space-y-1.5">
-                <button @click="adminTab = 'portfolio'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'portfolio' ? 'bg-white text-black border border-neutral-150' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'portfolio' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layers" class="h-4 w-4"></i></div>
+                <button @click="adminTab = 'portfolio'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'portfolio' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'portfolio' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layers" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Kelola Portofolio</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'portfolio' ? 'text-black/60' : 'text-brand-muted']">Daftar proyek</div></div>
                 </button>
-                <button @click="adminTab = 'certificate'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'certificate' ? 'bg-white text-black border border-neutral-150' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'certificate' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="badge-check" class="h-4 w-4"></i></div>
+                <button @click="adminTab = 'certificate'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'certificate' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'certificate' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="badge-check" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Kelola Sertifikat ({{certificateMenu.length}})</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'certificate' ? 'text-black/60' : 'text-brand-muted']">Kredensial &amp; sertifikasi</div></div>
                 </button>
-                <button @click="adminTab = 'chef'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'chef' ? 'bg-white text-black border border-neutral-150' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'chef' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="chef-hat" class="h-4 w-4"></i></div>
+                <button @click="adminTab = 'chef'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'chef' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'chef' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="chef-hat" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Profil Saya</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'chef' ? 'text-black/60' : 'text-brand-muted']">Identitas diri</div></div>
                 </button>
-                <button @click="adminTab = 'homepage'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'homepage' ? 'bg-white text-black border border-neutral-150' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'homepage' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layout-template" class="h-4 w-4"></i></div>
+                <button @click="adminTab = 'homepage'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'homepage' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'homepage' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layout-template" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Halaman Utama</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'homepage' ? 'text-black/60' : 'text-brand-muted']">Copywriting beranda</div></div>
                 </button>
-                <button @click="adminTab = 'guestbook'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'guestbook' ? 'bg-white text-black border border-neutral-150' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'guestbook' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="users" class="h-4 w-4"></i></div>
+                <button @click="adminTab = 'guestbook'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'guestbook' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'guestbook' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="users" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Buku Tamu ({{guestbookEntries.length}})</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'guestbook' ? 'text-black/60' : 'text-brand-muted']">Moderation logs</div></div>
                 </button>
               </div>
 
               <!-- Dynamic Workspace Panel -->
-              <div class="lg:col-span-3 bg-neutral-50/50 border border-neutral-200/50 p-6 rounded-3xl min-h-[500px]">
+              <div class="lg:col-span-3 bar-raised border border-neutral-200/40 p-6 rounded-3xl min-h-[500px]">
                 
                 <div v-if="adminTab === 'portfolio'" class="space-y-6">
                   
@@ -736,10 +736,10 @@
                   <div v-if="!isAddingCard" class="space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
                       <div>
-                        <h3 class="text-lg font-serif font-bold text-black">Daftar Proyek Portofolio</h3>
+                        <h3 class="text-lg font-sans font-bold text-black">Daftar Proyek Portofolio</h3>
                         <p class="text-xs text-brand-muted mt-0.5">Semua proyek yang aktif di web Anda.</p>
                       </div>
-                      <button @click="isAddingCard = true" class="flex items-center gap-1.5 px-4 py-2 bg-white text-black border border-neutral-150 rounded-full text-xs hover:bg-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
+                      <button @click="isAddingCard = true" class="chip-raised flex items-center gap-1.5 px-4 py-2 text-black rounded-full text-xs hover:text-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         <span>Tambah Proyek</span>
                       </button>
@@ -750,16 +750,16 @@
                         <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
                       </div>
                       <div class="flex-1 min-w-0 pr-12 text-left">
-                        <span class="text-[9px] font-mono font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
-                        <h4 class="font-serif font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
+                        <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
+                        <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
                         <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.shortDescription}}</p>
-                        <p class="text-[9px] font-mono text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{item.price}}</p>
+                        <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{item.price}}</p>
                       </div>
                       <div class="absolute right-3 flex flex-col gap-1.5">
-                        <button @click="startEditCard(item)" class="h-7 w-7 rounded-full bg-neutral-50 hover:bg-neutral-150 border border-neutral-200 text-black flex items-center justify-center cursor-pointer transition-colors" title="Edit">
+                        <button @click="startEditCard(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
                           <i data-lucide="edit-2" class="h-3 w-3"></i>
                         </button>
-                        <button @click="deletePortfolioCard(item.id)" class="h-7 w-7 rounded-full bg-red-50 hover:bg-red-100 border border-red-150 text-red-600 flex items-center justify-center cursor-pointer transition-colors" title="Delete">
+                        <button @click="deletePortfolioCard(item.id)" class="nav-raised h-7 w-7 rounded-full bg-white text-red-600 flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Delete">
                           <i data-lucide="trash-2" class="h-3 w-3"></i>
                         </button>
                       </div>
@@ -771,7 +771,7 @@
                 <div v-else class="space-y-6">
                   <form @submit.prevent="savePortfolioCard" class="space-y-6">
                     <div class="flex justify-between items-center border-b border-neutral-100 pb-3">
-                      <h3 class="text-lg font-serif font-bold text-black">
+                      <h3 class="text-lg font-sans font-bold text-black">
                         {{ editingCardId ? "Edit Proyek Portofolio" : "Tambah Proyek Portofolio Baru" }}
                       </h3>
                       <button type="button" @click="cancelPortfolioForm" class="flex items-center gap-1 text-xs text-brand-muted hover:text-black font-bold cursor-pointer">
@@ -816,7 +816,7 @@
                             <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
                           </div>
                           <div class="flex flex-col gap-1.5">
-                            <label class="px-3 py-1.5 bg-white text-black border border-neutral-150 rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
+                            <label class="chip-raised px-3 py-1.5 text-black rounded-full text-[11px] font-semibold cursor-pointer hover:text-brand-gold-dark transition-all w-fit">
                               {{ portfolioImageUploading ? 'Mengupload...' : 'Pilih Foto' }}
                               <input type="file" accept="image/*" :disabled="portfolioImageUploading" @change="handlePortfolioImageUpload" class="hidden" />
                             </label>
@@ -840,7 +840,7 @@
                         </div>
                         <div class="space-y-1.5">
                           <div v-for="(ing, idx) in portfolioForm.ingredients" :key="'ing'+idx" class="flex gap-2 items-center">
-                            <span class="font-mono text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
+                            <span class="font-sans text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
                             <input type="text" v-model="portfolioForm.ingredients[idx]" placeholder="Contoh: Digital LMS Portal" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
                             <button type="button" @click="handleRemoveField('ingredients', idx)" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
                               <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
@@ -859,7 +859,7 @@
                         </div>
                         <div class="space-y-1.5">
                           <div v-for="(alg, idx) in portfolioForm.allergens" :key="'alg'+idx" class="flex gap-2 items-center">
-                            <span class="font-mono text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
+                            <span class="font-sans text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
                             <input type="text" v-model="portfolioForm.allergens[idx]" placeholder="Contoh: Kecemasan Hari Pertama (Day-1 Anxiety)" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
                             <button type="button" @click="handleRemoveField('allergens', idx)" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
                               <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
@@ -870,7 +870,7 @@
 
                       <!-- CHEF'S RECIPE NOTES SECTION -->
                       <div class="md:col-span-2 border-t border-neutral-200 pt-4 mt-2">
-                        <h4 class="font-bold text-black font-serif text-sm border-b border-neutral-150 pb-2 mb-4">
+                        <h4 class="font-bold text-black font-sans text-sm border-b border-neutral-150 pb-2 mb-4">
                           Detail Case Study (Challenge, Solution, Impact)
                         </h4>
                       </div>
@@ -895,7 +895,7 @@
                         </div>
                         <div class="space-y-1.5">
                           <div v-for="(step, idx) in portfolioForm.chefNotes.recipe" :key="'step'+idx" class="flex gap-2 items-start">
-                            <span class="font-mono text-[10px] text-neutral-400 w-4 pt-2">{{idx + 1}}.</span>
+                            <span class="font-sans text-[10px] text-neutral-400 w-4 pt-2">{{idx + 1}}.</span>
                             <textarea rows="1.5" v-model="portfolioForm.chefNotes.recipe[idx]" placeholder="Contoh: Mengadakan riset empati..." class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none resize-none text-xs"></textarea>
                             <button type="button" @click="handleRemoveField(null, idx, 'recipe')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer mt-1">
                               <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
@@ -914,7 +914,7 @@
                         </div>
                         <div class="space-y-1.5">
                           <div v-for="(res, idx) in portfolioForm.chefNotes.results" :key="'res'+idx" class="flex gap-2 items-center">
-                            <span class="font-mono text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
+                            <span class="font-sans text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
                             <input type="text" v-model="portfolioForm.chefNotes.results[idx]" placeholder="Contoh: Mencapai skor kepuasan rata-rata 4.8" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
                             <button type="button" @click="handleRemoveField(null, idx, 'results')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
                               <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
@@ -930,7 +930,7 @@
                       <button type="button" @click="cancelPortfolioForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-black rounded-xl text-xs font-semibold cursor-pointer">
                         Batal
                       </button>
-                      <button type="submit" class="px-6 py-2.5 bg-white text-black border border-neutral-150 hover:bg-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
+                      <button type="submit" class="px-6 py-2.5 chip-raised text-black hover:text-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer">
                         {{ editingCardId ? "Simpan Perubahan" : "Tambah Proyek Baru" }}
                       </button>
                     </div>
@@ -944,10 +944,10 @@
                   <div v-if="!isAddingCertificate" class="space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
                       <div>
-                        <h3 class="text-lg font-serif font-bold text-black">Daftar Sertifikat</h3>
+                        <h3 class="text-lg font-sans font-bold text-black">Daftar Sertifikat</h3>
                         <p class="text-xs text-brand-muted mt-0.5">Semua sertifikat &amp; kredensial yang tampil di web Anda.</p>
                       </div>
-                      <button @click="isAddingCertificate = true" class="flex items-center gap-1.5 px-4 py-2 bg-white text-black border border-neutral-150 rounded-full text-xs hover:bg-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
+                      <button @click="isAddingCertificate = true" class="chip-raised flex items-center gap-1.5 px-4 py-2 text-black rounded-full text-xs hover:text-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         <span>Tambah Sertifikat</span>
                       </button>
@@ -965,16 +965,16 @@
                           <i v-else data-lucide="badge-check" class="h-5 w-5 text-brand-gold/40"></i>
                         </div>
                         <div class="flex-1 min-w-0 pr-12 text-left">
-                          <span class="text-[9px] font-mono font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
-                          <h4 class="font-serif font-bold text-sm text-black truncate mt-1">{{item.title}}</h4>
+                          <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
+                          <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.title}}</h4>
                           <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.issuer}}</p>
-                          <p class="text-[9px] font-mono text-brand-muted mt-1 font-semibold">📅 {{item.date}}</p>
+                          <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📅 {{item.date}}</p>
                         </div>
                         <div class="absolute right-3 flex flex-col gap-1.5">
-                          <button @click="startEditCertificate(item)" class="h-7 w-7 rounded-full bg-neutral-50 hover:bg-neutral-150 border border-neutral-200 text-black flex items-center justify-center cursor-pointer transition-colors" title="Edit">
+                          <button @click="startEditCertificate(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
                             <i data-lucide="edit-2" class="h-3 w-3"></i>
                           </button>
-                          <button @click="deleteCertificate(item.id)" class="h-7 w-7 rounded-full bg-red-50 hover:bg-red-100 border border-red-150 text-red-600 flex items-center justify-center cursor-pointer transition-colors" title="Delete">
+                          <button @click="deleteCertificate(item.id)" class="nav-raised h-7 w-7 rounded-full bg-white text-red-600 flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Delete">
                             <i data-lucide="trash-2" class="h-3 w-3"></i>
                           </button>
                         </div>
@@ -986,7 +986,7 @@
                   <div v-else class="space-y-6">
                     <form @submit.prevent="saveCertificate" class="space-y-6">
                       <div class="flex justify-between items-center border-b border-neutral-100 pb-3">
-                        <h3 class="text-lg font-serif font-bold text-black">
+                        <h3 class="text-lg font-sans font-bold text-black">
                           {{ editingCertificateId ? "Edit Sertifikat" : "Tambah Sertifikat Baru" }}
                         </h3>
                         <button type="button" @click="cancelCertificateForm" class="flex items-center gap-1 text-xs text-brand-muted hover:text-black font-bold cursor-pointer">
@@ -1030,7 +1030,7 @@
                               <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
                             </div>
                             <div class="flex flex-col gap-1.5">
-                              <label class="px-3 py-1.5 bg-white text-black border border-neutral-150 rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
+                              <label class="chip-raised px-3 py-1.5 text-black rounded-full text-[11px] font-semibold cursor-pointer hover:text-brand-gold-dark transition-all w-fit">
                                 {{ certificateImageUploading ? 'Mengupload...' : 'Pilih Foto' }}
                                 <input type="file" accept="image/*" :disabled="certificateImageUploading" @change="handleCertificateImageUpload" class="hidden" />
                               </label>
@@ -1051,7 +1051,7 @@
                         <button type="button" @click="cancelCertificateForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-black rounded-xl text-xs font-semibold cursor-pointer">
                           Batal
                         </button>
-                        <button type="submit" class="px-6 py-2.5 bg-white text-black border border-neutral-150 hover:bg-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
+                        <button type="submit" class="px-6 py-2.5 chip-raised text-black hover:text-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer">
                           {{ editingCertificateId ? "Simpan Perubahan" : "Tambah Sertifikat Baru" }}
                         </button>
                       </div>
@@ -1062,7 +1062,7 @@
                 <div v-else-if="adminTab === 'chef'">
                   <form @submit.prevent="handleChefFormSubmit" class="space-y-6">
                     <div class="border-b border-neutral-100 pb-3">
-                      <h3 class="text-lg font-serif font-bold text-black">Kelola Profil</h3>
+                      <h3 class="text-lg font-sans font-bold text-black">Kelola Profil</h3>
                       <p class="text-xs text-brand-muted mt-0.5">Ubah informasi identitas dan kredibilitas profesional Anda yang tampil di halaman Profil.</p>
                     </div>
 
@@ -1083,7 +1083,7 @@
                             <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
                           </div>
                           <div class="flex flex-col gap-1.5">
-                            <label class="px-3 py-1.5 bg-white text-black border border-neutral-150 rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
+                            <label class="chip-raised px-3 py-1.5 text-black rounded-full text-[11px] font-semibold cursor-pointer hover:text-brand-gold-dark transition-all w-fit">
                               {{ chefAvatarUploading ? 'Mengupload...' : 'Pilih Foto' }}
                               <input type="file" accept="image/*" :disabled="chefAvatarUploading" @change="handleChefAvatarUpload" class="hidden" />
                             </label>
@@ -1100,7 +1100,7 @@
                             <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
                           </div>
                           <div class="flex flex-col gap-1.5">
-                            <label class="px-3 py-1.5 bg-white text-black border border-neutral-150 rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
+                            <label class="chip-raised px-3 py-1.5 text-black rounded-full text-[11px] font-semibold cursor-pointer hover:text-brand-gold-dark transition-all w-fit">
                               {{ chefHeaderBgUploading ? 'Mengupload...' : 'Pilih Background' }}
                               <input type="file" accept="image/*" :disabled="chefHeaderBgUploading" @change="handleChefHeaderBgUpload" class="hidden" />
                             </label>
@@ -1143,7 +1143,7 @@
 
                           <!-- Section header: nama section + kontrol urutan/hapus -->
                           <div class="flex gap-2 items-center">
-                            <span class="shrink-0 px-2 py-1 rounded-md bg-brand-bone text-brand-gold-dark text-[9px] font-mono uppercase font-bold">{{section.type}}</span>
+                            <span class="shrink-0 px-2 py-1 rounded-md bg-brand-bone text-brand-gold-dark text-[9px] font-sans uppercase font-bold">{{section.type}}</span>
                             <input type="text" v-model="section.title" placeholder="Nama Section" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none font-semibold" />
                             <button type="button" @click="handleSectionMove(sIdx, -1)" :disabled="sIdx === 0" class="p-1.5 rounded-lg cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed hover:bg-neutral-100" title="Naikkan">
                               <i data-lucide="chevron-up" class="h-3.5 w-3.5 text-black"></i>
@@ -1163,7 +1163,7 @@
                           <!-- Isi section: TAGS -->
                           <div v-if="section.type === 'tags'" class="space-y-1.5">
                             <div v-for="(item, tIdx) in section.items" :key="'tag'+tIdx" class="flex gap-2 items-center">
-                              <span class="font-mono text-[10px] text-neutral-400 w-4">{{tIdx + 1}}.</span>
+                              <span class="font-sans text-[10px] text-neutral-400 w-4">{{tIdx + 1}}.</span>
                               <input type="text" v-model="section.items[tIdx]" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
                               <button type="button" @click="handleSectionTagRemove(sIdx, tIdx)" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
                                 <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
@@ -1178,7 +1178,7 @@
                           <div v-if="section.type === 'timeline'" class="space-y-3">
                             <div v-for="(entry, eIdx) in section.entries" :key="'entry'+eIdx" class="p-3 bg-white border border-neutral-200 rounded-xl space-y-2">
                               <div class="flex justify-between items-center">
-                                <span class="font-mono text-[10px] text-neutral-400">Entri {{eIdx + 1}}</span>
+                                <span class="font-sans text-[10px] text-neutral-400">Entri {{eIdx + 1}}</span>
                                 <button type="button" @click="handleSectionEntryRemove(sIdx, eIdx)" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
                                   <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
                                 </button>
@@ -1234,7 +1234,7 @@
                 <div v-else-if="adminTab === 'homepage'">
                   <form @submit.prevent="handleHomepageSubmit" class="space-y-6">
                     <div class="border-b border-neutral-100 pb-3">
-                      <h3 class="text-lg font-serif font-bold text-black">Kelola Halaman Utama &amp; Sosial Media</h3>
+                      <h3 class="text-lg font-sans font-bold text-black">Kelola Halaman Utama &amp; Sosial Media</h3>
                       <p class="text-xs text-brand-muted mt-0.5">Ubah nama panggung, sub-heading, jargon, deskripsi, dan link sosial yang tampil di halaman beranda.</p>
                     </div>
 
@@ -1247,7 +1247,7 @@
                             <i v-else data-lucide="user-round" class="h-6 w-6 text-brand-muted"></i>
                           </div>
                           <div class="flex flex-col gap-1.5">
-                            <label class="px-3 py-1.5 bg-white text-black border border-neutral-150 rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
+                            <label class="chip-raised px-3 py-1.5 text-black rounded-full text-[11px] font-semibold cursor-pointer hover:text-brand-gold-dark transition-all w-fit">
                               {{ homepagePhotoUploading ? 'Mengupload...' : 'Pilih Foto' }}
                               <input type="file" accept="image/*" :disabled="homepagePhotoUploading" @change="handleHomepagePhotoUpload" class="hidden" />
                             </label>
@@ -1282,7 +1282,7 @@
                       </div>
 
                       <div class="md:col-span-2 border-t border-neutral-100 pt-3 mt-2">
-                        <h4 class="font-bold text-black font-serif text-xs mb-3">Link Media Sosial &amp; Kontak</h4>
+                        <h4 class="font-bold text-black font-sans text-xs mb-3">Link Media Sosial &amp; Kontak</h4>
                       </div>
                       <div class="space-y-1">
                         <label class="font-semibold text-black">LinkedIn URL</label>
@@ -1303,20 +1303,20 @@
                 </div>
 
                 <div v-else-if="adminTab === 'guestbook'">
-                  <h3 class="text-lg font-serif font-bold text-black mb-4">Buku Tamu</h3>
+                  <h3 class="text-lg font-sans font-bold text-black mb-4">Buku Tamu</h3>
                   <div class="space-y-4">
                     <div v-for="entry in guestbookEntries" :key="entry.id" class="bg-white p-5 rounded-2xl border border-neutral-200/50 shadow-sm relative group">
                       <div class="flex justify-between items-start mb-2">
                         <div>
-                          <h4 class="font-serif font-bold text-black">{{entry.name}}</h4>
-                          <p class="text-[10px] text-brand-muted font-mono mt-0.5">{{entry.role}} • {{entry.date}}</p>
+                          <h4 class="font-sans font-bold text-black">{{entry.name}}</h4>
+                          <p class="text-[10px] text-brand-muted font-sans mt-0.5">{{entry.role}} • {{entry.date}}</p>
                         </div>
                         <div class="text-xs tracking-widest text-brand-gold-dark">
                           {{'⭐'.repeat(entry.stars)}}
                         </div>
                       </div>
                       <p class="text-xs text-brand-muted mt-2 italic">&ldquo;{{entry.message}}&rdquo;</p>
-                      <div class="mt-3 pt-3 border-t border-neutral-100 flex justify-between items-center text-[10px] font-mono text-brand-muted">
+                      <div class="mt-3 pt-3 border-t border-neutral-100 flex justify-between items-center text-[10px] font-sans text-brand-muted">
                         <span>Mencicipi: {{entry.dishLiked}}</span>
                       </div>
                     </div>
@@ -1528,12 +1528,12 @@
               <div class="h-12 w-12 rounded-full bg-neutral-100 flex items-center justify-center mx-auto text-black">
                 <i data-lucide="lock" class="h-5 w-5"></i>
               </div>
-              <h3 class="font-serif text-xl font-bold">Private Archive Login</h3>
+              <h3 class="font-sans text-xl font-bold">Private Archive Login</h3>
             </div>
             <form @submit.prevent="handleLogin" class="space-y-4">
               <input type="password" v-model="password" placeholder="••••••••" class="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
               <div v-if="loginError" class="bg-red-50 text-red-800 text-xs p-3 rounded-xl">{{loginError}}</div>
-              <button type="submit" class="w-full py-2.5 bg-white text-black border border-neutral-150 hover:bg-brand-gold-dark rounded-xl font-semibold uppercase text-xs">Masuk</button>
+              <button type="submit" class="btn-raised w-full py-2.5 text-black rounded-xl font-sans font-semibold uppercase text-xs">Masuk</button>
             </form>
           </div>
         </div>
