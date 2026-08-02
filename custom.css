@@ -102,20 +102,20 @@ body {
    like the pill is held down. ===== */
 .chip-raised {
   background: #FFFFFF;
-  border: 1px solid rgba(44, 40, 37, 0.08);
+  border: 1px solid #e7e2dc;
   box-shadow:
     3px 3px 6px rgba(44, 40, 37, 0.10),
     -3px -3px 6px rgba(255, 255, 255, 0.9);
 }
 .chip-raised:hover {
-  border-color: rgba(160, 120, 80, 0.35);
+  border-color: #e7e2dc;
 }
 .chip-raised:active {
   transform: scale(0.98);
 }
 .chip-raised.chip-active {
   background: #FFFFFF;
-  border-color: var(--color-brand-gold);
+  border-color: #e7e2dc;
   box-shadow:
     inset 2px 2px 5px rgba(44, 40, 37, 0.14),
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);
@@ -129,6 +129,20 @@ body {
   box-shadow:
     6px 6px 14px rgba(44, 40, 37, 0.08),
     -6px -6px 14px rgba(255, 255, 255, 0.9);
+}
+
+/* ===== Floating nav dock buttons (home/profile/etc) — pure white,
+   "timbul" raised circle when idle. Active tab = pressed in (inset
+   shadow) instead of a solid brown/gold fill. ===== */
+.nav-raised {
+  box-shadow:
+    4px 4px 10px rgba(44, 40, 37, 0.10),
+    -4px -4px 10px rgba(255, 255, 255, 0.9);
+}
+.nav-raised.nav-active {
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.16),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
 
 /* ===== Brand wordmark "nadyanah" (top bar non-beranda) ===== */
