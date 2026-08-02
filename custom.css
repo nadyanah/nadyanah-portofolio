@@ -35,15 +35,24 @@
   --color-brand-gold-dark: #7A5C38;
   --color-brand-muted: #8E877B;
 
-  /* Font variables — mirror the fontFamily config in tailwind.config
-     (index.html). Needed because a few inline styles reference
-     var(--font-mono) directly instead of the Tailwind font-mono class;
-     without these, that var() was undefined and silently fell back to
-     the inherited font instead of JetBrains Mono. */
+  /* ==========================================================================
+     FONT CONTROL PANEL — edit satu baris di sini untuk ganti font sekelompok
+     teks di seluruh web. Setiap variable dipakai oleh class Tailwind (lewat
+     tailwind.config di index.html) DAN beberapa class custom di bawah.
+
+     --font-sans   -> class "font-sans"   (body text, deskripsi, label biasa)
+     --font-serif  -> class "font-serif"  (semua judul/heading — ±30 tempat)
+     --font-mono   -> class "font-mono"   (label uppercase kecil, tag, harga)
+     --font-hand   -> class "font-hand"   (aksen tulisan tangan, mis. "click")
+     --font-hero   -> class ".hand-title" (judul beranda "My Hidden Gem...")
+     --font-brand  -> class ".brand-name" (nama "nadyanah" & nama lengkap)
+     ========================================================================== */
   --font-sans: "Outfit", sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
   --font-hand: "Caveat", cursive;
+  --font-hero: "Fontby-en", var(--font-hand);
+  --font-brand: "Fontby-n", var(--font-serif);
 }
 
 body {
@@ -84,9 +93,14 @@ body {
   transition-duration: 400ms;
 }
 
+/* ===== Brand wordmark "nadyanah" & nama lengkap di beranda ===== */
+.brand-name {
+  font-family: var(--font-brand);
+}
+
 /* ===== Hand-drawn hero headline on the beranda (echoes "meet the world of woset") ===== */
 .hand-title {
-  font-family: 'Fontby-en', var(--font-hand);
+  font-family: var(--font-hero);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0.01em;
