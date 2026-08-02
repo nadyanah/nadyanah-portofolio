@@ -1,0 +1,101 @@
+/* ==========================================================================
+   custom.css — hand-written styles for the Nadya portfolio site
+   This file is 100% plain CSS. No build step, no compiler.
+   Everyday layout/spacing/color classes come from Tailwind (loaded via CDN
+   in index.html, config'd right below the <script> tag that loads it).
+   Only put things here that Tailwind utility classes can't express:
+   custom fonts, brand color variables, animations, and one-off components
+   like the sliding drawer.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Caveat:wght@500..700&display=swap');
+
+/* Brand color variables — used by Tailwind config (tailwind.config in
+   index.html) AND directly in a couple of inline styles/gradients. Change
+   a value here and it updates everywhere at once. */
+:root {
+  --color-brand-cream: #FCFAF7;
+  --color-brand-bone: #F4EFE6;
+  --color-brand-charcoal: #2C2825;
+  --color-brand-gold: #A07850;
+  --color-brand-gold-dark: #7A5C38;
+  --color-brand-muted: #8E877B;
+
+  /* Font variables — mirror the fontFamily config in tailwind.config
+     (index.html). Needed because a few inline styles reference
+     var(--font-mono) directly instead of the Tailwind font-mono class;
+     without these, that var() was undefined and silently fell back to
+     the inherited font instead of JetBrains Mono. */
+  --font-sans: "Outfit", sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-hand: "Caveat", cursive;
+}
+
+body {
+  background-color: var(--color-brand-cream);
+  color: var(--color-brand-charcoal);
+  font-family: "Outfit", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbars on elements that opt in (e.g. horizontal chip rows) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Simple fade/rise-in entrance used when switching tabs */
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tailwind's default duration scale skips 400ms — this site uses it for
+   the portfolio-card hover overlay, so it's defined here directly. */
+.duration-400 {
+  transition-duration: 400ms;
+}
+
+/* ===== Hand-drawn hero headline on the beranda (echoes "meet the world of woset") ===== */
+.hand-title {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  transform: rotate(-1deg);
+  display: inline-block;
+}
+
+/* ===== Portfolio card hover overlay (dark gradient + text that rises in) ===== */
+.group:hover .card-overlay {
+  opacity: 1 !important;
+}
+.group:hover .card-overlay-content {
+  transform: translateY(0px) !important;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+.fade-enter-active > *,
+.fade-leave-active > * {
+  pointer-events: auto;
+}
