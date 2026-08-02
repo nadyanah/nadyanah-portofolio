@@ -118,20 +118,20 @@
       <div v-if="activeTab !== 'home'" class="fixed bottom-6 inset-x-0 z-40 pointer-events-none">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-start">
           <div class="pointer-events-auto flex items-center gap-3 flex-wrap">
-            <button @click="switchTab('home')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'home' ? 'bg-neutral-900 border border-neutral-900 text-white shadow-[0_12px_25px_-4px_rgba(0,0,0,0.18),0_4px_12px_-2px_rgba(0,0,0,0.1)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="01. Welcome">
+            <button @click="switchTab('home')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'home' ? 'bg-brand-gold-dark border border-brand-gold-dark text-white shadow-[0_12px_25px_-4px_rgba(122,92,56,0.35),0_4px_12px_-2px_rgba(122,92,56,0.2)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="01. Welcome">
               <i data-lucide="home" class="h-5 w-5"></i>
             </button>
             <div class="w-1.5"></div>
-            <button @click="switchTab('chef')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'chef' ? 'bg-neutral-900 border border-neutral-900 text-white shadow-[0_12px_25px_-4px_rgba(0,0,0,0.18),0_4px_12px_-2px_rgba(0,0,0,0.1)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="02. Profile">
+            <button @click="switchTab('chef')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'chef' ? 'bg-brand-gold-dark border border-brand-gold-dark text-white shadow-[0_12px_25px_-4px_rgba(122,92,56,0.35),0_4px_12px_-2px_rgba(122,92,56,0.2)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="02. Profile">
               <i data-lucide="user" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('background')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'bg-neutral-900 border border-neutral-900 text-white shadow-[0_12px_25px_-4px_rgba(0,0,0,0.18),0_4px_12px_-2px_rgba(0,0,0,0.1)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="03. Background">
+            <button @click="switchTab('background')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'bg-brand-gold-dark border border-brand-gold-dark text-white shadow-[0_12px_25px_-4px_rgba(122,92,56,0.35),0_4px_12px_-2px_rgba(122,92,56,0.2)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="03. Background">
               <i data-lucide="book-open" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('menu')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'bg-neutral-900 border border-neutral-900 text-white shadow-[0_12px_25px_-4px_rgba(0,0,0,0.18),0_4px_12px_-2px_rgba(0,0,0,0.1)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="04. Selected Works (Portofolio)">
+            <button @click="switchTab('menu')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'bg-brand-gold-dark border border-brand-gold-dark text-white shadow-[0_12px_25px_-4px_rgba(122,92,56,0.35),0_4px_12px_-2px_rgba(122,92,56,0.2)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="04. Selected Works (Portofolio)">
               <i data-lucide="search" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('certificate')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'bg-neutral-900 border border-neutral-900 text-white shadow-[0_12px_25px_-4px_rgba(0,0,0,0.18),0_4px_12px_-2px_rgba(0,0,0,0.1)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="05. Certificates">
+            <button @click="switchTab('certificate')" :class="['h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'bg-brand-gold-dark border border-brand-gold-dark text-white shadow-[0_12px_25px_-4px_rgba(122,92,56,0.35),0_4px_12px_-2px_rgba(122,92,56,0.2)]' : 'bg-white border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.12)]']" title="05. Certificates">
               <i data-lucide="badge-check" class="h-5 w-5"></i>
             </button>
             <div class="relative">
@@ -267,13 +267,12 @@
 
             <!-- MENU TAB -->
             <div v-if="activeTab === 'menu'" class="space-y-8 fade-in-up">
-               <div class="flex flex-col sm:flex-row justify-between items-center bg-brand-bone p-3 rounded-2xl border border-neutral-200/40 shadow-sm">
+               <div class="bar-raised flex flex-col sm:flex-row justify-between items-center p-3 rounded-2xl border border-neutral-200/40">
                   <div class="flex flex-wrap gap-1.5 justify-center">
                     <button v-for="cat in [{id:'all', label:'Semua'}, {id:'people-culture', label:'People Culture'}, {id:'employer-branding', label:'Employer Branding'}, {id:'people-analytics', label:'People Analytics'}, {id:'organizational-development', label:'Organizational Development'}]" 
                             :key="cat.id" @click="selectedCategory = cat.id" 
-                            class="relative px-4 py-1.5 text-xs font-medium tracking-wide rounded-full transition-all duration-300 focus:outline-none cursor-pointer">
-                      <span :class="['relative z-10', selectedCategory === cat.id ? 'text-white' : 'text-brand-muted hover:text-brand-charcoal']">{{cat.label}}</span>
-                      <div v-if="selectedCategory === cat.id" class="absolute inset-0 bg-brand-charcoal rounded-full"></div>
+                            :class="['chip-raised px-4 py-1.5 text-xs font-medium tracking-wide rounded-full transition-all duration-300 focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'chip-active text-brand-gold-dark' : 'text-brand-muted hover:text-brand-charcoal']">
+                      {{cat.label}}
                     </button>
                   </div>
                   <div class="relative w-full sm:w-64 mt-3 sm:mt-0">
@@ -739,7 +738,7 @@
                         <h3 class="text-lg font-serif font-bold text-brand-charcoal">Daftar Proyek Portofolio</h3>
                         <p class="text-xs text-brand-muted mt-0.5">Semua proyek yang aktif di web Anda.</p>
                       </div>
-                      <button @click="isAddingCard = true" class="flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal text-white rounded-full text-xs hover:bg-neutral-800 transition-all font-semibold uppercase tracking-wider cursor-pointer">
+                      <button @click="isAddingCard = true" class="flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal text-white rounded-full text-xs hover:bg-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         <span>Tambah Proyek</span>
                       </button>
@@ -816,7 +815,7 @@
                             <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
                           </div>
                           <div class="flex flex-col gap-1.5">
-                            <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-neutral-800 transition-colors w-fit">
+                            <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
                               {{ portfolioImageUploading ? 'Mengupload...' : 'Pilih Foto' }}
                               <input type="file" accept="image/*" :disabled="portfolioImageUploading" @change="handlePortfolioImageUpload" class="hidden" />
                             </label>
@@ -930,7 +929,7 @@
                       <button type="button" @click="cancelPortfolioForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-brand-charcoal rounded-xl text-xs font-semibold cursor-pointer">
                         Batal
                       </button>
-                      <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-neutral-800 rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
+                      <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
                         {{ editingCardId ? "Simpan Perubahan" : "Tambah Proyek Baru" }}
                       </button>
                     </div>
@@ -947,7 +946,7 @@
                         <h3 class="text-lg font-serif font-bold text-brand-charcoal">Daftar Sertifikat</h3>
                         <p class="text-xs text-brand-muted mt-0.5">Semua sertifikat &amp; kredensial yang tampil di web Anda.</p>
                       </div>
-                      <button @click="isAddingCertificate = true" class="flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal text-white rounded-full text-xs hover:bg-neutral-800 transition-all font-semibold uppercase tracking-wider cursor-pointer">
+                      <button @click="isAddingCertificate = true" class="flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal text-white rounded-full text-xs hover:bg-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         <span>Tambah Sertifikat</span>
                       </button>
@@ -1030,7 +1029,7 @@
                               <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
                             </div>
                             <div class="flex flex-col gap-1.5">
-                              <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-neutral-800 transition-colors w-fit">
+                              <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
                                 {{ certificateImageUploading ? 'Mengupload...' : 'Pilih Foto' }}
                                 <input type="file" accept="image/*" :disabled="certificateImageUploading" @change="handleCertificateImageUpload" class="hidden" />
                               </label>
@@ -1051,7 +1050,7 @@
                         <button type="button" @click="cancelCertificateForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-brand-charcoal rounded-xl text-xs font-semibold cursor-pointer">
                           Batal
                         </button>
-                        <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-neutral-800 rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
+                        <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
                           {{ editingCertificateId ? "Simpan Perubahan" : "Tambah Sertifikat Baru" }}
                         </button>
                       </div>
@@ -1083,7 +1082,7 @@
                             <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
                           </div>
                           <div class="flex flex-col gap-1.5">
-                            <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-neutral-800 transition-colors w-fit">
+                            <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
                               {{ chefAvatarUploading ? 'Mengupload...' : 'Pilih Foto' }}
                               <input type="file" accept="image/*" :disabled="chefAvatarUploading" @change="handleChefAvatarUpload" class="hidden" />
                             </label>
@@ -1207,7 +1206,7 @@
                       </div>
                     </div>
                     <div class="border-t border-neutral-100 pt-4 flex justify-end">
-                      <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-neutral-800 rounded-xl font-semibold uppercase tracking-wider text-xs cursor-pointer shadow-md transition-all active:scale-[0.98]">
+                      <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-brand-gold-dark rounded-xl font-semibold uppercase tracking-wider text-xs cursor-pointer shadow-md transition-all active:scale-[0.98]">
                         Simpan Profil
                       </button>
                     </div>
@@ -1230,7 +1229,7 @@
                             <i v-else data-lucide="user-round" class="h-6 w-6 text-brand-muted"></i>
                           </div>
                           <div class="flex flex-col gap-1.5">
-                            <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-neutral-800 transition-colors w-fit">
+                            <label class="px-3 py-1.5 bg-brand-charcoal text-white rounded-full text-[11px] font-semibold cursor-pointer hover:bg-brand-gold-dark transition-colors w-fit">
                               {{ homepagePhotoUploading ? 'Mengupload...' : 'Pilih Foto' }}
                               <input type="file" accept="image/*" :disabled="homepagePhotoUploading" @change="handleHomepagePhotoUpload" class="hidden" />
                             </label>
@@ -1278,7 +1277,7 @@
                       </div>
                     </div>
                     <div class="border-t border-neutral-100 pt-4 flex justify-end">
-                      <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-neutral-800 rounded-xl font-semibold uppercase tracking-wider text-xs cursor-pointer shadow-md transition-all active:scale-[0.98]">
+                      <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-brand-gold-dark rounded-xl font-semibold uppercase tracking-wider text-xs cursor-pointer shadow-md transition-all active:scale-[0.98]">
                         Simpan Konten Beranda
                       </button>
                     </div>
@@ -1314,7 +1313,7 @@
       <!-- DETAIL MODAL SCREEN -->
       <transition name="fade">
         <div v-if="selectedDish" class="fixed inset-0 z-[80] flex items-center justify-center p-3 md:p-6 text-left">
-          <div @click="selectedDish = null" class="absolute inset-0 bg-neutral-950/80 backdrop-blur-md cursor-pointer"></div>
+          <div @click="selectedDish = null" class="absolute inset-0 bg-brand-charcoal/80 backdrop-blur-md cursor-pointer"></div>
           
           <div class="bg-neutral-200 w-full max-w-5xl rounded-[32px] p-1.5 md:p-2.5 shadow-[0_30px_80px_-10px_rgba(139,130,115,0.35)] relative border border-neutral-300 z-10 max-h-[92vh] flex flex-col">
             <!-- Stacked sheets visual effect -->
@@ -1325,8 +1324,8 @@
             <div class="bg-brand-cream w-full h-full rounded-[24px] overflow-hidden border border-neutral-300 relative flex flex-col flex-1 shadow-inner">
               
               <!-- Book Crease Overlay -->
-              <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-12 pointer-events-none z-30 bg-gradient-to-r from-transparent via-black/[0.08] to-transparent"></div>
-              <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-black/10 pointer-events-none z-30 shadow-[0_0_8px_rgba(0,0,0,0.15)]"></div>
+              <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-12 pointer-events-none z-30 bg-gradient-to-r from-transparent via-brand-charcoal/[0.1] to-transparent"></div>
+              <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-brand-charcoal/15 pointer-events-none z-30 shadow-[0_0_8px_rgba(44,40,37,0.2)]"></div>
               <div class="hidden md:block absolute top-0 bottom-0 left-[calc(50%-1px)] w-[1px] bg-white/40 pointer-events-none z-30"></div>
 
               <button @click="selectedDish = null" class="absolute top-3 right-3 md:top-6 md:right-6 z-40 bg-brand-cream/90 text-brand-charcoal p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
@@ -1342,7 +1341,7 @@
                       <img :src="selectedDish.image" :alt="selectedDish.name" class="w-full h-full object-cover" />
                     </div>
 
-                    <div class="absolute inset-x-6 bottom-6 md:hidden text-white bg-black/60 backdrop-blur-sm p-4 rounded-xl">
+                    <div class="absolute inset-x-6 bottom-6 md:hidden text-white bg-brand-charcoal/75 backdrop-blur-sm p-4 rounded-xl">
                       <span class="text-[9px] font-mono uppercase tracking-wider text-brand-gold font-bold">{{ selectedDish.categoryLabel }}</span>
                       <h2 class="text-xl font-sans mt-1 font-medium">{{ selectedDish.name }}</h2>
                     </div>
@@ -1449,7 +1448,7 @@
       <!-- CERTIFICATE LIGHTBOX MODAL -->
       <transition name="fade">
         <div v-if="selectedCertificate" class="fixed inset-0 z-[80] flex items-center justify-center p-3 md:p-6 text-left">
-          <div @click="selectedCertificate = null" class="absolute inset-0 bg-neutral-950/80 backdrop-blur-md cursor-pointer"></div>
+          <div @click="selectedCertificate = null" class="absolute inset-0 bg-brand-charcoal/80 backdrop-blur-md cursor-pointer"></div>
 
           <div class="bg-white w-full max-w-3xl rounded-[24px] shadow-[0_30px_80px_-10px_rgba(139,130,115,0.35)] relative border border-neutral-300 z-10 max-h-[92vh] flex flex-col overflow-hidden">
 
@@ -1490,7 +1489,7 @@
                 </div>
 
                 <a v-if="selectedCertificate.credentialUrl" :href="selectedCertificate.credentialUrl" target="_blank"
-                   class="inline-flex items-center gap-2 text-xs font-mono font-bold text-white bg-brand-charcoal px-4 py-2.5 rounded-full hover:bg-neutral-800 transition-colors">
+                   class="inline-flex items-center gap-2 text-xs font-mono font-bold text-white bg-brand-charcoal px-4 py-2.5 rounded-full hover:bg-brand-gold-dark transition-colors">
                   Verifikasi Kredensial <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
                 </a>
               </div>
@@ -1502,7 +1501,7 @@
       <!-- LOGIN MODAL -->
       <transition name="fade">
         <div v-if="isLoginModalOpen" class="fixed inset-0 z-[80] flex items-center justify-center p-4">
-          <div @click="isLoginModalOpen = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"></div>
+          <div @click="isLoginModalOpen = false" class="absolute inset-0 bg-brand-charcoal/70 backdrop-blur-sm cursor-pointer"></div>
           <div class="bg-brand-cream w-full max-w-md rounded-3xl p-6 relative shadow-2xl z-10 text-left border border-neutral-200">
             <button @click="isLoginModalOpen = false" class="absolute top-4 right-4 h-8 w-8 rounded-full hover:bg-neutral-100 flex items-center justify-center text-brand-muted">
               <i data-lucide="x" class="h-4 w-4"></i>
@@ -1516,7 +1515,7 @@
             <form @submit.prevent="handleLogin" class="space-y-4">
               <input type="password" v-model="password" placeholder="••••••••" class="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
               <div v-if="loginError" class="bg-red-50 text-red-800 text-xs p-3 rounded-xl">{{loginError}}</div>
-              <button type="submit" class="w-full py-2.5 bg-brand-charcoal text-white hover:bg-neutral-800 rounded-xl font-semibold uppercase text-xs">Masuk</button>
+              <button type="submit" class="w-full py-2.5 bg-brand-charcoal text-white hover:bg-brand-gold-dark rounded-xl font-semibold uppercase text-xs">Masuk</button>
             </form>
           </div>
         </div>

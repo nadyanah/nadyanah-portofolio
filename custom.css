@@ -95,6 +95,42 @@ body {
   transition-duration: 400ms;
 }
 
+/* ===== Filter chip pills (kategori "Semua", "People Culture", dst) —
+   soft "timbul" / raised shape instead of a flat solid-color fill.
+   Pure white, no cream/bone tint. Idle = puffs up slightly off the
+   white bar behind it. Active/selected = pressed in (inset shadow),
+   like the pill is held down. ===== */
+.chip-raised {
+  background: #FFFFFF;
+  border: 1px solid rgba(44, 40, 37, 0.08);
+  box-shadow:
+    3px 3px 6px rgba(44, 40, 37, 0.10),
+    -3px -3px 6px rgba(255, 255, 255, 0.9);
+}
+.chip-raised:hover {
+  border-color: rgba(160, 120, 80, 0.35);
+}
+.chip-raised:active {
+  transform: scale(0.98);
+}
+.chip-raised.chip-active {
+  background: #FFFFFF;
+  border-color: var(--color-brand-gold);
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.14),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+}
+
+/* ===== Filter bar wrapper (kategori chips + search) — pure white,
+   pushed up as a "timbul" raised slab off the cream page background,
+   instead of a flat brand-bone panel. ===== */
+.bar-raised {
+  background: #FFFFFF;
+  box-shadow:
+    6px 6px 14px rgba(44, 40, 37, 0.08),
+    -6px -6px 14px rgba(255, 255, 255, 0.9);
+}
+
 /* ===== Brand wordmark "nadyanah" (top bar non-beranda) ===== */
 .brand-name {
   font-family: var(--font-brand);
