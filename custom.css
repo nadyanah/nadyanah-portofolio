@@ -131,6 +131,16 @@ body {
     -6px -6px 14px rgba(255, 255, 255, 0.9);
 }
 
+/* ===== Search input (kategori filter bar) — pure white, "timbul"
+   raised pill, matching the chip/nav raised style. ===== */
+.search-raised {
+  background: #FFFFFF;
+  border: 1px solid #e7e2dc;
+  box-shadow:
+    3px 3px 8px rgba(44, 40, 37, 0.10),
+    -3px -3px 8px rgba(255, 255, 255, 0.9);
+}
+
 /* ===== Floating nav dock buttons (home/profile/etc) — pure white,
    "timbul" raised circle when idle. Active tab = pressed in (inset
    shadow) instead of a solid brown/gold fill. ===== */
@@ -183,4 +193,33 @@ body {
 .fade-enter-active > *,
 .fade-leave-active > * {
   pointer-events: auto;
+}
+
+/* ==========================================================================
+   Force all text to black across the site.
+   Uses [class*="..."] attribute selectors so it also catches Tailwind
+   state/opacity variants like hover:text-brand-gold, text-brand-gold/40,
+   group-hover:text-brand-gold, text-neutral-400, etc. — not just the
+   bare class name.
+   Exception: text-white is left untouched on purpose — it's used for
+   labels/badges sitting on dark (bg-brand-charcoal) backgrounds, so
+   turning it black would make that text unreadable (black-on-black).
+   ========================================================================== */
+body,
+[class*="text-brand-charcoal"],
+[class*="text-brand-gold"],
+[class*="text-brand-muted"],
+[class*="text-brand-cream"],
+[class*="text-brand-bone"],
+[class*="text-neutral-"] {
+  color: #000000 !important;
+}
+
+/* ===== Revert: floating nav dock icons (home/profile/book/search/certificate)
+   back to their original colors — idle = neutral gray, active = gold-dark. ===== */
+.nav-raised[class*="text-neutral-"] {
+  color: #737373 !important;
+}
+.nav-raised[class*="text-brand-gold-dark"] {
+  color: #e7e2dc !important;
 }

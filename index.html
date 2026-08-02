@@ -66,9 +66,9 @@
     <!-- Data Configuration -->
     <script src="data.js"></script>
   </head>
-  <body class="bg-brand-cream text-brand-charcoal font-sans relative pb-24">
+  <body class="bg-brand-cream text-black font-sans relative pb-24">
     <div id="root" >
-      <div v-if="dataLoading" class="min-h-screen flex items-center justify-center text-brand-charcoal font-mono text-sm tracking-widest uppercase">
+      <div v-if="dataLoading" class="min-h-screen flex items-center justify-center text-black font-mono text-sm tracking-widest uppercase">
         Memuat menu...
       </div>
       <div v-else-if="dataLoadError" class="min-h-screen flex items-center justify-center text-center px-6 text-red-600 font-mono text-sm max-w-md mx-auto">
@@ -83,13 +83,13 @@
         <div v-if="showWelcome" @click="showWelcome = false"
              class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
           <div class="max-w-md mx-auto">
-            <p class="font-sans font-semibold text-lg sm:text-xl leading-relaxed text-brand-charcoal">
+            <p class="font-sans font-semibold text-lg sm:text-xl leading-relaxed text-black">
               Explore and take a look at the profile, background, and projects growing here. Think of it as a little garden — tended one idea at a time!
             </p>
           </div>
 
           <div class="absolute bottom-10 left-8 sm:left-14 flex flex-col items-start gap-1.5">
-            <div class="flex items-center gap-1.5 font-hand text-xl text-brand-charcoal -rotate-3">
+            <div class="flex items-center gap-1.5 font-hand text-xl text-black -rotate-3">
               <span>click</span>
               <svg viewBox="0 0 40 40" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M6 8 C6 22 12 30 24 32" />
@@ -97,7 +97,7 @@
               </svg>
             </div>
             <!-- growing plant / sprout line drawing -->
-            <svg viewBox="0 0 100 100" class="h-20 w-20 sm:h-24 sm:w-24 text-brand-charcoal" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 100 100" class="h-20 w-20 sm:h-24 sm:w-24 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 90 Q50 83 82 90" />
               <path d="M50 90 C50 68 45 58 50 42 C53 32 48 23 50 12" />
               <path d="M50 56 C39 51 31 56 27 46 C37 42 47 46 50 56 Z" />
@@ -118,20 +118,20 @@
       <div v-if="activeTab !== 'home'" class="fixed bottom-6 inset-x-0 z-40 pointer-events-none">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-start">
           <div class="pointer-events-auto flex items-center gap-3 flex-wrap">
-            <button @click="switchTab('home')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'home' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300']" title="01. Welcome">
+            <button @click="switchTab('home')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'home' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="01. Welcome">
               <i data-lucide="home" class="h-5 w-5"></i>
             </button>
             <div class="w-1.5"></div>
-            <button @click="switchTab('chef')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'chef' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300']" title="02. Profile">
+            <button @click="switchTab('chef')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'chef' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="02. Profile">
               <i data-lucide="user" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('background')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300']" title="03. Background">
+            <button @click="switchTab('background')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="03. Background">
               <i data-lucide="book-open" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('menu')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300']" title="04. Selected Works (Portofolio)">
+            <button @click="switchTab('menu')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="04. Selected Works (Portofolio)">
               <i data-lucide="search" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-brand-charcoal hover:border-neutral-300']" title="05. Certificates">
+            <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="05. Certificates">
               <i data-lucide="badge-check" class="h-5 w-5"></i>
             </button>
             <div class="relative">
@@ -141,16 +141,16 @@
               <!-- speed-dial social icons -->
               <transition name="fade">
                 <div v-if="isContactMenuOpen" class="absolute bottom-full left-0 mb-3 flex flex-col items-center gap-3 z-40">
-                  <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" class="h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-brand-charcoal" title="LinkedIn">
+                  <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" class="h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black" title="LinkedIn">
                     <i data-lucide="linkedin" class="h-5 w-5"></i>
                   </a>
-                  <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" class="h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-brand-charcoal" title="Email">
+                  <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" class="h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black" title="Email">
                     <i data-lucide="mail" class="h-5 w-5"></i>
                   </a>
                 </div>
               </transition>
 
-              <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['h-11 w-11 rounded-full bg-white border shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none relative z-40', isContactMenuOpen ? 'border-brand-gold text-brand-gold' : 'border-neutral-200/60 text-brand-charcoal hover:text-brand-gold hover:border-brand-gold/40']" title="06. Let's Connect">
+              <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['h-11 w-11 rounded-full bg-white border shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none relative z-40', isContactMenuOpen ? 'border-brand-gold text-brand-gold' : 'border-neutral-200/60 text-black hover:text-brand-gold hover:border-brand-gold/40']" title="06. Let's Connect">
                 <i data-lucide="contact" class="h-5 w-5"></i>
               </button>
             </div>
@@ -166,18 +166,18 @@
           <!-- HOME TOP BAR (only on beranda) -->
           <div class="w-full grid grid-cols-[1fr_auto_1fr] items-center gap-3 pb-5 mb-2 border-b border-neutral-200/70">
             <div class="flex items-center gap-6 sm:gap-10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-muted justify-self-start">
-              <button @click="switchTab('chef')" class="hover:text-brand-charcoal transition-colors cursor-pointer focus:outline-none">Profile</button>
-              <button @click="switchTab('background')" class="hidden sm:inline hover:text-brand-charcoal transition-colors cursor-pointer focus:outline-none">Background</button>
+              <button @click="switchTab('chef')" class="hover:text-black transition-colors cursor-pointer focus:outline-none">Profile</button>
+              <button @click="switchTab('background')" class="hidden sm:inline hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
             </div>
 
-            <h1 @click="handleNameClick" class="hand-title text-center text-2xl sm:text-3xl text-brand-charcoal select-none cursor-default justify-self-center">
+            <h1 @click="handleNameClick" class="hand-title text-center text-2xl sm:text-3xl text-black select-none cursor-default justify-self-center">
               {{ mainPageContent.title }}
             </h1>
 
             <div class="flex items-center gap-5 sm:gap-8 text-brand-muted justify-self-end">
               <div class="flex items-center gap-6 sm:gap-10">
-                <button @click="switchTab('menu')" class="hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-brand-charcoal transition-colors cursor-pointer focus:outline-none">Portofolio</button>
-                <button @click="switchTab('certificate')" class="hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-brand-charcoal transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
+                <button @click="switchTab('menu')" class="hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
+                <button @click="switchTab('certificate')" class="hidden sm:inline text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
               </div>
             </div>
           </div>
@@ -187,10 +187,10 @@
             <!-- FLOATING SOCIAL BUTTONS — sits beside the white card on the cream background, scrolls with the card, never overlaps other content -->
             <div v-if="mainPageContent.linkedinUrl || chefProfileState.contactEmail"
                  class="hidden lg:flex absolute bottom-0 right-0 translate-x-[76px] xl:translate-x-[92px] z-20 flex-col items-center gap-2.5 bg-white/70 backdrop-blur-md border border-neutral-200/60 rounded-full py-4 px-2 shadow-[0_15px_35px_-8px_rgba(0,0,0,0.1)]">
-              <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" title="LinkedIn" class="h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-brand-charcoal">
+              <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" title="LinkedIn" class="h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
                 <i data-lucide="linkedin" class="h-4 w-4"></i>
               </a>
-              <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" title="Email" class="h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-brand-charcoal">
+              <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" title="Email" class="h-10 w-10 rounded-full bg-white border border-neutral-200/70 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
                 <i data-lucide="mail" class="h-4 w-4"></i>
               </a>
             </div>
@@ -201,10 +201,10 @@
                 <img v-if="mainPageContent.photoUrl" :src="mainPageContent.photoUrl" class="w-full h-full object-cover" />
                 <i v-else data-lucide="user-round" class="h-9 w-9 text-brand-gold/50"></i>
               </div>
-              <h1 @click="handleNameClick" class="text-2xl md:text-3xl name-title text-brand-charcoal tracking-tight font-medium select-none cursor-default">
+              <h1 @click="handleNameClick" class="text-2xl md:text-3xl name-title text-black tracking-tight font-medium select-none cursor-default">
                 {{ mainPageContent.name }}
               </h1>
-              <h2 class="text-lg md:text-xl font-sans font-semibold text-brand-charcoal leading-snug">
+              <h2 class="text-lg md:text-xl font-sans font-semibold text-black leading-snug">
                 {{ mainPageContent.slogan }}
               </h2>
               <p class="text-xs md:text-sm text-brand-muted leading-relaxed max-w-lg pt-1">
@@ -224,10 +224,10 @@
                   <div class="relative aspect-[16/11] rounded-xl overflow-hidden bg-neutral-100">
                     <img :src="currentDish.image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <span class="absolute top-2.5 left-2.5 bg-brand-charcoal text-white text-[8px] font-mono font-bold tracking-widest px-2 py-0.5 rounded-full uppercase">{{ currentDish.categoryLabel.split(" ")[0] }}</span>
-                    <span class="absolute top-2.5 right-2.5 bg-white text-brand-charcoal border border-neutral-150 text-[8px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full shadow-sm">{{ currentDish.price }}</span>
+                    <span class="absolute top-2.5 right-2.5 bg-white text-black border border-neutral-150 text-[8px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full shadow-sm">{{ currentDish.price }}</span>
                   </div>
                   <div class="pt-3 px-1 text-left">
-                    <h3 class="text-lg font-serif text-brand-charcoal font-bold leading-tight group-hover:text-brand-gold transition-colors mb-1 line-clamp-1">{{ currentDish.name }}</h3>
+                    <h3 class="text-lg font-serif text-black font-bold leading-tight group-hover:text-brand-gold transition-colors mb-1 line-clamp-1">{{ currentDish.name }}</h3>
                     <p class="text-[11px] text-neutral-500 leading-relaxed line-clamp-2 mb-3">{{ currentDish.shortDescription }}</p>
                     <hr class="border-neutral-100 mb-2.5" />
                     <div class="flex items-center gap-1.5 text-[10px] text-brand-gold-dark font-mono font-bold">
@@ -239,13 +239,13 @@
               </div>
 
               <div class="flex items-center justify-between w-full mt-4 px-1">
-                <button @click="handlePrevSlide" class="h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted hover:text-brand-charcoal hover:border-brand-gold/60 flex items-center justify-center shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer focus:outline-none">
+                <button @click="handlePrevSlide" class="h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted hover:text-black hover:border-brand-gold/60 flex items-center justify-center shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer focus:outline-none">
                   <i data-lucide="chevron-left" class="h-4 w-4"></i>
                 </button>
                 <div class="flex items-center gap-1.5">
                   <button v-for="(item, idx) in portfolioMenu" :key="idx" @click="currentSlideIndex = idx" :class="['transition-all duration-300 rounded-full', idx === currentSlideIndex ? 'w-5 h-1 bg-neutral-700' : 'w-1 h-1 bg-neutral-200']"></button>
                 </div>
-                <button @click="handleNextSlide" class="h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted hover:text-brand-charcoal hover:border-brand-gold/60 flex items-center justify-center shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer focus:outline-none">
+                <button @click="handleNextSlide" class="h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted hover:text-black hover:border-brand-gold/60 flex items-center justify-center shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer focus:outline-none">
                   <i data-lucide="chevron-right" class="h-4 w-4"></i>
                 </button>
               </div>
@@ -258,7 +258,7 @@
         <div v-if="activeTab !== 'home' && activeTab !== 'admin'" class="py-6 fade-in-up text-left">
            <div class="mb-8 relative flex items-center justify-center border-b border-neutral-200/80 pb-4">
               <div class="absolute left-0">
-                <span class="brand-name italic text-2xl sm:text-3xl text-brand-charcoal select-none">nadyanah</span>
+                <span class="brand-name italic text-2xl sm:text-3xl text-black select-none">nadyanah</span>
               </div>
               <div class="absolute right-0">
                 <span class="text-[10px] font-mono uppercase tracking-widest text-brand-gold font-bold">{{ {chef:'02. Profile', background:'03. Background', menu:'04. Selected Works (Portofolio)', certificate:'05. Certificates'}[activeTab] }}</span>
@@ -271,14 +271,14 @@
                   <div class="flex flex-wrap gap-1.5 justify-center">
                     <button v-for="cat in [{id:'all', label:'Semua'}, {id:'people-culture', label:'People Culture'}, {id:'employer-branding', label:'Employer Branding'}, {id:'people-analytics', label:'People Analytics'}, {id:'organizational-development', label:'Organizational Development'}]" 
                             :key="cat.id" @click="selectedCategory = cat.id" 
-                            :class="['chip-raised px-4 py-1.5 text-xs font-medium tracking-wide rounded-full transition-all duration-300 focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'chip-active text-brand-gold-dark' : 'text-brand-muted hover:text-brand-charcoal']">
+                            :class="['chip-raised px-4 py-1.5 text-xs font-medium tracking-wide rounded-full transition-all duration-300 focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'chip-active text-brand-gold-dark' : 'text-brand-muted hover:text-black']">
                       {{cat.label}}
                     </button>
                   </div>
                   <div class="relative w-full sm:w-64 mt-3 sm:mt-0">
                     <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-brand-muted"></i>
-                    <input type="text" v-model="searchQuery" placeholder="Cari bahan / nama proyek..." class="w-full pl-9 pr-4 py-1.5 bg-white rounded-full border border-neutral-200/80 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold transition-all" />
-                    <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-brand-charcoal cursor-pointer">
+                    <input type="text" v-model="searchQuery" placeholder="Cari bahan / nama proyek..." class="search-raised w-full pl-9 pr-4 py-1.5 bg-white rounded-full border-0 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold transition-all" />
+                    <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-black cursor-pointer">
                       <i data-lucide="x" class="h-3 w-3"></i>
                     </button>
                   </div>
@@ -286,7 +286,7 @@
                
                <div v-if="filteredMenu.length === 0" class="text-center py-20 bg-brand-bone rounded-3xl border border-dashed border-neutral-300">
                   <i data-lucide="utensils" class="h-10 w-10 text-brand-gold/40 mx-auto mb-3"></i>
-                  <h3 class="text-lg font-serif font-medium text-brand-charcoal">Resep tidak ditemukan</h3>
+                  <h3 class="text-lg font-serif font-medium text-black">Resep tidak ditemukan</h3>
                </div>
                
                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -297,7 +297,7 @@
                            <span class="bg-brand-charcoal/80 backdrop-blur-md text-white text-[9px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full">{{item.category}}</span>
                         </div>
                         <div class="absolute top-4 right-4">
-                           <span class="bg-white/90 backdrop-blur-md border border-neutral-200/50 text-brand-charcoal text-[10px] font-mono font-bold px-3 py-1 rounded-full shadow-sm">{{item.price}}</span>
+                           <span class="bg-white/90 backdrop-blur-md border border-neutral-200/50 text-black text-[10px] font-mono font-bold px-3 py-1 rounded-full shadow-sm">{{item.price}}</span>
                         </div>
                         <!-- HOVER OVERLAY -->
                         <div class="card-overlay absolute inset-0 flex flex-col justify-end p-5" style="background: linear-gradient(to top, rgba(44,40,37,0.96) 0%, rgba(44,40,37,0.55) 55%, transparent 100%); opacity: 0; transition: opacity 0.35s ease;">
@@ -316,7 +316,7 @@
                      </div>
                      <div class="p-6 flex-1 flex flex-col justify-between">
                         <div>
-                           <h3 class="font-serif text-lg font-medium text-brand-charcoal group-hover:text-brand-gold transition-colors">{{item.name}}</h3>
+                           <h3 class="font-serif text-lg font-medium text-black group-hover:text-brand-gold transition-colors">{{item.name}}</h3>
                            <p class="text-xs text-brand-muted line-clamp-3 leading-relaxed mb-4 mt-2">{{item.shortDescription}}</p>
                         </div>
                         <div class="border-t border-neutral-100 pt-3 flex items-center text-[11px] font-mono">
@@ -330,7 +330,7 @@
             <!-- BACKGROUND TAB -->
             <div v-if="activeTab === 'background'" class="max-w-4xl mx-auto text-left fade-in-up">
               <div class="bg-white rounded-3xl border border-neutral-200/60 p-6 md:p-10 shadow-sm">
-                <h2 class="text-2xl md:text-3xl font-serif font-medium text-brand-charcoal mb-4">Perjalanan &amp; Latar Belakang</h2>
+                <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-4">Perjalanan &amp; Latar Belakang</h2>
                 <p class="text-sm text-brand-muted leading-relaxed">
                   Halaman ini masih kosong dan siap diisi dengan cerita perjalanan karier, pendidikan, atau latar belakang profesional. Kasih tau aja isinya mau seperti apa, nanti dibantu susun & desain kontennya.
                 </p>
@@ -350,7 +350,7 @@
                       <div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl"></div>
                     </div>
                     <div class="flex-1 text-center sm:text-left pt-1">
-                      <h2 class="text-3xl md:text-4xl font-serif font-medium text-brand-charcoal">{{chefProfileState.name}}</h2>
+                      <h2 class="text-3xl md:text-4xl font-serif font-medium text-black">{{chefProfileState.name}}</h2>
                       <span class="inline-block mt-2.5 px-3 py-1 rounded-full bg-brand-charcoal text-white text-[11px] font-mono">{{chefProfileState.title}}</span>
                       <p class="text-sm text-brand-muted leading-relaxed mt-4 max-w-xl">{{chefProfileState.tagline}}</p>
                       <div class="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2 mt-4">
@@ -374,7 +374,7 @@
                   <!-- Sections berjenis "paragraph" tampil penuh lebar, berurutan -->
                   <template v-for="section in chefProfileState.sections" :key="section.id + '-p'">
                     <div v-if="section.type === 'paragraph'">
-                      <h3 class="font-serif text-lg font-medium text-brand-charcoal flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
+                      <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
                         <i :data-lucide="sectionIcon(section.type)" class="h-4 w-4 text-brand-gold"></i> {{section.title}}
                       </h3>
                       <p class="text-xs text-brand-muted leading-relaxed">{{section.content}}</p>
@@ -392,12 +392,12 @@
                     <div class="space-y-10 md:pr-6 md:border-r md:border-brand-bone">
                       <template v-for="section in chefProfileState.sections" :key="section.id + '-t'">
                         <div v-if="section.type === 'tags'">
-                          <h3 class="font-serif text-lg font-medium text-brand-charcoal flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
+                          <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
                             <i :data-lucide="sectionIcon(section.type)" class="h-4 w-4 text-brand-gold"></i> {{section.title}}
                           </h3>
                           <div class="flex flex-wrap gap-2">
                             <span v-for="(item, idx) in section.items" :key="'item'+idx"
-                              class="px-3 py-1 rounded-full border border-brand-gold/40 text-brand-charcoal text-[11px] italic">
+                              class="px-3 py-1 rounded-full border border-brand-gold/40 text-black text-[11px] italic">
                               {{item}}
                             </span>
                           </div>
@@ -409,14 +409,14 @@
                     <div class="space-y-10">
                       <template v-for="section in chefProfileState.sections" :key="section.id + '-tl'">
                         <div v-if="section.type === 'timeline'">
-                          <h3 class="font-serif text-lg font-medium text-brand-charcoal flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
+                          <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
                             <i :data-lucide="sectionIcon(section.type)" class="h-4 w-4 text-brand-gold"></i> {{section.title}}
                           </h3>
                           <div v-if="!section.entries || section.entries.length === 0" class="text-xs text-brand-muted italic">
                             Belum ada data.
                           </div>
                           <div v-for="(entry, idx) in section.entries" :key="'entry'+idx" :class="idx > 0 ? 'mt-6 pt-6 border-t border-neutral-100' : ''">
-                            <p class="text-sm font-semibold text-brand-charcoal">{{entry.heading}}</p>
+                            <p class="text-sm font-semibold text-black">{{entry.heading}}</p>
                             <p class="text-xs text-brand-muted">{{entry.subheading}}</p>
                             <span class="inline-block mt-1.5 px-2.5 py-0.5 rounded-full bg-brand-bone text-brand-gold-dark text-[10px] font-mono italic">{{entry.period}}</span>
                             <ul v-if="entry.bullets && entry.bullets.length" class="mt-2.5 space-y-1.5">
@@ -441,7 +441,7 @@
               <!-- EMPTY STATE -->
               <div v-if="!certificateMenu || certificateMenu.length === 0" class="text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-200">
                 <i data-lucide="badge-check" class="h-10 w-10 text-brand-gold/40 mx-auto mb-3"></i>
-                <h3 class="text-lg font-serif font-medium text-brand-charcoal">Belum ada sertifikat yang ditambahkan</h3>
+                <h3 class="text-lg font-serif font-medium text-black">Belum ada sertifikat yang ditambahkan</h3>
                 <p class="text-xs text-brand-muted mt-1">Sertifikasi, pelatihan, atau kredensial profesional bisa ditambahkan di sini.</p>
               </div>
 
@@ -477,7 +477,7 @@
                   <!-- CERTIFICATE INFO -->
                   <div class="p-6 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 class="font-serif text-lg font-medium text-brand-charcoal group-hover:text-brand-gold transition-colors leading-snug">{{cert.title}}</h3>
+                      <h3 class="font-serif text-lg font-medium text-black group-hover:text-brand-gold transition-colors leading-snug">{{cert.title}}</h3>
                       <p class="text-xs text-brand-muted leading-relaxed mt-2">{{cert.issuer}}</p>
                     </div>
                     <div class="border-t border-neutral-100 pt-3 mt-4 flex items-center justify-between text-[11px] font-mono">
@@ -494,7 +494,7 @@
 
               <!-- Section Header -->
               <div class="mb-6">
-                <h2 class="text-2xl font-serif font-bold text-brand-charcoal">Buku Tamu</h2>
+                <h2 class="text-2xl font-serif font-bold text-black">Buku Tamu</h2>
                 <p class="text-xs text-brand-muted mt-1">Testimoni &amp; kesan dari rekan yang pernah bekerja bersama.</p>
               </div>
 
@@ -509,7 +509,7 @@
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                     </div>
                     <div>
-                      <h3 class="text-lg font-serif font-bold text-brand-charcoal leading-tight">Tulis Ulasan Anda</h3>
+                      <h3 class="text-lg font-serif font-bold text-black leading-tight">Tulis Ulasan Anda</h3>
                       <p class="text-[11px] text-brand-muted leading-relaxed mt-0.5">Sampaikan kesan Anda terhadap proyek ini</p>
                     </div>
                   </div>
@@ -534,7 +534,7 @@
                       <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Proyek Favorit</label>
                       <div class="relative">
                         <select v-model="formDishLiked"
-                          class="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 text-sm text-brand-charcoal appearance-none pr-10 transition-all cursor-pointer">
+                          class="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 text-sm text-black appearance-none pr-10 transition-all cursor-pointer">
                           <option v-for="item in portfolioMenu" :key="item.id" :value="item.name">{{item.name}}</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
@@ -587,7 +587,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold-dark"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                       </div>
                       <div>
-                        <h3 class="text-lg font-serif font-bold text-brand-charcoal leading-tight">Review Pelanggan</h3>
+                        <h3 class="text-lg font-serif font-bold text-black leading-tight">Review Pelanggan</h3>
                         <p class="text-[11px] text-brand-muted mt-0.5">{{guestbookEntries.length}} ulasan tersimpan</p>
                       </div>
                     </div>
@@ -613,7 +613,7 @@
                           <span class="text-sm font-bold text-brand-gold-dark">{{ (entry.name && entry.name.match(/[a-zA-Z]/)) ? entry.name.replace(/[^a-zA-Z]/g, '').charAt(0).toUpperCase() : 'U' }}</span>
                         </div>
                         <div>
-                          <h4 class="font-serif font-bold text-brand-charcoal text-base leading-tight">{{entry.name || 'User Tanpa Nama'}}</h4>
+                          <h4 class="font-serif font-bold text-black text-base leading-tight">{{entry.name || 'User Tanpa Nama'}}</h4>
                           <p class="text-[10px] text-brand-muted font-mono mt-1 tracking-wide">{{entry.role || 'Visitor'}}</p>
                         </div>
                       </div>
@@ -628,12 +628,12 @@
 
                     <!-- Quote -->
                     <div class="pl-3 border-l-[3px] border-brand-gold/30 mb-4">
-                      <p class="text-[13px] text-brand-charcoal/90 italic leading-relaxed">&ldquo;{{entry.message}}&rdquo;</p>
+                      <p class="text-[13px] text-black/90 italic leading-relaxed">&ldquo;{{entry.message}}&rdquo;</p>
                     </div>
 
                     <!-- Footer: dish badge + thumbs up -->
                     <div class="flex items-center justify-between gap-2 pt-3 border-t border-neutral-50">
-                      <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-cream border border-neutral-100 rounded-full text-[9px] font-mono tracking-wide text-brand-charcoal">
+                      <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-cream border border-neutral-100 rounded-full text-[9px] font-mono tracking-wide text-black">
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="6.5"/></svg>
                         <span class="truncate max-w-[140px]">{{entry.dishLiked}}</span>
                       </span>
@@ -667,7 +667,7 @@
                 <span class="text-[10px] font-mono tracking-widest text-neutral-400 font-bold uppercase">
                   Chief Culture Chef Dashboard
                 </span>
-                <h2 class="text-3xl font-serif font-medium text-brand-charcoal">
+                <h2 class="text-3xl font-serif font-medium text-black">
                   Ruang Kerja Admin
                 </h2>
               </div>
@@ -675,7 +675,7 @@
               <div class="flex flex-wrap gap-2">
                 <button
                   @click="switchTab('home')"
-                  class="flex items-center gap-1.5 px-4 py-2 bg-neutral-100 hover:bg-neutral-200 text-brand-charcoal text-xs font-mono rounded-full border border-neutral-200 transition-all cursor-pointer font-bold"
+                  class="flex items-center gap-1.5 px-4 py-2 bg-neutral-100 hover:bg-neutral-200 text-black text-xs font-mono rounded-full border border-neutral-200 transition-all cursor-pointer font-bold"
                 >
                   <i data-lucide="home" class="h-3.5 w-3.5"></i>
                   <span>Lihat Web</span>
@@ -704,23 +704,23 @@
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
               <!-- Sidebar Tabs -->
               <div class="lg:col-span-1 space-y-1.5">
-                <button @click="adminTab = 'portfolio'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'portfolio' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-brand-charcoal border border-transparent hover:border-neutral-200/50']">
+                <button @click="adminTab = 'portfolio'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'portfolio' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'portfolio' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layers" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Kelola Portofolio</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'portfolio' ? 'text-white/75' : 'text-brand-muted']">Daftar proyek</div></div>
                 </button>
-                <button @click="adminTab = 'certificate'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'certificate' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-brand-charcoal border border-transparent hover:border-neutral-200/50']">
+                <button @click="adminTab = 'certificate'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'certificate' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'certificate' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="badge-check" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Kelola Sertifikat ({{certificateMenu.length}})</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'certificate' ? 'text-white/75' : 'text-brand-muted']">Kredensial &amp; sertifikasi</div></div>
                 </button>
-                <button @click="adminTab = 'chef'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'chef' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-brand-charcoal border border-transparent hover:border-neutral-200/50']">
+                <button @click="adminTab = 'chef'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'chef' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'chef' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="chef-hat" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Profil Saya</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'chef' ? 'text-white/75' : 'text-brand-muted']">Identitas diri</div></div>
                 </button>
-                <button @click="adminTab = 'homepage'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'homepage' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-brand-charcoal border border-transparent hover:border-neutral-200/50']">
+                <button @click="adminTab = 'homepage'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'homepage' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'homepage' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layout-template" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Halaman Utama</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'homepage' ? 'text-white/75' : 'text-brand-muted']">Copywriting beranda</div></div>
                 </button>
-                <button @click="adminTab = 'guestbook'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'guestbook' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-brand-charcoal border border-transparent hover:border-neutral-200/50']">
+                <button @click="adminTab = 'guestbook'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none', adminTab === 'guestbook' ? 'bg-brand-charcoal text-white' : 'hover:bg-neutral-100 text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'guestbook' ? 'bg-white/10' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="users" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Buku Tamu ({{guestbookEntries.length}})</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'guestbook' ? 'text-white/75' : 'text-brand-muted']">Moderation logs</div></div>
                 </button>
@@ -735,7 +735,7 @@
                   <div v-if="!isAddingCard" class="space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
                       <div>
-                        <h3 class="text-lg font-serif font-bold text-brand-charcoal">Daftar Proyek Portofolio</h3>
+                        <h3 class="text-lg font-serif font-bold text-black">Daftar Proyek Portofolio</h3>
                         <p class="text-xs text-brand-muted mt-0.5">Semua proyek yang aktif di web Anda.</p>
                       </div>
                       <button @click="isAddingCard = true" class="flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal text-white rounded-full text-xs hover:bg-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
@@ -750,12 +750,12 @@
                       </div>
                       <div class="flex-1 min-w-0 pr-12 text-left">
                         <span class="text-[9px] font-mono font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
-                        <h4 class="font-serif font-bold text-sm text-brand-charcoal truncate mt-1">{{item.name}}</h4>
+                        <h4 class="font-serif font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
                         <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.shortDescription}}</p>
                         <p class="text-[9px] font-mono text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{item.price}}</p>
                       </div>
                       <div class="absolute right-3 flex flex-col gap-1.5">
-                        <button @click="startEditCard(item)" class="h-7 w-7 rounded-full bg-neutral-50 hover:bg-neutral-150 border border-neutral-200 text-brand-charcoal flex items-center justify-center cursor-pointer transition-colors" title="Edit">
+                        <button @click="startEditCard(item)" class="h-7 w-7 rounded-full bg-neutral-50 hover:bg-neutral-150 border border-neutral-200 text-black flex items-center justify-center cursor-pointer transition-colors" title="Edit">
                           <i data-lucide="edit-2" class="h-3 w-3"></i>
                         </button>
                         <button @click="deletePortfolioCard(item.id)" class="h-7 w-7 rounded-full bg-red-50 hover:bg-red-100 border border-red-150 text-red-600 flex items-center justify-center cursor-pointer transition-colors" title="Delete">
@@ -770,10 +770,10 @@
                 <div v-else class="space-y-6">
                   <form @submit.prevent="savePortfolioCard" class="space-y-6">
                     <div class="flex justify-between items-center border-b border-neutral-100 pb-3">
-                      <h3 class="text-lg font-serif font-bold text-brand-charcoal">
+                      <h3 class="text-lg font-serif font-bold text-black">
                         {{ editingCardId ? "Edit Proyek Portofolio" : "Tambah Proyek Portofolio Baru" }}
                       </h3>
-                      <button type="button" @click="cancelPortfolioForm" class="flex items-center gap-1 text-xs text-brand-muted hover:text-brand-charcoal font-bold cursor-pointer">
+                      <button type="button" @click="cancelPortfolioForm" class="flex items-center gap-1 text-xs text-brand-muted hover:text-black font-bold cursor-pointer">
                         <i data-lucide="x" class="h-4 w-4"></i>
                         <span>Batal</span>
                       </button>
@@ -783,12 +783,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                       
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Judul Proyek*</label>
+                        <label class="font-semibold text-black">Judul Proyek*</label>
                         <input type="text" required placeholder="Contoh: Onboarding Delight Salad" v-model="portfolioForm.name" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
 
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Kategori Proyek*</label>
+                        <label class="font-semibold text-black">Kategori Proyek*</label>
                         <select v-model="portfolioForm.category" class="w-full px-2 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer">
                           <option value="people-culture">People Culture</option>
                           <option value="employer-branding">Employer Branding</option>
@@ -798,17 +798,17 @@
                       </div>
 
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Skala / Timeline Proyek*</label>
+                        <label class="font-semibold text-black">Skala / Timeline Proyek*</label>
                         <input type="text" required placeholder="Contoh: Est. 2026 atau Scale 100+ Staff" v-model="portfolioForm.price" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
 
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Metrik Dampak (Hasil Terukur)*</label>
+                        <label class="font-semibold text-black">Metrik Dampak (Hasil Terukur)*</label>
                         <input type="text" required placeholder="Contoh: -35% Turnover Rate" v-model="portfolioForm.impactMetric" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal block">Gambar Proyek*</label>
+                        <label class="font-semibold text-black block">Gambar Proyek*</label>
                         <div class="flex items-center gap-4">
                           <div class="h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                             <img v-if="portfolioForm.image" :src="portfolioForm.image" class="w-full h-full object-cover" />
@@ -825,15 +825,15 @@
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal">Deskripsi Singkat / Tagline Proyek*</label>
+                        <label class="font-semibold text-black">Deskripsi Singkat / Tagline Proyek*</label>
                         <textarea required rows="2.5" placeholder="Deskripsi singkat yang menarik perhatian pembaca..." v-model="portfolioForm.shortDescription" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
                       </div>
 
                       <!-- Dynamic List: Ingredients -->
                       <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
                         <div class="flex justify-between items-center">
-                          <label class="font-bold text-brand-charcoal block">Kata Kunci / Keywords (Skills &amp; Tools)</label>
-                          <button type="button" @click="handleAddField('ingredients')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-brand-charcoal font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
+                          <label class="font-bold text-black block">Kata Kunci / Keywords (Skills &amp; Tools)</label>
+                          <button type="button" @click="handleAddField('ingredients')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Skill
                           </button>
                         </div>
@@ -851,8 +851,8 @@
                       <!-- Dynamic List: Allergens -->
                       <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
                         <div class="flex justify-between items-center">
-                          <label class="font-bold text-brand-charcoal block text-red-900">Challenge / Why Problem — Poin Kendala</label>
-                          <button type="button" @click="handleAddField('allergens')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-brand-charcoal font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
+                          <label class="font-bold text-black block text-red-900">Challenge / Why Problem — Poin Kendala</label>
+                          <button type="button" @click="handleAddField('allergens')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Tantangan
                           </button>
                         </div>
@@ -869,26 +869,26 @@
 
                       <!-- CHEF'S RECIPE NOTES SECTION -->
                       <div class="md:col-span-2 border-t border-neutral-200 pt-4 mt-2">
-                        <h4 class="font-bold text-brand-charcoal font-serif text-sm border-b border-neutral-150 pb-2 mb-4">
+                        <h4 class="font-bold text-black font-serif text-sm border-b border-neutral-150 pb-2 mb-4">
                           Detail Case Study (Challenge, Solution, Impact)
                         </h4>
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal">Challenge / Why Problem — Latar Belakang</label>
+                        <label class="font-semibold text-black">Challenge / Why Problem — Latar Belakang</label>
                         <textarea rows="3" placeholder="Uraikan kondisi awal sebelum dilakukan restrukturisasi..." v-model="portfolioForm.chefNotes.background" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal">Challenge / Why Problem — Rumusan Masalah</label>
+                        <label class="font-semibold text-black">Challenge / Why Problem — Rumusan Masalah</label>
                         <textarea rows="3" placeholder="Tantangan krusial atau rumusan masalah utama..." v-model="portfolioForm.chefNotes.challenge" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
                       </div>
 
                       <!-- Chef Notes Recipe Steps -->
                       <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
                         <div class="flex justify-between items-center">
-                          <label class="font-bold text-brand-charcoal block">Solution — Tahapan Pengerjaan</label>
-                          <button type="button" @click="handleAddField(null, 'recipe')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-brand-charcoal font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
+                          <label class="font-bold text-black block">Solution — Tahapan Pengerjaan</label>
+                          <button type="button" @click="handleAddField(null, 'recipe')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Langkah
                           </button>
                         </div>
@@ -906,8 +906,8 @@
                       <!-- Chef Notes Results -->
                       <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
                         <div class="flex justify-between items-center">
-                          <label class="font-bold text-brand-charcoal block text-emerald-900">Impact — Hasil &amp; Dampak Nyata</label>
-                          <button type="button" @click="handleAddField(null, 'results')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-brand-charcoal font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
+                          <label class="font-bold text-black block text-emerald-900">Impact — Hasil &amp; Dampak Nyata</label>
+                          <button type="button" @click="handleAddField(null, 'results')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Hasil
                           </button>
                         </div>
@@ -926,7 +926,7 @@
 
                     <!-- Form Actions -->
                     <div class="border-t border-neutral-100 pt-5 flex justify-end gap-3.5">
-                      <button type="button" @click="cancelPortfolioForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-brand-charcoal rounded-xl text-xs font-semibold cursor-pointer">
+                      <button type="button" @click="cancelPortfolioForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-black rounded-xl text-xs font-semibold cursor-pointer">
                         Batal
                       </button>
                       <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
@@ -943,7 +943,7 @@
                   <div v-if="!isAddingCertificate" class="space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
                       <div>
-                        <h3 class="text-lg font-serif font-bold text-brand-charcoal">Daftar Sertifikat</h3>
+                        <h3 class="text-lg font-serif font-bold text-black">Daftar Sertifikat</h3>
                         <p class="text-xs text-brand-muted mt-0.5">Semua sertifikat &amp; kredensial yang tampil di web Anda.</p>
                       </div>
                       <button @click="isAddingCertificate = true" class="flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal text-white rounded-full text-xs hover:bg-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
@@ -965,12 +965,12 @@
                         </div>
                         <div class="flex-1 min-w-0 pr-12 text-left">
                           <span class="text-[9px] font-mono font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
-                          <h4 class="font-serif font-bold text-sm text-brand-charcoal truncate mt-1">{{item.title}}</h4>
+                          <h4 class="font-serif font-bold text-sm text-black truncate mt-1">{{item.title}}</h4>
                           <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.issuer}}</p>
                           <p class="text-[9px] font-mono text-brand-muted mt-1 font-semibold">📅 {{item.date}}</p>
                         </div>
                         <div class="absolute right-3 flex flex-col gap-1.5">
-                          <button @click="startEditCertificate(item)" class="h-7 w-7 rounded-full bg-neutral-50 hover:bg-neutral-150 border border-neutral-200 text-brand-charcoal flex items-center justify-center cursor-pointer transition-colors" title="Edit">
+                          <button @click="startEditCertificate(item)" class="h-7 w-7 rounded-full bg-neutral-50 hover:bg-neutral-150 border border-neutral-200 text-black flex items-center justify-center cursor-pointer transition-colors" title="Edit">
                             <i data-lucide="edit-2" class="h-3 w-3"></i>
                           </button>
                           <button @click="deleteCertificate(item.id)" class="h-7 w-7 rounded-full bg-red-50 hover:bg-red-100 border border-red-150 text-red-600 flex items-center justify-center cursor-pointer transition-colors" title="Delete">
@@ -985,10 +985,10 @@
                   <div v-else class="space-y-6">
                     <form @submit.prevent="saveCertificate" class="space-y-6">
                       <div class="flex justify-between items-center border-b border-neutral-100 pb-3">
-                        <h3 class="text-lg font-serif font-bold text-brand-charcoal">
+                        <h3 class="text-lg font-serif font-bold text-black">
                           {{ editingCertificateId ? "Edit Sertifikat" : "Tambah Sertifikat Baru" }}
                         </h3>
-                        <button type="button" @click="cancelCertificateForm" class="flex items-center gap-1 text-xs text-brand-muted hover:text-brand-charcoal font-bold cursor-pointer">
+                        <button type="button" @click="cancelCertificateForm" class="flex items-center gap-1 text-xs text-brand-muted hover:text-black font-bold cursor-pointer">
                           <i data-lucide="x" class="h-4 w-4"></i>
                           <span>Batal</span>
                         </button>
@@ -997,32 +997,32 @@
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
 
                         <div class="space-y-1 md:col-span-2">
-                          <label class="font-semibold text-brand-charcoal">Nama Sertifikat*</label>
+                          <label class="font-semibold text-black">Nama Sertifikat*</label>
                           <input type="text" required placeholder="Contoh: People Analytics Professional" v-model="certificateForm.title" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-brand-charcoal">Penerbit / Issuer*</label>
+                          <label class="font-semibold text-black">Penerbit / Issuer*</label>
                           <input type="text" required placeholder="Contoh: HR Certification Institute" v-model="certificateForm.issuer" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-brand-charcoal">Tanggal Terbit*</label>
+                          <label class="font-semibold text-black">Tanggal Terbit*</label>
                           <input type="text" required placeholder="Contoh: Maret 2024" v-model="certificateForm.date" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-brand-charcoal">Kategori</label>
+                          <label class="font-semibold text-black">Kategori</label>
                           <input type="text" placeholder="Contoh: People Analytics" v-model="certificateForm.category" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-brand-charcoal">ID Kredensial</label>
+                          <label class="font-semibold text-black">ID Kredensial</label>
                           <input type="text" placeholder="Contoh: HRCI-PA-2024-08213" v-model="certificateForm.credentialId" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1 md:col-span-2">
-                          <label class="font-semibold text-brand-charcoal block">Gambar Sertifikat</label>
+                          <label class="font-semibold text-black block">Gambar Sertifikat</label>
                           <div class="flex items-center gap-4">
                             <div class="h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                               <img v-if="certificateForm.image" :src="certificateForm.image" class="w-full h-full object-cover" />
@@ -1039,7 +1039,7 @@
                         </div>
 
                         <div class="space-y-1 md:col-span-2">
-                          <label class="font-semibold text-brand-charcoal block">Link Verifikasi Kredensial</label>
+                          <label class="font-semibold text-black block">Link Verifikasi Kredensial</label>
                           <input type="text" v-model="certificateForm.credentialUrl" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="https://..." />
                         </div>
 
@@ -1047,7 +1047,7 @@
 
                       <!-- Form Actions -->
                       <div class="border-t border-neutral-100 pt-5 flex justify-end gap-3.5">
-                        <button type="button" @click="cancelCertificateForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-brand-charcoal rounded-xl text-xs font-semibold cursor-pointer">
+                        <button type="button" @click="cancelCertificateForm" class="px-5 py-2.5 bg-neutral-150 hover:bg-neutral-200 text-black rounded-xl text-xs font-semibold cursor-pointer">
                           Batal
                         </button>
                         <button type="submit" class="px-6 py-2.5 bg-brand-charcoal text-white hover:bg-brand-gold-dark rounded-xl text-xs font-semibold tracking-wider uppercase cursor-pointer shadow-md">
@@ -1061,21 +1061,21 @@
                 <div v-else-if="adminTab === 'chef'">
                   <form @submit.prevent="handleChefFormSubmit" class="space-y-6">
                     <div class="border-b border-neutral-100 pb-3">
-                      <h3 class="text-lg font-serif font-bold text-brand-charcoal">Kelola Profil</h3>
+                      <h3 class="text-lg font-serif font-bold text-black">Kelola Profil</h3>
                       <p class="text-xs text-brand-muted mt-0.5">Ubah informasi identitas dan kredibilitas profesional Anda yang tampil di halaman Profil.</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Nama Lengkap*</label>
+                        <label class="font-semibold text-black">Nama Lengkap*</label>
                         <input type="text" required v-model="chefForm.name" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Gelar / Posisi*</label>
+                        <label class="font-semibold text-black">Gelar / Posisi*</label>
                         <input type="text" required v-model="chefForm.title" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal block">Foto Profil (Banner)*</label>
+                        <label class="font-semibold text-black block">Foto Profil (Banner)*</label>
                         <div class="flex items-center gap-4">
                           <div class="h-20 w-32 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                             <img v-if="chefForm.avatar" :src="chefForm.avatar" class="w-full h-full object-cover" />
@@ -1092,23 +1092,23 @@
                         <span class="text-[9px] text-neutral-400 block mt-1">Gunakan foto landscape (mendatar) agar pas dengan banner profil. Jangan lupa klik Simpan Profil setelah memilih.</span>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Nomor Telepon</label>
+                        <label class="font-semibold text-black">Nomor Telepon</label>
                         <input type="text" v-model="chefForm.contactPhone" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Email</label>
+                        <label class="font-semibold text-black">Email</label>
                         <input type="text" v-model="chefForm.contactEmail" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal">Tagline Singkat (tampil di banner)*</label>
+                        <label class="font-semibold text-black">Tagline Singkat (tampil di banner)*</label>
                         <textarea required rows="2" v-model="chefForm.tagline" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Tahun Pengalaman*</label>
+                        <label class="font-semibold text-black">Tahun Pengalaman*</label>
                         <input type="text" required v-model="chefForm.experienceYears" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal">Filosofi Kerja / Value Pribadi (opsional, tampil sebagai kutipan di section Summary)</label>
+                        <label class="font-semibold text-black">Filosofi Kerja / Value Pribadi (opsional, tampil sebagai kutipan di section Summary)</label>
                         <textarea rows="3" v-model="chefForm.philosophy" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                     </div>
@@ -1116,7 +1116,7 @@
                     <!-- ===== DYNAMIC CV SECTIONS ===== -->
                     <div class="pt-5 border-t border-neutral-100 space-y-2">
                       <div>
-                        <h4 class="font-bold text-brand-charcoal text-sm">Section CV (ATS)</h4>
+                        <h4 class="font-bold text-black text-sm">Section CV (ATS)</h4>
                         <p class="text-[11px] text-brand-muted mt-0.5">Ganti nama, hapus, atau tambah section baru (Summary, Professional Experience, Skills, Education, dst). Susunan di halaman Profil akan menyesuaikan otomatis.</p>
                       </div>
 
@@ -1128,10 +1128,10 @@
                             <span class="shrink-0 px-2 py-1 rounded-md bg-brand-bone text-brand-gold-dark text-[9px] font-mono uppercase font-bold">{{section.type}}</span>
                             <input type="text" v-model="section.title" placeholder="Nama Section" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none font-semibold" />
                             <button type="button" @click="handleSectionMove(sIdx, -1)" :disabled="sIdx === 0" class="p-1.5 rounded-lg cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed hover:bg-neutral-100" title="Naikkan">
-                              <i data-lucide="chevron-up" class="h-3.5 w-3.5 text-brand-charcoal"></i>
+                              <i data-lucide="chevron-up" class="h-3.5 w-3.5 text-black"></i>
                             </button>
                             <button type="button" @click="handleSectionMove(sIdx, 1)" :disabled="sIdx === chefForm.sections.length - 1" class="p-1.5 rounded-lg cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed hover:bg-neutral-100" title="Turunkan">
-                              <i data-lucide="chevron-down" class="h-3.5 w-3.5 text-brand-charcoal"></i>
+                              <i data-lucide="chevron-down" class="h-3.5 w-3.5 text-black"></i>
                             </button>
                             <button type="button" @click="handleSectionRemove(sIdx)" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer" title="Hapus Section">
                               <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
@@ -1216,13 +1216,13 @@
                 <div v-else-if="adminTab === 'homepage'">
                   <form @submit.prevent="handleHomepageSubmit" class="space-y-6">
                     <div class="border-b border-neutral-100 pb-3">
-                      <h3 class="text-lg font-serif font-bold text-brand-charcoal">Kelola Halaman Utama &amp; Sosial Media</h3>
+                      <h3 class="text-lg font-serif font-bold text-black">Kelola Halaman Utama &amp; Sosial Media</h3>
                       <p class="text-xs text-brand-muted mt-0.5">Ubah nama panggung, sub-heading, jargon, deskripsi, dan link sosial yang tampil di halaman beranda.</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal block">Foto Profil (Lingkaran di Beranda)</label>
+                        <label class="font-semibold text-black block">Foto Profil (Lingkaran di Beranda)</label>
                         <div class="flex items-center gap-4">
                           <div class="h-16 w-16 rounded-full overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                             <img v-if="homepageForm.photoUrl" :src="homepageForm.photoUrl" class="w-full h-full object-cover" />
@@ -1239,39 +1239,39 @@
                         <p class="text-[10px] text-brand-muted mt-1">Foto akan otomatis dipotong bulat, jangan lupa klik Simpan setelah memilih.</p>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Nama / Brand Tampilan*</label>
+                        <label class="font-semibold text-black">Nama / Brand Tampilan*</label>
                         <input type="text" required v-model="homepageForm.name" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Judul Samping Atas*</label>
+                        <label class="font-semibold text-black">Judul Samping Atas*</label>
                         <input type="text" required v-model="homepageForm.title" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal">Kalimat Slogan Utama (Headline)*</label>
+                        <label class="font-semibold text-black">Kalimat Slogan Utama (Headline)*</label>
                         <input type="text" required v-model="homepageForm.slogan" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal">Paragraf Deskripsi Beranda*</label>
+                        <label class="font-semibold text-black">Paragraf Deskripsi Beranda*</label>
                         <textarea required rows="4" v-model="homepageForm.body" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
-                        <label class="font-semibold text-brand-charcoal block">Jargon Pendek Versi Mobile (Quote Box)*</label>
+                        <label class="font-semibold text-black block">Jargon Pendek Versi Mobile (Quote Box)*</label>
                         <textarea required rows="2.5" v-model="homepageForm.mobileQuote" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-brand-charcoal block">Deskripsi Pendek Laci Samping (Drawer Sidebar Description)*</label>
+                        <label class="font-semibold text-black block">Deskripsi Pendek Laci Samping (Drawer Sidebar Description)*</label>
                         <textarea required rows="2.5" v-model="homepageForm.drawerDesc" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
 
                       <div class="md:col-span-2 border-t border-neutral-100 pt-3 mt-2">
-                        <h4 class="font-bold text-brand-charcoal font-serif text-xs mb-3">Link Media Sosial &amp; Kontak</h4>
+                        <h4 class="font-bold text-black font-serif text-xs mb-3">Link Media Sosial &amp; Kontak</h4>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">LinkedIn URL</label>
+                        <label class="font-semibold text-black">LinkedIn URL</label>
                         <input type="url" v-model="homepageForm.linkedinUrl" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="https://linkedin.com/in/username" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-brand-charcoal">Email (dari data Profil)</label>
+                        <label class="font-semibold text-black">Email (dari data Profil)</label>
                         <input type="text" disabled :value="chefForm.contactEmail" class="w-full px-3 py-2 bg-neutral-100 border border-neutral-200 rounded-xl text-brand-muted cursor-not-allowed" />
                         <p class="text-[11px] text-brand-muted">Ubah email di tab Profil &rarr; field Email.</p>
                       </div>
@@ -1285,12 +1285,12 @@
                 </div>
 
                 <div v-else-if="adminTab === 'guestbook'">
-                  <h3 class="text-lg font-serif font-bold text-brand-charcoal mb-4">Buku Tamu</h3>
+                  <h3 class="text-lg font-serif font-bold text-black mb-4">Buku Tamu</h3>
                   <div class="space-y-4">
                     <div v-for="entry in guestbookEntries" :key="entry.id" class="bg-white p-5 rounded-2xl border border-neutral-200/50 shadow-sm relative group">
                       <div class="flex justify-between items-start mb-2">
                         <div>
-                          <h4 class="font-serif font-bold text-brand-charcoal">{{entry.name}}</h4>
+                          <h4 class="font-serif font-bold text-black">{{entry.name}}</h4>
                           <p class="text-[10px] text-brand-muted font-mono mt-0.5">{{entry.role}} • {{entry.date}}</p>
                         </div>
                         <div class="text-xs tracking-widest text-brand-gold-dark">
@@ -1328,7 +1328,7 @@
               <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-brand-charcoal/15 pointer-events-none z-30 shadow-[0_0_8px_rgba(44,40,37,0.2)]"></div>
               <div class="hidden md:block absolute top-0 bottom-0 left-[calc(50%-1px)] w-[1px] bg-white/40 pointer-events-none z-30"></div>
 
-              <button @click="selectedDish = null" class="absolute top-3 right-3 md:top-6 md:right-6 z-40 bg-brand-cream/90 text-brand-charcoal p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
+              <button @click="selectedDish = null" class="absolute top-3 right-3 md:top-6 md:right-6 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
                 <i data-lucide="x" class="h-3.5 w-3.5"></i>
               </button>
 
@@ -1356,12 +1356,12 @@
                         <span class="text-xs font-mono tracking-widest text-brand-gold font-bold uppercase block mb-3">
                           {{ selectedDish.categoryLabel }} • {{ selectedDish.price }}
                         </span>
-                        <h2 class="text-3xl md:text-4xl font-sans font-semibold text-brand-charcoal tracking-tight leading-tight">
+                        <h2 class="text-3xl md:text-4xl font-sans font-semibold text-black tracking-tight leading-tight">
                           {{ selectedDish.name }}
                         </h2>
                       </div>
 
-                      <p class="text-sm md:text-base text-brand-charcoal italic border-l-2 border-brand-gold pl-4 py-0.5 font-sans leading-relaxed">
+                      <p class="text-sm md:text-base text-black italic border-l-2 border-brand-gold pl-4 py-0.5 font-sans leading-relaxed">
                         &ldquo;{{ selectedDish.shortDescription }}&rdquo;
                       </p>
 
@@ -1370,14 +1370,14 @@
 
                         <!-- CHALLENGE / WHY PROBLEM -->
                         <div class="space-y-3 p-4">
-                          <h4 class="font-sans font-bold text-brand-charcoal flex items-center gap-2 text-sm">
+                          <h4 class="font-sans font-bold text-black flex items-center gap-2 text-sm">
                             <i data-lucide="alert-triangle" class="h-4 w-4 text-brand-gold"></i>
                             Challenge / Why Problem
                           </h4>
                           <p v-if="selectedDish.chefNotes.background" class="font-sans text-brand-muted text-sm leading-relaxed">
                             {{ selectedDish.chefNotes.background }}
                           </p>
-                          <p v-if="selectedDish.chefNotes.challenge" class="font-sans text-brand-charcoal/90 text-sm leading-relaxed font-medium">
+                          <p v-if="selectedDish.chefNotes.challenge" class="font-sans text-black/90 text-sm leading-relaxed font-medium">
                             {{ selectedDish.chefNotes.challenge }}
                           </p>
                           <ul class="space-y-1.5 pl-1 pt-1">
@@ -1390,7 +1390,7 @@
 
                         <!-- SOLUTION -->
                         <div class="space-y-3.5 p-4">
-                          <h4 class="font-sans font-bold text-brand-charcoal text-sm flex items-center gap-2">
+                          <h4 class="font-sans font-bold text-black text-sm flex items-center gap-2">
                             <i data-lucide="lightbulb" class="h-4 w-4 text-brand-gold"></i>
                             Solution
                           </h4>
@@ -1406,7 +1406,7 @@
 
                         <!-- IMPACT -->
                         <div class="space-y-3 p-4">
-                          <h4 class="font-sans font-bold text-brand-charcoal text-sm flex items-center gap-2">
+                          <h4 class="font-sans font-bold text-black text-sm flex items-center gap-2">
                             <i data-lucide="trending-up" class="h-4 w-4 text-brand-gold"></i>
                             Impact
                           </h4>
@@ -1422,12 +1422,12 @@
 
                         <!-- KATA KUNCI / KEYWORDS -->
                         <div class="space-y-2.5 p-4">
-                          <h4 class="font-sans font-bold text-brand-charcoal text-sm flex items-center gap-2">
+                          <h4 class="font-sans font-bold text-black text-sm flex items-center gap-2">
                             <i data-lucide="tags" class="h-4 w-4 text-brand-gold"></i>
                             Kata Kunci / Keywords
                           </h4>
                           <div class="flex flex-wrap gap-1.5">
-                            <span v-for="(ing, i) in selectedDish.ingredients" :key="i" class="font-mono bg-brand-cream text-brand-charcoal border border-neutral-300 px-2 py-0.5 rounded-full text-[10px] leading-relaxed whitespace-nowrap">
+                            <span v-for="(ing, i) in selectedDish.ingredients" :key="i" class="font-mono bg-brand-cream text-black border border-neutral-300 px-2 py-0.5 rounded-full text-[10px] leading-relaxed whitespace-nowrap">
                               {{ ing }}
                             </span>
                           </div>
@@ -1452,7 +1452,7 @@
 
           <div class="bg-white w-full max-w-3xl rounded-[24px] shadow-[0_30px_80px_-10px_rgba(139,130,115,0.35)] relative border border-neutral-300 z-10 max-h-[92vh] flex flex-col overflow-hidden">
 
-            <button @click="selectedCertificate = null" class="absolute top-4 right-4 z-40 bg-brand-cream/90 text-brand-charcoal p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
+            <button @click="selectedCertificate = null" class="absolute top-4 right-4 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
               <i data-lucide="x" class="h-3.5 w-3.5"></i>
             </button>
 
@@ -1471,7 +1471,7 @@
               <div class="p-6 md:p-8 space-y-4">
                 <div>
                   <span class="text-xs font-mono tracking-widest text-brand-gold font-bold uppercase block mb-2">{{ selectedCertificate.category }}</span>
-                  <h2 class="text-2xl md:text-3xl font-serif font-semibold text-brand-charcoal tracking-tight leading-tight">
+                  <h2 class="text-2xl md:text-3xl font-serif font-semibold text-black tracking-tight leading-tight">
                     {{ selectedCertificate.title }}
                   </h2>
                   <p class="text-sm text-brand-muted mt-2">{{ selectedCertificate.issuer }}</p>
@@ -1480,11 +1480,11 @@
                 <div class="border border-neutral-200 rounded-2xl divide-y divide-neutral-200 overflow-hidden">
                   <div class="flex items-center justify-between px-4 py-3">
                     <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="calendar" class="h-3.5 w-3.5 text-brand-gold"></i>Tanggal Terbit</span>
-                    <span class="text-xs font-mono font-bold text-brand-charcoal">{{ selectedCertificate.date }}</span>
+                    <span class="text-xs font-mono font-bold text-black">{{ selectedCertificate.date }}</span>
                   </div>
                   <div v-if="selectedCertificate.credentialId" class="flex items-center justify-between px-4 py-3">
                     <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="hash" class="h-3.5 w-3.5 text-brand-gold"></i>ID Kredensial</span>
-                    <span class="text-xs font-mono font-bold text-brand-charcoal">{{ selectedCertificate.credentialId }}</span>
+                    <span class="text-xs font-mono font-bold text-black">{{ selectedCertificate.credentialId }}</span>
                   </div>
                 </div>
 
@@ -1507,7 +1507,7 @@
               <i data-lucide="x" class="h-4 w-4"></i>
             </button>
             <div class="text-center space-y-2 mb-6">
-              <div class="h-12 w-12 rounded-full bg-neutral-100 flex items-center justify-center mx-auto text-brand-charcoal">
+              <div class="h-12 w-12 rounded-full bg-neutral-100 flex items-center justify-center mx-auto text-black">
                 <i data-lucide="lock" class="h-5 w-5"></i>
               </div>
               <h3 class="font-serif text-xl font-bold">Private Archive Login</h3>
