@@ -54,6 +54,79 @@ const app = createApp({
     const chefAvatarUploading = ref(false);
     const chefHeaderBgUploading = ref(false);
 
+    // ---- SHARED IMAGE CROP MODAL (dipakai semua upload foto: avatar, header bg, portfolio, sertifikat, beranda) ----
+    const cropModalOpen = ref(false);
+    const cropImageUrl = ref("");
+    const cropZoomValue = ref(0);
+    const cropTarget = ref(null); // { assign, folder, uploadingRef, aspect, inputEl }
+    let cropperInstance = null;
+
+    const openCropModal = (file, { assign, folder, uploadingRef, aspect }, inputEl) => {
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        alert("File harus berupa gambar (JPG/PNG/dll).");
+        if (inputEl) inputEl.value = "";
+        return;
+      }
+      cropImageUrl.value = URL.createObjectURL(file);
+      cropTarget.value = { assign, folder, uploadingRef, aspect, inputEl };
+      cropZoomValue.value = 0;
+      cropModalOpen.value = true;
+      nextTick(() => {
+        const imgEl = document.getElementById("cropperImage");
+        if (!imgEl || !window.Cropper) return;
+        if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+        cropperInstance = new window.Cropper(imgEl, {
+          aspectRatio: aspect || NaN,
+          viewMode: 1,
+          dragMode: "move",
+          autoCropArea: 1,
+          background: false,
+          responsive: true,
+          zoomOnWheel: true,
+        });
+      });
+    };
+
+    const closeCropModal = () => {
+      cropModalOpen.value = false;
+      if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+      if (cropImageUrl.value) URL.revokeObjectURL(cropImageUrl.value);
+      cropImageUrl.value = "";
+      if (cropTarget.value && cropTarget.value.inputEl) cropTarget.value.inputEl.value = "";
+      cropTarget.value = null;
+    };
+
+    const setCropZoom = () => {
+      if (cropperInstance) cropperInstance.zoomTo(1 + Number(cropZoomValue.value));
+    };
+    const cropZoomStep = (delta) => {
+      cropZoomValue.value = Math.max(0, Math.min(3, Number(cropZoomValue.value) + delta));
+      setCropZoom();
+    };
+
+    const confirmCrop = () => {
+      if (!cropperInstance || !cropTarget.value) return;
+      const { assign, folder, uploadingRef } = cropTarget.value;
+      const canvas = cropperInstance.getCroppedCanvas({ maxWidth: 1600, maxHeight: 1600, imageSmoothingQuality: "high" });
+      if (!canvas) return;
+      canvas.toBlob(async (blob) => {
+        if (!blob) return;
+        if (uploadingRef) uploadingRef.value = true;
+        closeCropModal();
+        try {
+          const file = new File([blob], `cropped-${Date.now()}.jpg`, { type: "image/jpeg" });
+          const url = await window.db.uploadImage(file, folder);
+          assign(url);
+        } catch (err) {
+          alert("Gagal upload gambar. Cek koneksi internet kamu.");
+        } finally {
+          if (uploadingRef) uploadingRef.value = false;
+        }
+      }, "image/jpeg", 0.92);
+    };
+
+
     // FORM STATES
     const formName = ref("");
     const formRole = ref("");
@@ -165,21 +238,10 @@ const app = createApp({
       isAddingCard.value = false;
     };
 
-    const handlePortfolioImageUpload = async (e) => {
+    const handlePortfolioImageUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      if (!file.type.startsWith("image/")) {
-        alert("File harus berupa gambar (JPG/PNG/dll).");
-        return;
-      }
-      portfolioImageUploading.value = true;
-      try {
-        portfolioForm.value.image = await window.db.uploadImage(file, "portfolio");
-      } catch (err) {
-        alert("Gagal upload gambar. Cek koneksi internet kamu.");
-      } finally {
-        portfolioImageUploading.value = false;
-      }
+      openCropModal(file, { assign: (url) => portfolioForm.value.image = url, folder: "portfolio", uploadingRef: portfolioImageUploading, aspect: 1 }, e.target);
     };
     const handlePortfolioImageRemove = () => {
       portfolioForm.value.image = "";
@@ -245,21 +307,10 @@ const app = createApp({
       isAddingCertificate.value = false;
     };
 
-    const handleCertificateImageUpload = async (e) => {
+    const handleCertificateImageUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      if (!file.type.startsWith("image/")) {
-        alert("File harus berupa gambar (JPG/PNG/dll).");
-        return;
-      }
-      certificateImageUploading.value = true;
-      try {
-        certificateForm.value.image = await window.db.uploadImage(file, "certificates");
-      } catch (err) {
-        alert("Gagal upload gambar. Cek koneksi internet kamu.");
-      } finally {
-        certificateImageUploading.value = false;
-      }
+      openCropModal(file, { assign: (url) => certificateForm.value.image = url, folder: "certificates", uploadingRef: certificateImageUploading, aspect: 1 }, e.target);
     };
     const handleCertificateImageRemove = () => {
       certificateForm.value.image = "";
@@ -278,40 +329,18 @@ const app = createApp({
       chefProfileState.value = next;
       alert("Profil Chef disimpan!");
     };
-    const handleChefAvatarUpload = async (e) => {
+    const handleChefAvatarUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      if (!file.type.startsWith("image/")) {
-        alert("File harus berupa gambar (JPG/PNG/dll).");
-        return;
-      }
-      chefAvatarUploading.value = true;
-      try {
-        chefForm.value.avatar = await window.db.uploadImage(file, "chef");
-      } catch (err) {
-        alert("Gagal upload foto. Cek koneksi internet kamu.");
-      } finally {
-        chefAvatarUploading.value = false;
-      }
+      openCropModal(file, { assign: (url) => chefForm.value.avatar = url, folder: "chef", uploadingRef: chefAvatarUploading, aspect: 3 / 4 }, e.target);
     };
     const handleChefAvatarRemove = () => {
       chefForm.value.avatar = "";
     };
-    const handleChefHeaderBgUpload = async (e) => {
+    const handleChefHeaderBgUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      if (!file.type.startsWith("image/")) {
-        alert("File harus berupa gambar (JPG/PNG/dll).");
-        return;
-      }
-      chefHeaderBgUploading.value = true;
-      try {
-        chefForm.value.headerBackground = await window.db.uploadImage(file, "chef");
-      } catch (err) {
-        alert("Gagal upload background. Cek koneksi internet kamu.");
-      } finally {
-        chefHeaderBgUploading.value = false;
-      }
+      openCropModal(file, { assign: (url) => chefForm.value.headerBackground = url, folder: "chef", uploadingRef: chefHeaderBgUploading, aspect: 2.6 }, e.target);
     };
     const handleChefHeaderBgRemove = () => {
       chefForm.value.headerBackground = "";
@@ -364,21 +393,10 @@ const app = createApp({
     const handleSectionEntryBulletRemove = (sectionIdx, entryIdx, bulletIdx) => chefForm.value.sections[sectionIdx].entries[entryIdx].bullets.splice(bulletIdx, 1);
 
     // HOMEPAGE ADMIN HANDLERS
-    const handleHomepagePhotoUpload = async (e) => {
+    const handleHomepagePhotoUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      if (!file.type.startsWith("image/")) {
-        alert("File harus berupa gambar (JPG/PNG/dll).");
-        return;
-      }
-      homepagePhotoUploading.value = true;
-      try {
-        homepageForm.value.photoUrl = await window.db.uploadImage(file, "homepage");
-      } catch (err) {
-        alert("Gagal upload foto. Cek koneksi internet kamu.");
-      } finally {
-        homepagePhotoUploading.value = false;
-      }
+      openCropModal(file, { assign: (url) => homepageForm.value.photoUrl = url, folder: "homepage", uploadingRef: homepagePhotoUploading, aspect: 1 }, e.target);
     };
     const handleHomepagePhotoRemove = () => {
       homepageForm.value.photoUrl = "";
@@ -555,7 +573,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen], () => {
+    watch([adminTab, activeTab, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen], () => {
       nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
     });
 
@@ -578,6 +596,7 @@ const app = createApp({
       handleHomepageSubmit, handleHomepagePhotoUpload, handleHomepagePhotoRemove, homepagePhotoUploading, handleChefFormSubmit, handleResetToDefaults,
       chefAvatarUploading, handleChefAvatarUpload, handleChefAvatarRemove,
       chefHeaderBgUploading, handleChefHeaderBgUpload, handleChefHeaderBgRemove,
+      cropModalOpen, cropImageUrl, cropZoomValue, closeCropModal, setCropZoom, cropZoomStep, confirmCrop,
       formName, formRole, formMessage, formStars, formDishLiked, guestbookSuccess, handleAddGuestbook, handleLikeEntry,
       password, showPassword, loginError, loginSuccess, handleLogin, handleLogout,
       dataLoading, dataLoadError
