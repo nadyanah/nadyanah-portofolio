@@ -51,6 +51,7 @@ const app = createApp({
     const chefForm = ref({});
     const homepageForm = ref({});
     const homepagePhotoUploading = ref(false);
+    const chefAvatarUploading = ref(false);
 
     // FORM STATES
     const formName = ref("");
@@ -275,6 +276,25 @@ const app = createApp({
       }
       chefProfileState.value = next;
       alert("Profil Chef disimpan!");
+    };
+    const handleChefAvatarUpload = async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        alert("File harus berupa gambar (JPG/PNG/dll).");
+        return;
+      }
+      chefAvatarUploading.value = true;
+      try {
+        chefForm.value.avatar = await window.db.uploadImage(file, "chef");
+      } catch (err) {
+        alert("Gagal upload foto. Cek koneksi internet kamu.");
+      } finally {
+        chefAvatarUploading.value = false;
+      }
+    };
+    const handleChefAvatarRemove = () => {
+      chefForm.value.avatar = "";
     };
     const handleChefArrayAddField = (field) => {
       if (!Array.isArray(chefForm.value[field])) chefForm.value[field] = [];
@@ -536,6 +556,7 @@ const app = createApp({
       handleSectionTagAdd, handleSectionTagRemove,
       handleSectionEntryAdd, handleSectionEntryRemove, handleSectionEntryBulletAdd, handleSectionEntryBulletRemove,
       handleHomepageSubmit, handleHomepagePhotoUpload, handleHomepagePhotoRemove, homepagePhotoUploading, handleChefFormSubmit, handleResetToDefaults,
+      chefAvatarUploading, handleChefAvatarUpload, handleChefAvatarRemove,
       formName, formRole, formMessage, formStars, formDishLiked, guestbookSuccess, handleAddGuestbook, handleLikeEntry,
       password, showPassword, loginError, loginSuccess, handleLogin, handleLogout,
       dataLoading, dataLoadError
