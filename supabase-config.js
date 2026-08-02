@@ -14,6 +14,6 @@
  * di Supabase → Authentication → Users. Password admin diatur di sana,
  * BUKAN di kode ini.
  */
-const SUPABASE_URL = "https://YOUR-PROJECT-REF.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
-const ADMIN_EMAIL = "admin@nadya-portfolio.local";
+const SUPABASE_URL = "https://xafemxehfquoqfmvyqpj.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_76_phvIUxbdr8gb_Uiql7Q_YebI1fW5";
+const ADMIN_EMAIL = "nadyanah@porto.com";
