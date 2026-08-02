@@ -385,29 +385,35 @@
                 <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-1">Perjalanan Karier</h2>
                 <p class="text-xs text-brand-muted mb-9">Jejak langkah profesional dari waktu ke waktu.</p>
 
-                <!-- EMPTY STATE -->
-                <div v-if="!careerEntries || careerEntries.length === 0" class="text-xs text-brand-muted italic">
-                  Belum ada data perjalanan karier.
-                </div>
+                <!-- INNER CREAM PANEL — same layered "timbul" look as the timeline
+                     card on the beranda (white outer shape + cream inset inner) -->
+                <div class="w-full bg-brand-cream rounded-[28px] p-5 md:p-7 border border-neutral-200/50 shadow-inner">
 
-                <!-- TIMELINE -->
-                <div v-else class="relative pl-9">
-                  <!-- vertical dashed connector line -->
-                  <div class="absolute left-[7px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
-
-                  <div v-for="(entry, idx) in careerEntries" :key="'career-'+idx" class="relative pb-11 last:pb-0">
-                    <!-- node dot -->
-                    <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2 border-black"></span>
-
-                    <span class="inline-block px-3 py-1 rounded-full border border-neutral-200 text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5">
-                      {{entry.period}}
-                    </span>
-                    <p class="text-base md:text-lg font-serif font-medium text-black">{{entry.heading}}</p>
-                    <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
-                    <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2.5 max-w-xl">
-                      {{entry.description}}
-                    </p>
+                  <!-- EMPTY STATE -->
+                  <div v-if="!careerEntries || careerEntries.length === 0" class="text-xs text-brand-muted italic">
+                    Belum ada data perjalanan karier.
                   </div>
+
+                  <!-- TIMELINE -->
+                  <div v-else class="relative pl-9">
+                    <!-- vertical dashed connector line -->
+                    <div class="absolute left-[7px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
+
+                    <div v-for="(entry, idx) in careerEntries" :key="'career-'+idx" class="relative pb-11 last:pb-0">
+                      <!-- node dot -->
+                      <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2 border-black"></span>
+
+                      <span class="inline-block px-3 py-1 rounded-full border border-neutral-200 text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5">
+                        {{entry.period}}
+                      </span>
+                      <p class="text-base md:text-lg font-serif font-medium text-black">{{entry.heading}}</p>
+                      <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
+                      <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2.5 max-w-xl">
+                        {{entry.description}}
+                      </p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
