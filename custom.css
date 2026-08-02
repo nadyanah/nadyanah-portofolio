@@ -366,6 +366,61 @@ body,
   color: #000000 !important;
 }
 
+/* ===========================================================================
+   MOBILE / TABLET BOTTOM TAB BAR (below the "lg" breakpoint)
+   Replaces the floating rounded dock with a full-width, app-style bar fixed
+   to the bottom of the screen — icon on top, short label underneath, active
+   tab picked out in the brand gold-dark accent. Mirrors the reference
+   "Cookbook" app bottom nav layout.
+   =========================================================================== */
+.mobile-tab-bar {
+  background: #FFFFFF;
+  border-top: 1px solid #e7e2dc;
+  box-shadow: 0 -6px 20px rgba(44, 40, 37, 0.06);
+  /* keep the bar clear of the home-indicator / gesture area on iOS */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.mobile-tab-item {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 9px 2px 8px;
+  background: transparent;
+  border: none;
+  color: #9a948a;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-tab-item:active {
+  transform: scale(0.94);
+}
+.mobile-tab-item.mobile-tab-active {
+  color: var(--color-brand-gold-dark);
+}
+/* the site-wide "force text black" rule further down would otherwise
+   override the muted/active tab-bar colors above — keep this bar exempt */
+.mobile-tab-item,
+.mobile-tab-item.mobile-tab-active {
+  color: #9a948a !important;
+}
+.mobile-tab-item.mobile-tab-active {
+  color: var(--color-brand-gold-dark) !important;
+}
+/* reserves the height of the fixed bar so page content can scroll clear of it */
+.mobile-tab-bar-spacer {
+  height: 66px;
+  height: calc(66px + env(safe-area-inset-bottom, 0px));
+}
+
 /* ===== Revert: floating nav dock icons (home/profile/book/search/certificate)
    back to their original colors — idle AND active both neutral gray, so the
    only "active" cue is the pressed-in (mendelep) shadow, not a color change. ===== */

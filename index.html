@@ -117,8 +117,9 @@
       <div class="absolute inset-0 opacity-[0.02] pointer-events-none" 
            style="background-image: radial-gradient(var(--color-brand-charcoal) 1px, transparent 0), radial-gradient(var(--color-brand-charcoal) 1px, transparent 0); background-size: 24px 24px; background-position: 0 0, 12px 12px"></div>
       
-      <!-- GLOBAL PERSISTENT FLOATING NAVIGATION DOCK (hidden on beranda — home has its own top nav) -->
-      <div v-if="activeTab !== 'home'" class="fixed bottom-6 inset-x-0 z-40 pointer-events-none">
+      <!-- GLOBAL PERSISTENT FLOATING NAVIGATION DOCK — desktop/large screens only.
+           On mobile/tablet (below lg) this is replaced by the fixed bottom tab bar below. -->
+      <div v-if="activeTab !== 'home'" class="hidden lg:block fixed bottom-6 inset-x-0 z-40 pointer-events-none">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-start">
           <div class="pointer-events-auto flex items-center gap-3 flex-wrap">
             <button @click="switchTab('home')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'home' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="01. Welcome">
@@ -160,6 +161,58 @@
           </div>
         </div>
       </div>
+
+      <!-- MOBILE / TABLET BOTTOM TAB BAR — replaces the floating dock below the
+           lg breakpoint with a fixed, full-width, app-style tab bar (icon + label),
+           same tabs/logic as the desktop dock above, just a different look. -->
+      <div v-if="activeTab !== 'home'" class="mobile-tab-bar lg:hidden fixed bottom-0 inset-x-0 z-40">
+        <div class="flex items-stretch w-full">
+          <button @click="switchTab('home')" :class="['mobile-tab-item', activeTab === 'home' ? 'mobile-tab-active' : '']">
+            <i data-lucide="home" class="h-5 w-5"></i>
+            <span>Home</span>
+          </button>
+          <button @click="switchTab('chef')" :class="['mobile-tab-item', activeTab === 'chef' ? 'mobile-tab-active' : '']">
+            <i data-lucide="user" class="h-5 w-5"></i>
+            <span>Profile</span>
+          </button>
+          <button @click="switchTab('background')" :class="['mobile-tab-item', activeTab === 'background' ? 'mobile-tab-active' : '']">
+            <i data-lucide="book-open" class="h-5 w-5"></i>
+            <span>Kisah</span>
+          </button>
+          <button @click="switchTab('menu')" :class="['mobile-tab-item', activeTab === 'menu' ? 'mobile-tab-active' : '']">
+            <i data-lucide="search" class="h-5 w-5"></i>
+            <span>Karya</span>
+          </button>
+          <button @click="switchTab('certificate')" :class="['mobile-tab-item', activeTab === 'certificate' ? 'mobile-tab-active' : '']">
+            <i data-lucide="badge-check" class="h-5 w-5"></i>
+            <span>Sertif.</span>
+          </button>
+          <div class="relative flex-1 flex">
+            <!-- click-outside overlay -->
+            <div v-if="isContactMenuOpen" @click="isContactMenuOpen = false" class="fixed inset-0 z-30"></div>
+
+            <!-- speed-dial social icons — pops up above the bar -->
+            <transition name="fade">
+              <div v-if="isContactMenuOpen" class="absolute bottom-full right-2 mb-3 flex flex-col items-center gap-3 z-40">
+                <a v-if="mainPageContent.linkedinUrl" :href="mainPageContent.linkedinUrl" target="_blank" class="icon-social h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted" title="LinkedIn">
+                  <i data-lucide="linkedin" class="h-5 w-5"></i>
+                </a>
+                <a v-if="chefProfileState.contactEmail" :href="'mailto:' + chefProfileState.contactEmail" class="icon-social h-11 w-11 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted" title="Email">
+                  <i data-lucide="mail" class="h-5 w-5"></i>
+                </a>
+              </div>
+            </transition>
+
+            <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['mobile-tab-item', isContactMenuOpen ? 'mobile-tab-active' : '']">
+              <i data-lucide="contact" class="h-5 w-5"></i>
+              <span>Kontak</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- spacer so page content isn't hidden behind the fixed mobile tab bar -->
+      <div v-if="activeTab !== 'home'" class="mobile-tab-bar-spacer lg:hidden"></div>
 
       <main :class="activeTab === 'home' ? 'max-w-[1600px]' : 'max-w-7xl'" class="w-full mx-auto px-4 sm:px-6 lg:px-8 mt-2 lg:mt-4 pt-10 lg:pt-0">
         
