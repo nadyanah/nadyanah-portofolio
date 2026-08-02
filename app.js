@@ -587,6 +587,15 @@ const app = createApp({
       nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
     });
 
+    // The floating nav dock (fixed to the bottom of the screen) is hidden on
+    // the home tab, which has its own top nav bar instead. Body only needs
+    // the extra bottom padding that makes room for that dock when it's
+    // actually visible — keeping it on the home tab wastes vertical space
+    // and can force an unnecessary page scrollbar.
+    watch(activeTab, (tab) => {
+      document.body.classList.toggle("pb-24", tab !== "home");
+    }, { immediate: true });
+
     return {
       activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, searchQuery, selectedDish, openDishDetails,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,

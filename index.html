@@ -69,7 +69,7 @@
     <!-- Data Configuration -->
     <script src="data.js"></script>
   </head>
-  <body class="bg-brand-cream text-black font-sans relative pb-24">
+  <body class="bg-brand-cream text-black font-sans relative">
     <div id="root" >
       <div v-if="dataLoading" class="min-h-screen flex items-center justify-center text-black font-mono text-sm tracking-widest uppercase">
         Memuat menu...
@@ -1202,6 +1202,9 @@
 
                           <!-- Isi section: TIMELINE -->
                           <div v-if="section.type === 'timeline'" class="space-y-3">
+                            <p v-if="section.id === 'experience'" class="text-[10px] text-brand-gold-dark bg-brand-bone/60 border border-brand-gold/20 rounded-lg px-2.5 py-1.5 -mt-0.5">
+                              Entri di section ini juga otomatis tampil sebagai timeline "Perjalanan Karier" di halaman Background.
+                            </p>
                             <div v-for="(entry, eIdx) in section.entries" :key="'entry'+eIdx" class="p-3 bg-white border border-neutral-200 rounded-xl space-y-2">
                               <div class="flex justify-between items-center">
                                 <span class="font-sans text-[10px] text-neutral-400">Entri {{eIdx + 1}}</span>
