@@ -162,39 +162,33 @@
         </div>
       </div>
 
-      <!-- FLOATING "TIMBUL" QUICK-ACCESS PILLS — sits just above the mobile tab
-           bar. Same raised white pill / press-in-on-tap (mendelep) style as the
-           existing .pill-press buttons used elsewhere on the site. -->
-      <div class="lg:hidden fixed bottom-[76px] inset-x-0 z-40 flex items-center justify-center gap-3 px-4 pointer-events-none">
-        <button @click="switchTab('menu')" class="pill-press pointer-events-auto text-[11px] font-mono font-semibold tracking-widest uppercase text-black cursor-pointer focus:outline-none">Portofolio</button>
-        <button @click="switchTab('certificate')" class="pill-press pointer-events-auto text-[11px] font-mono font-semibold tracking-widest uppercase text-black cursor-pointer focus:outline-none">Sertifikat</button>
-      </div>
-
       <!-- MOBILE / TABLET BOTTOM TAB BAR — replaces the floating dock below the
-           lg breakpoint with a fixed, full-width, app-style tab bar (icon + label),
+           lg breakpoint with a floating, neumorphic "timbul" bar (icon + label),
            same tabs/logic as the desktop dock above, just a different look.
+           The bar itself is a raised white card, and every button inside it is
+           its own raised shape that presses in (mendelep) on tap.
            Unlike the desktop dock, this stays visible on the beranda too, since
            the mobile home top bar no longer carries its own nav links. -->
-      <div class="mobile-tab-bar lg:hidden fixed bottom-0 inset-x-0 z-40">
-        <div class="flex items-stretch w-full">
+      <div class="mobile-tab-bar lg:hidden fixed bottom-3 inset-x-3 z-40" style="bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));">
+        <div class="flex items-stretch w-full gap-1.5">
           <button @click="switchTab('home')" :class="['mobile-tab-item', activeTab === 'home' ? 'mobile-tab-active' : '']">
-            <span class="mobile-tab-icon-wrap"><i data-lucide="home" class="h-5 w-5"></i></span>
+            <i data-lucide="home" class="h-5 w-5"></i>
             <span>Home</span>
           </button>
           <button @click="switchTab('chef')" :class="['mobile-tab-item', activeTab === 'chef' ? 'mobile-tab-active' : '']">
-            <span class="mobile-tab-icon-wrap"><i data-lucide="user" class="h-5 w-5"></i></span>
+            <i data-lucide="user" class="h-5 w-5"></i>
             <span>Profile</span>
           </button>
           <button @click="switchTab('background')" :class="['mobile-tab-item', activeTab === 'background' ? 'mobile-tab-active' : '']">
-            <span class="mobile-tab-icon-wrap"><i data-lucide="book-open" class="h-5 w-5"></i></span>
+            <i data-lucide="book-open" class="h-5 w-5"></i>
             <span>Kisah</span>
           </button>
           <button @click="switchTab('menu')" :class="['mobile-tab-item', activeTab === 'menu' ? 'mobile-tab-active' : '']">
-            <span class="mobile-tab-icon-wrap"><i data-lucide="search" class="h-5 w-5"></i></span>
+            <i data-lucide="search" class="h-5 w-5"></i>
             <span>Karya</span>
           </button>
           <button @click="switchTab('certificate')" :class="['mobile-tab-item', activeTab === 'certificate' ? 'mobile-tab-active' : '']">
-            <span class="mobile-tab-icon-wrap"><i data-lucide="badge-check" class="h-5 w-5"></i></span>
+            <i data-lucide="badge-check" class="h-5 w-5"></i>
             <span>Sertif.</span>
           </button>
           <div class="relative flex-1 flex">
@@ -214,7 +208,7 @@
             </transition>
 
             <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['mobile-tab-item', isContactMenuOpen ? 'mobile-tab-active' : '']">
-              <span class="mobile-tab-icon-wrap"><i data-lucide="contact" class="h-5 w-5"></i></span>
+              <i data-lucide="contact" class="h-5 w-5"></i>
               <span>Kontak</span>
             </button>
           </div>

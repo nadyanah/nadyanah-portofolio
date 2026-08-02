@@ -368,17 +368,19 @@ body,
 
 /* ===========================================================================
    MOBILE / TABLET BOTTOM TAB BAR (below the "lg" breakpoint)
-   Replaces the floating rounded dock with a full-width, app-style bar fixed
-   to the bottom of the screen — icon on top, short label underneath, active
-   tab picked out in the brand gold-dark accent. Mirrors the reference
-   "Cookbook" app bottom nav layout.
+   A floating, neumorphic "timbul" card fixed near the bottom of the screen —
+   the bar itself is raised off the cream page background, and every button
+   inside it is its own raised shape that presses in (mendelep) on tap.
+   Mirrors the soft-UI / clay-style look, using the same raised + inset shadow
+   pairing already used by .nav-raised / .chip-raised / .pill-press elsewhere.
    =========================================================================== */
 .mobile-tab-bar {
   background: #FFFFFF;
-  border-top: 1px solid #e7e2dc;
-  box-shadow: 0 -6px 20px rgba(44, 40, 37, 0.06);
-  /* keep the bar clear of the home-indicator / gesture area on iOS */
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-radius: 26px;
+  padding: 7px;
+  box-shadow:
+    8px 8px 20px rgba(44, 40, 37, 0.12),
+    -8px -8px 20px rgba(255, 255, 255, 0.9);
 }
 .mobile-tab-item {
   flex: 1 1 0;
@@ -387,21 +389,28 @@ body,
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 9px 2px 8px;
-  background: transparent;
+  padding: 8px 2px 7px;
+  border-radius: 18px;
+  background: #FFFFFF;
   border: none;
-  color: #9a948a;
   font-family: var(--font-mono);
   font-size: 9.5px;
   line-height: 1.1;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.15s ease, transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
+  box-shadow:
+    3px 3px 6px rgba(44, 40, 37, 0.10),
+    -3px -3px 6px rgba(255, 255, 255, 0.9);
+  transition: box-shadow 0.15s ease, transform 0.1s ease, color 0.15s ease;
 }
 .mobile-tab-item:active {
-  transform: scale(0.94);
+  transition: none;
+  transform: scale(0.95);
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.16),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
 /* !important here because the site-wide "force text black" rule further
    down the file would otherwise override these tab-bar colors */
@@ -410,26 +419,15 @@ body,
 }
 .mobile-tab-item.mobile-tab-active {
   color: var(--color-brand-gold-dark) !important;
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.16),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
-.mobile-tab-icon-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 26px;
-  min-width: 40px;
-  padding: 0 8px;
-  border-radius: 12px;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-.mobile-tab-item.mobile-tab-active .mobile-tab-icon-wrap {
-  background-color: rgba(160, 120, 80, 0.16);
-  color: var(--color-brand-gold-dark);
-}
-/* reserves the height of the fixed bar + the floating pill row above it,
-   so page content can scroll clear of both */
+/* reserves the height of the floating fixed bar (+ its bottom offset) so
+   page content can scroll clear of it */
 .mobile-tab-bar-spacer {
-  height: 122px;
-  height: calc(122px + env(safe-area-inset-bottom, 0px));
+  height: 88px;
+  height: calc(88px + env(safe-area-inset-bottom, 0px));
 }
 
 /* ===== Revert: floating nav dock icons (home/profile/book/search/certificate)
