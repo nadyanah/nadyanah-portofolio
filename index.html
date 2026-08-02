@@ -121,20 +121,20 @@
       <div v-if="activeTab !== 'home'" class="fixed bottom-6 inset-x-0 z-40 pointer-events-none">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-start">
           <div class="pointer-events-auto flex items-center gap-3 flex-wrap">
-            <button @click="switchTab('home')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'home' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="01. Welcome">
+            <button @click="switchTab('home')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'home' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="01. Welcome">
               <i data-lucide="home" class="h-5 w-5"></i>
             </button>
             <div class="w-1.5"></div>
-            <button @click="switchTab('chef')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'chef' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="02. Profile">
+            <button @click="switchTab('chef')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'chef' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="02. Profile">
               <i data-lucide="user" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('background')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="03. Background">
+            <button @click="switchTab('background')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="03. Background">
               <i data-lucide="book-open" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('menu')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="04. Selected Works (Portofolio)">
+            <button @click="switchTab('menu')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="04. Selected Works (Portofolio)">
               <i data-lucide="search" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-brand-gold-dark' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="05. Certificates">
+            <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="05. Certificates">
               <i data-lucide="badge-check" class="h-5 w-5"></i>
             </button>
             <div class="relative">
@@ -247,13 +247,13 @@
               </div>
 
               <div class="flex items-center justify-between w-full mt-4 px-1">
-                <button @click="handlePrevSlide" class="h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted hover:text-black hover:border-brand-gold/60 flex items-center justify-center shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer focus:outline-none">
+                <button @click="handlePrevSlide" class="slider-nav-btn h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted flex items-center justify-center cursor-pointer focus:outline-none">
                   <i data-lucide="chevron-left" class="h-4 w-4"></i>
                 </button>
                 <div class="flex items-center gap-1.5">
                   <button v-for="(item, idx) in portfolioMenu" :key="idx" @click="currentSlideIndex = idx" :class="['transition-all duration-300 rounded-full', idx === currentSlideIndex ? 'w-5 h-1 bg-neutral-700' : 'w-1 h-1 bg-neutral-200']"></button>
                 </div>
-                <button @click="handleNextSlide" class="h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted hover:text-black hover:border-brand-gold/60 flex items-center justify-center shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer focus:outline-none">
+                <button @click="handleNextSlide" class="slider-nav-btn h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted flex items-center justify-center cursor-pointer focus:outline-none">
                   <i data-lucide="chevron-right" class="h-4 w-4"></i>
                 </button>
               </div>
@@ -279,14 +279,17 @@
                 Belum ada data perjalanan karier.
               </div>
 
-              <!-- TIMELINE (scrolls internally if it grows taller than the card, page itself never scrolls) -->
-              <div v-else class="relative pl-9 w-full max-h-[500px] overflow-y-auto no-scrollbar pr-1">
+              <!-- TIMELINE (scrolls internally if it grows taller than the card, page itself never scrolls).
+                   Note: pl-10 (not pl-9) on purpose — overflow-y-auto forces the browser to also clip
+                   overflow-x, so the dot needs a few px of buffer inside the padding box or its border
+                   gets cut off at the edge. -->
+              <div v-else class="relative pl-10 w-full max-h-[500px] overflow-y-auto no-scrollbar pr-1">
                 <!-- vertical dashed connector line -->
-                <div class="absolute left-[7px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
+                <div class="absolute left-[11px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
 
                 <div v-for="(entry, idx) in careerEntries" :key="'home-career-'+idx" class="relative pb-8 last:pb-0">
                   <!-- node dot -->
-                  <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2 border-black"></span>
+                  <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2"></span>
 
                   <span class="inline-block px-3 py-1 rounded-full border border-neutral-200 text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5">
                     {{entry.period}}
@@ -323,13 +326,13 @@
                   <div class="flex flex-wrap gap-1.5 justify-center">
                     <button v-for="cat in [{id:'all', label:'Semua'}, {id:'people-culture', label:'People Culture'}, {id:'employer-branding', label:'Employer Branding'}, {id:'people-analytics', label:'People Analytics'}, {id:'organizational-development', label:'Organizational Development'}]" 
                             :key="cat.id" @click="selectedCategory = cat.id" 
-                            :class="['pill-press px-4 py-1.5 text-xs font-medium tracking-wide rounded-full focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'pill-press-active text-brand-gold-dark' : 'text-brand-muted hover:text-black']">
+                            :class="['pill-press px-4 py-1.5 text-xs font-medium tracking-wide rounded-full focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'pill-press-active text-brand-muted' : 'text-brand-muted hover:text-black']">
                       {{cat.label}}
                     </button>
                   </div>
                   <div class="relative w-full sm:w-64 mt-3 sm:mt-0">
                     <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-brand-muted"></i>
-                    <input type="text" v-model="searchQuery" placeholder="Cari bahan / nama proyek..." class="search-raised w-full pl-9 pr-4 py-1.5 bg-white rounded-full border-0 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold transition-all" />
+                    <input type="text" v-model="searchQuery" placeholder="Cari bahan / nama proyek..." class="search-raised w-full pl-9 pr-4 py-1.5 bg-white rounded-full border-0 text-xs focus:outline-none transition-all" />
                     <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-black cursor-pointer">
                       <i data-lucide="x" class="h-3 w-3"></i>
                     </button>
@@ -401,7 +404,7 @@
 
                     <div v-for="(entry, idx) in careerEntries" :key="'career-'+idx" class="relative pb-11 last:pb-0">
                       <!-- node dot -->
-                      <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2 border-black"></span>
+                      <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2"></span>
 
                       <span class="inline-block px-3 py-1 rounded-full border border-neutral-200 text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5">
                         {{entry.period}}

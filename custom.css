@@ -69,12 +69,15 @@ body {
 /* Kill native browser tap-highlight / focus-ring artifacts on buttons —
    this is what shows up as an unwanted flash of a black border/box on
    press on some browsers/devices, on top of our own custom styling. */
-button {
+button,
+input {
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
 button:focus,
-button:focus-visible {
+button:focus-visible,
+input:focus,
+input:focus-visible {
   outline: none;
 }
 button::-moz-focus-inner {
@@ -91,8 +94,33 @@ button::-moz-focus-inner {
 .icon-social[class*="text-neutral-"] {
   color: #737373 !important;
 }
-.icon-social:hover {
-  color: #000000 !important;
+@media (hover: hover) and (pointer: fine) {
+  .icon-social:hover {
+    color: #000000 !important;
+  }
+}
+
+/* ===== Slider prev/next arrow buttons (HIGHLIGHT PORTOFOLIO MENU) — same
+   touch-safe treatment as the other buttons: hover color/border/shadow
+   only engage on real pointer devices (no sticky-hover glow on tap), and
+   the pressed state snaps instantly with no interim transition. ===== */
+.slider-nav-btn {
+  box-shadow:
+    3px 3px 6px rgba(44, 40, 37, 0.10),
+    -3px -3px 6px rgba(255, 255, 255, 0.9);
+  transition: transform 0.15s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .slider-nav-btn:hover {
+    color: #000000;
+  }
+}
+.slider-nav-btn:active {
+  transition: none;
+  transform: scale(0.95);
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.14),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
 
 /* Hide scrollbars on elements that opt in (e.g. horizontal chip rows) */
@@ -137,11 +165,14 @@ button::-moz-focus-inner {
     3px 3px 6px rgba(44, 40, 37, 0.10),
     -3px -3px 6px rgba(255, 255, 255, 0.9);
 }
-.chip-raised:hover {
-  border-color: #e7e2dc;
+@media (hover: hover) and (pointer: fine) {
+  .chip-raised:hover {
+    border-color: #e7e2dc;
+  }
 }
 .chip-raised:active {
   transform: scale(0.98);
+  transition: none;
 }
 .chip-raised.chip-active {
   background: #FFFFFF;
@@ -170,6 +201,12 @@ button::-moz-focus-inner {
     3px 3px 8px rgba(44, 40, 37, 0.10),
     -3px -3px 8px rgba(255, 255, 255, 0.9);
 }
+.search-raised:focus {
+  transition: none;
+  box-shadow:
+    inset 2px 2px 5px rgba(44, 40, 37, 0.10),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+}
 
 /* ===== Home top bar text links (Profile / Background / Portofolio /
    Sertifikat) — permanently raised pill, same "timbul" look as the
@@ -184,13 +221,16 @@ button::-moz-focus-inner {
     -3px -3px 6px rgba(255, 255, 255, 0.9);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.pill-press:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    5px 6px 12px rgba(44, 40, 37, 0.14),
-    -4px -4px 10px rgba(255, 255, 255, 0.95);
+@media (hover: hover) and (pointer: fine) {
+  .pill-press:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      5px 6px 12px rgba(44, 40, 37, 0.14),
+      -4px -4px 10px rgba(255, 255, 255, 0.95);
+  }
 }
 .pill-press:active {
+  transition: none;
   transform: scale(0.98);
   box-shadow:
     inset 2px 2px 5px rgba(44, 40, 37, 0.14),
@@ -232,23 +272,39 @@ button::-moz-focus-inner {
     4px 4px 10px rgba(44, 40, 37, 0.10),
     -4px -4px 10px rgba(255, 255, 255, 0.9);
 }
+@media (hover: none), (pointer: coarse) {
+  /* Kill the sticky hover-lift on touch devices — without a real mouse
+     leave event, the hover:-translate-y-1 utility can stay "stuck" after
+     a tap, reading as a stray glow/border before the press-in state. */
+  .nav-raised:hover {
+    transform: none !important;
+  }
+}
+.nav-raised:active {
+  transition: none;
+}
 .nav-raised.nav-active {
   box-shadow:
     inset 2px 2px 5px rgba(44, 40, 37, 0.16),
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
 
-/* ===== Career timeline dot markers (halaman Background) — pure white
-   circle with black ring, pops up "timbul" on hover to invite interaction. ===== */
+/* ===== Career timeline dot markers (halaman Background) — white circle
+   with a #928c83 ring, pops up "timbul" and fills solid #928c83 on hover
+   to invite interaction. ===== */
 .career-dot {
+  border-color: #928c83 !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
-.career-dot:hover {
-  transform: scale(1.25);
-  box-shadow:
-    3px 3px 8px rgba(44, 40, 37, 0.18),
-    -2px -2px 6px rgba(255, 255, 255, 0.9);
+@media (hover: hover) and (pointer: fine) {
+  .career-dot:hover {
+    background-color: #928c83 !important;
+    transform: scale(1.25);
+    box-shadow:
+      3px 3px 8px rgba(44, 40, 37, 0.18),
+      -2px -2px 6px rgba(255, 255, 255, 0.9);
+  }
 }
 /* ===== Brand wordmark "nadyanah" (top bar non-beranda) ===== */
 .brand-name {
@@ -311,7 +367,8 @@ body,
 }
 
 /* ===== Revert: floating nav dock icons (home/profile/book/search/certificate)
-   back to their original colors — idle = neutral gray, active = gold-dark. ===== */
+   back to their original colors — idle AND active both neutral gray, so the
+   only "active" cue is the pressed-in (mendelep) shadow, not a color change. ===== */
 .nav-raised[class*="text-neutral-"] {
   color: #737373 !important;
 }
@@ -319,5 +376,5 @@ body,
   color: #928c83 !important;
 }
 .nav-raised.nav-active[class*="text-neutral-"] {
-  color: #928c83 !important;
+  color: #737373 !important;
 }
