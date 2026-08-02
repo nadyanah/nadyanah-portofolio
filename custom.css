@@ -221,5 +221,8 @@ body,
   color: #737373 !important;
 }
 .nav-raised[class*="text-brand-gold-dark"] {
-  color: #e7e2dc !important;
+  color: #928c83 !important;
+}
+.nav-raised.nav-active[class*="text-neutral-"] {
+  color: #928c83 !important;
 }
