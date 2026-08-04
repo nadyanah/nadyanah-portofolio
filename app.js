@@ -8,6 +8,28 @@ const app = createApp({
     const adminTab = ref("portfolio");
     const isContactMenuOpen = ref(false);
     const currentSlideIndex = ref(0);
+
+    // SAFE ICON REFRESH — lucide.createIcons() jalan lewat nextTick di banyak
+    // tempat (setelah upload foto, ganti tab admin, simpan form, dll). Kalau
+    // dua pemanggilan itu tumpang-tindih (misal ganti tab admin sambil ada
+    // update lain), lucide bisa mencoba insertBefore ke elemen <i> yang sudah
+    // diganti/dihapus Vue lebih dulu, dan itu jadi "PROMISE REJECTION" yang
+    // tidak tertangkap. refreshIcons() ini men-debounce ke satu pemanggilan
+    // per tick dan membungkusnya dengan try/catch supaya kegagalan render
+    // icon (kosmetik) tidak pernah lagi merusak/menghentikan halaman.
+    let iconsRefreshQueued = false;
+    const refreshIcons = () => {
+      if (iconsRefreshQueued) return;
+      iconsRefreshQueued = true;
+      nextTick(() => {
+        iconsRefreshQueued = false;
+        try {
+          if (window.lucide) window.lucide.createIcons();
+        } catch (err) {
+          console.warn("Lucide createIcons gagal, diabaikan (tidak fatal):", err);
+        }
+      });
+    };
     const selectedCategory = ref("all");
     const searchQuery = ref("");
     const selectedDish = ref(null);
@@ -54,6 +76,17 @@ const app = createApp({
     const chefAvatarUploading = ref(false);
     const chefHeaderBgUploading = ref(false);
 
+    // BACKGROUND PAGE — HIGHLIGHT PORTOFOLIO MENU (foto + 3 section deskripsi
+    // gaya "WHY / HOW / WHAT", admin-editable per section)
+    const makeEmptyHighlightSections = () => ([
+      { label: "WHY", title: "THE PURPOSE", body: "" },
+      { label: "HOW", title: "THE METHOD", body: "" },
+      { label: "WHAT", title: "THE DELIVERABLES", body: "" }
+    ]);
+    const backgroundHighlight = ref({ image: "", sections: makeEmptyHighlightSections() });
+    const backgroundHighlightForm = ref({ image: "", sections: makeEmptyHighlightSections() });
+    const backgroundHighlightImageUploading = ref(false);
+
     // ---- SHARED IMAGE CROP MODAL (dipakai semua upload foto: avatar, header bg, portfolio, sertifikat, beranda) ----
     const cropModalOpen = ref(false);
     const cropImageUrl = ref("");
@@ -76,21 +109,41 @@ const app = createApp({
         const imgEl = document.getElementById("cropperImage");
         if (!imgEl || !window.Cropper) return;
         if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
-        cropperInstance = new window.Cropper(imgEl, {
-          aspectRatio: aspect || NaN,
-          viewMode: 1,
-          dragMode: "move",
-          autoCropArea: 1,
-          background: false,
-          responsive: true,
-          zoomOnWheel: true,
-        });
+        const initCropper = () => {
+          // cropModalOpen bisa saja sudah ditutup lagi sebelum gambar selesai load
+          // (klik cepat / batal) — jangan inisialisasi cropper ke elemen yang sudah tidak relevan.
+          if (!cropModalOpen.value) return;
+          try {
+            cropperInstance = new window.Cropper(imgEl, {
+              aspectRatio: aspect || NaN,
+              viewMode: 1,
+              dragMode: "move",
+              autoCropArea: 1,
+              background: false,
+              responsive: true,
+              zoomOnWheel: true,
+            });
+          } catch (err) {
+            console.error("Gagal inisialisasi cropper:", err);
+          }
+        };
+        // Cropper.js butuh dimensi gambar asli (naturalWidth/Height) untuk setup
+        // internalnya dengan benar. Kalau blob URL belum selesai di-decode browser,
+        // insertBefore/wrapper Cropper bisa error karena elemen belum siap.
+        if (imgEl.complete && imgEl.naturalWidth > 0) {
+          initCropper();
+        } else {
+          imgEl.onload = initCropper;
+          imgEl.onerror = () => console.error("Gagal memuat gambar untuk di-crop.");
+        }
       });
     };
 
     const closeCropModal = () => {
       cropModalOpen.value = false;
       if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+      const imgEl = document.getElementById("cropperImage");
+      if (imgEl) { imgEl.onload = null; imgEl.onerror = null; }
       if (cropImageUrl.value) URL.revokeObjectURL(cropImageUrl.value);
       cropImageUrl.value = "";
       if (cropTarget.value && cropTarget.value.inputEl) cropTarget.value.inputEl.value = "";
@@ -154,11 +207,33 @@ const app = createApp({
           drawerDesc: "People Operations Specialist obsessed with elegant administration and clean organizational designs."
         };
 
-        const [menuRes, certRes, chefRes, mainRes, guestbook, session] = await Promise.all([
+        const defaultBackgroundHighlight = {
+          image: "",
+          sections: [
+            {
+              label: "WHY",
+              title: "THE PURPOSE",
+              body: "I believe structured systems and warm workplace cultures should never be mutually exclusive. I work to nourish environments where people and organization grow together."
+            },
+            {
+              label: "HOW",
+              title: "THE METHOD",
+              body: "Applying engineering logic & data-driven insights to human-centered processes. I bridge people, culture, and branding through clean administration and clear workflows."
+            },
+            {
+              label: "WHAT",
+              title: "THE DELIVERABLES",
+              body: "Optimized onboarding journeys, structured HRIS databases, vibrant internal culture events, and strategic employer branding materials."
+            }
+          ]
+        };
+
+        const [menuRes, certRes, chefRes, mainRes, bgHighlightRes, guestbook, session] = await Promise.all([
           window.db.getContent("portfolio_menu", PORTFOLIO_MENU),
           window.db.getContent("certificate_menu", typeof CERTIFICATE_MENU !== "undefined" ? CERTIFICATE_MENU : []),
           window.db.getContent("chef_profile", CHEF_PROFILE),
           window.db.getContent("main_page_content", defaultMainPage),
+          window.db.getContent("background_highlight", defaultBackgroundHighlight),
           window.db.getGuestbook(),
           window.db.getSession()
         ]);
@@ -169,6 +244,20 @@ const app = createApp({
         chefForm.value = JSON.parse(JSON.stringify(chefProfileState.value));
         mainPageContent.value = mainRes.value;
         homepageForm.value = JSON.parse(JSON.stringify(mainPageContent.value));
+        // Normalisasi data lama: kalau di Supabase masih tersimpan format lama
+        // ({ image, description }) atau sections belum lengkap, konversi dulu
+        // ke format 3 section (WHY/HOW/WHAT) supaya tidak error di template.
+        const rawBgHighlight = bgHighlightRes.value || {};
+        const normalizedSections = makeEmptyHighlightSections().map((defaultSection, idx) => {
+          const existing = Array.isArray(rawBgHighlight.sections) ? rawBgHighlight.sections[idx] : null;
+          if (existing) return { ...defaultSection, ...existing };
+          if (idx === 0 && !rawBgHighlight.sections && rawBgHighlight.description) {
+            return { ...defaultSection, body: rawBgHighlight.description };
+          }
+          return defaultSection;
+        });
+        backgroundHighlight.value = { image: rawBgHighlight.image || "", sections: normalizedSections };
+        backgroundHighlightForm.value = JSON.parse(JSON.stringify(backgroundHighlight.value));
         guestbookEntries.value = guestbook;
 
         isAdminLoggedIn.value = !!session;
@@ -181,9 +270,7 @@ const app = createApp({
         dataLoadError.value = "Gagal memuat data dari Supabase. Cek koneksi internet & konfigurasi di supabase-config.js.";
       } finally {
         dataLoading.value = false;
-        nextTick(() => {
-          if(window.lucide) window.lucide.createIcons();
-        });
+        refreshIcons();
       }
     });
 
@@ -216,7 +303,7 @@ const app = createApp({
         return;
       }
       cancelPortfolioForm();
-      nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+      refreshIcons();
     };
     
     const deletePortfolioCard = async (id) => {
@@ -285,7 +372,7 @@ const app = createApp({
         return;
       }
       cancelCertificateForm();
-      nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+      refreshIcons();
     };
 
     const deleteCertificate = async (id) => {
@@ -414,6 +501,28 @@ const app = createApp({
       alert("Konten Beranda disimpan!");
     };
 
+    // BACKGROUND HIGHLIGHT ADMIN HANDLERS (foto + 1 deskripsi di kartu HIGHLIGHT halaman Background)
+    const handleBackgroundHighlightPhotoUpload = (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      openCropModal(file, { assign: (url) => backgroundHighlightForm.value.image = url, folder: "background-highlight", uploadingRef: backgroundHighlightImageUploading, aspect: 4 / 5 }, e.target);
+    };
+    const handleBackgroundHighlightPhotoRemove = () => {
+      backgroundHighlightForm.value.image = "";
+    };
+    const handleBackgroundHighlightSubmit = async (e) => {
+      if(e) e.preventDefault();
+      const next = JSON.parse(JSON.stringify(backgroundHighlightForm.value));
+      try {
+        await window.db.saveContent("background_highlight", next);
+      } catch (err) {
+        alert("Gagal menyimpan ke Supabase. Cek koneksi internet kamu.");
+        return;
+      }
+      backgroundHighlight.value = next;
+      alert("Highlight halaman Background disimpan!");
+    };
+
     const handleResetToDefaults = async () => {
       if (window.confirm("Apakah Anda yakin ingin mengembalikan semua data ke pengaturan awal bawaan? Seluruh perubahan inputan Anda akan dihapus.")) {
         const defaultMainPage = {
@@ -455,7 +564,7 @@ const app = createApp({
       if (clickCount.value >= 5) {
         isLoginModalOpen.value = true;
         clickCount.value = 0;
-        nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+        refreshIcons();
       }
       clickTimeoutRef.value = setTimeout(() => {
         clickCount.value = 0;
@@ -487,7 +596,7 @@ const app = createApp({
       formStars.value = 5;
       guestbookSuccess.value = true;
       setTimeout(() => { guestbookSuccess.value = false; }, 4000);
-      nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+      refreshIcons();
     };
 
     const handleLikeEntry = async (id) => {
@@ -539,17 +648,17 @@ const app = createApp({
 
     const switchTab = (tabId) => {
       activeTab.value = tabId;
-      nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+      refreshIcons();
     };
 
     const openDishDetails = (dish) => {
       selectedDish.value = dish;
-      nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+      refreshIcons();
     };
 
     const openCertificate = (cert) => {
       selectedCertificate.value = cert;
-      nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+      refreshIcons();
     };
 
     // LOGIN MODAL STATE
@@ -584,7 +693,7 @@ const app = createApp({
 
     // Watcher to re-render lucide icons when important states change
     watch([adminTab, activeTab, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen], () => {
-      nextTick(() => { if(window.lucide) window.lucide.createIcons(); });
+      refreshIcons();
     });
 
     // The floating nav dock (fixed to the bottom of the screen) is hidden on
@@ -613,6 +722,8 @@ const app = createApp({
       handleSectionTagAdd, handleSectionTagRemove,
       handleSectionEntryAdd, handleSectionEntryRemove, handleSectionEntryBulletAdd, handleSectionEntryBulletRemove,
       handleHomepageSubmit, handleHomepagePhotoUpload, handleHomepagePhotoRemove, homepagePhotoUploading, handleChefFormSubmit, handleResetToDefaults,
+      backgroundHighlight, backgroundHighlightForm, backgroundHighlightImageUploading,
+      handleBackgroundHighlightPhotoUpload, handleBackgroundHighlightPhotoRemove, handleBackgroundHighlightSubmit,
       chefAvatarUploading, handleChefAvatarUpload, handleChefAvatarRemove,
       chefHeaderBgUploading, handleChefHeaderBgUpload, handleChefHeaderBgRemove,
       cropModalOpen, cropImageUrl, cropZoomValue, closeCropModal, setCropZoom, cropZoomStep, confirmCrop,
@@ -622,6 +733,14 @@ const app = createApp({
     };
   }
 });
+
+// Jaring pengaman terakhir: kalau ada error tak terduga saat Vue render/patch
+// komponen (bukan dari kode kita sendiri), jangan biarkan itu menghentikan
+// seluruh aplikasi — cukup log ke console supaya bisa didiagnosis, tapi UI
+// tetap jalan untuk user.
+app.config.errorHandler = (err, instance, info) => {
+  console.error("Vue error tertangkap (app tetap jalan):", err, info);
+};
 
 app.mount('#root');
 
