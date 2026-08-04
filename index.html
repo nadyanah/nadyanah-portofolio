@@ -98,7 +98,7 @@
              class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
           <div class="max-w-md mx-auto">
             <p class="font-sans font-semibold text-lg sm:text-xl leading-relaxed text-black">
-              Explore and take a look at the profile, background, and projects growing here. Think of it as a little garden — tended one idea at a time!, brand identity ("Fertilizer" & "Garden of Growth")
+              Explore and take a look at the profile, background, and projects growing here. Think of it as a little garden — tended one idea at a time!
             </p>
           </div>
 
@@ -230,7 +230,7 @@
       <div class="mobile-tab-bar-spacer lg:hidden"></div>
 
 
-      <main :class="activeTab === 'home' ? 'max-w-[1600px]' : 'max-w-7xl'" class="w-full mx-auto px-4 sm:px-6 lg:px-8 mt-2 lg:mt-4 pt-10 lg:pt-0">
+      <main class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-2 lg:mt-4 pt-10 lg:pt-0">
         
         <!-- HOME PAGE -->
         <div v-if="activeTab === 'home'" class="flex flex-col gap-3 w-full items-center fade-in-up">
@@ -537,7 +537,7 @@
             </div>
 
             <!-- CHEF TAB -->
-            <div v-if="activeTab === 'chef'" class="max-w-4xl mx-auto text-left fade-in-up">
+            <div v-if="activeTab === 'chef'" class="w-full text-left fade-in-up">
               <div class="bg-white rounded-3xl border border-neutral-200/60 shadow-sm overflow-hidden p-3 md:p-4">
 
                 <!-- LANDSCAPE HEADER BANNER — now an inset "lekukan dalam" panel
@@ -638,7 +638,7 @@
             </div>
             
             <!-- CERTIFICATE TAB -->
-            <div v-if="activeTab === 'certificate'" class="max-w-6xl mx-auto text-left fade-in-up">
+            <div v-if="activeTab === 'certificate'" class="w-full text-left fade-in-up">
 
               <!-- EMPTY STATE -->
               <div v-if="!certificateMenu || certificateMenu.length === 0" class="text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-200">
