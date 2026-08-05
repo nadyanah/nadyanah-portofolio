@@ -22,6 +22,64 @@
   font-style: normal;
 }
 
+/* ---- 3 font tambahan (lokal, dari folder fonts/) ---- */
+
+@font-face {
+  font-family: 'Hack';
+  src: url('fonts/Hack-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Hack';
+  src: url('fonts/Hack-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Hack';
+  src: url('fonts/Hack-RegularOblique.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Hack';
+  src: url('fonts/Hack-BoldOblique.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Apercu Mono';
+  src: url('fonts/ApercuMono.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Dikasih nama 'JetBrains Mono Local' (bukan 'JetBrains Mono') supaya
+   tidak bentrok sama versi Google Fonts yang sudah di-import di bawah.
+   Kalau mau pakai versi lokal ini sebagai pengganti, tinggal ganti value
+   --font-mono di FONT CONTROL PANEL jadi "JetBrains Mono Local", lalu
+   boleh hapus "JetBrains+Mono..." dari @import di bawah biar gak double load. */
+@font-face {
+  font-family: 'JetBrains Mono Local';
+  src: url('fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrains Mono Local';
+  src: url('fonts/JetBrainsMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrains Mono Local';
+  src: url('fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Caveat:wght@500..700&display=swap');
 
 /* Brand color variables — used by Tailwind config (tailwind.config in
@@ -49,12 +107,19 @@
      --font-name   -> class ".name-title" (nama "Nadya Nanda Adisty Hadian" di beranda)
      ========================================================================== */
   --font-sans: "Outfit", sans-serif;
-  --font-serif: "Playfair Display", Georgia, serif;
+  --font-serif: "Outfit", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   --font-hand: "Caveat", cursive;
   --font-hero: "Fontby-en", var(--font-hand);
   --font-brand: "Fontby-en", var(--font-serif);
   --font-name: var(--font-sans);
+
+  /* 3 font baru siap pakai — tinggal ganti salah satu variable di atas
+     (misal --font-mono) ke salah satu value ini kalau mau dipakai:
+     "Hack", monospace
+     "Apercu Mono", monospace
+     "JetBrains Mono Local", monospace   <- versi lokal, bukan dari Google Fonts
+  */
 }
 
 body {
