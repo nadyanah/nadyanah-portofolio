@@ -204,7 +204,9 @@ const app = createApp({
           body: "A people operations facilitator obsessed with elegant administration and clean designs. I believe that workspace compliance doesn't have to look boring, and employee branding is best served with true transparency. Let's delve into my cozy archive of insights.",
           linkedinUrl: "https://linkedin.com",
           mobileQuote: "Kami memformulasikan budaya organisasi terstruktur dengan bumbu empati, menyajikan kepuasan talenta yang matang untuk pertumbuhan bisnis.",
-          drawerDesc: "People Operations Specialist obsessed with elegant administration and clean organizational designs."
+          drawerDesc: "People Operations Specialist obsessed with elegant administration and clean organizational designs.",
+          welcomeQuote: "\ud83c\udf31 Hi, I am Nadya. Every project here started as a small seed\u2014\nwatered through daily hands-on practice, fertilized by \npurposeful learning and reflection, and cultivated to \ndeliver meaningful impact.",
+          welcomeCta: "[ Step inside the garden of growth \u2192 ]"
         };
 
         const defaultBackgroundHighlight = {
@@ -242,7 +244,14 @@ const app = createApp({
         certificateMenu.value = certRes.value;
         chefProfileState.value = chefRes.value;
         chefForm.value = JSON.parse(JSON.stringify(chefProfileState.value));
-        mainPageContent.value = mainRes.value;
+        // Normalisasi data lama: kalau di Supabase belum ada field welcomeQuote/welcomeCta
+        // (baru ditambahkan), pakai default dari defaultMainPage supaya tidak kosong.
+        mainPageContent.value = {
+          ...defaultMainPage,
+          ...mainRes.value,
+          welcomeQuote: (mainRes.value && mainRes.value.welcomeQuote) || defaultMainPage.welcomeQuote,
+          welcomeCta: (mainRes.value && mainRes.value.welcomeCta) || defaultMainPage.welcomeCta
+        };
         homepageForm.value = JSON.parse(JSON.stringify(mainPageContent.value));
         // Normalisasi data lama: kalau di Supabase masih tersimpan format lama
         // ({ image, description }) atau sections belum lengkap, konversi dulu
@@ -533,7 +542,9 @@ const app = createApp({
           body: "A people operations facilitator obsessed with elegant administration and clean designs. I believe that workspace compliance doesn't have to look boring, and employee branding is best served with true transparency. Let's delve into my cozy archive of insights.",
           linkedinUrl: "https://linkedin.com",
           mobileQuote: "Kami memformulasikan budaya organisasi terstruktur dengan bumbu empati, menyajikan kepuasan talenta yang matang untuk pertumbuhan bisnis.",
-          drawerDesc: "People Operations Specialist obsessed dengan elegant administration and clean organizational designs."
+          drawerDesc: "People Operations Specialist obsessed dengan elegant administration and clean organizational designs.",
+          welcomeQuote: "\ud83c\udf31 Hi, I am Nadya. Every project here started as a small seed\u2014\nwatered through daily hands-on practice, fertilized by \npurposeful learning and reflection, and cultivated to \ndeliver meaningful impact.",
+          welcomeCta: "[ Step inside the garden of growth \u2192 ]"
         };
         try {
           await Promise.all([

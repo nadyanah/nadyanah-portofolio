@@ -97,12 +97,7 @@
         <div v-if="showWelcome" @click="showWelcome = false"
              class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
           <div class="max-w-md mx-auto">
-            <p class="font-hack font-semibold text-lg sm:text-xl leading-normal text-black">
-              🌱 Hi, I am Nadya. Every project here started as a small seed—
-watered through daily hands-on practice, fertilized by 
-purposeful learning and reflection, and cultivated to 
-deliver meaningful impact.
-            </p>
+            <p class="font-hack font-semibold text-lg sm:text-xl leading-normal text-black" style="white-space: pre-line;">{{ mainPageContent.welcomeQuote }}</p>
           </div>
 
           <div class="absolute bottom-10 left-8 sm:left-14 flex flex-col items-start gap-1.5">
@@ -123,7 +118,7 @@ deliver meaningful impact.
             </svg>
           </div>
 
-          <p class="absolute bottom-4 right-6 text-[10px] font-mono uppercase tracking-widest text-brand-muted/70">[ Step inside the garden of growth → ]</p>
+          <p class="absolute bottom-4 right-6 text-sm sm:text-base font-mono uppercase tracking-widest text-brand-muted/70">{{ mainPageContent.welcomeCta }}</p>
         </div>
       </transition>
 
@@ -1483,6 +1478,15 @@ deliver meaningful impact.
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Paragraf Deskripsi Beranda*</label>
                         <textarea required rows="4" v-model="homepageForm.body" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
+                      </div>
+                      <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
+                        <label class="font-semibold text-black block">Kalimat Layar Sambutan (Welcome Screen)*</label>
+                        <p class="text-[10px] text-brand-muted mb-1">Ini kalimat yang muncul pertama kali saat website dibuka. Tekan Enter di posisi yang kamu mau untuk mengatur baris barunya sendiri.</p>
+                        <textarea required rows="5" v-model="homepageForm.welcomeQuote" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed font-hack"></textarea>
+                      </div>
+                      <div class="space-y-1 md:col-span-2">
+                        <label class="font-semibold text-black block">Teks Ajakan di Pojok Welcome Screen*</label>
+                        <input type="text" required v-model="homepageForm.welcomeCta" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="[ Step inside the garden of growth → ]" />
                       </div>
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
                         <label class="font-semibold text-black block">Jargon Pendek Versi Mobile (Quote Box)*</label>
