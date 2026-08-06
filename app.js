@@ -61,6 +61,10 @@ const app = createApp({
     const isAddingCard = ref(false);
     const editingCardId = ref(null);
     const portfolioImageUploading = ref(false);
+    // Filter "Pengalaman" khusus di daftar admin (Kelola Portofolio) — beda
+    // dari filter di halaman publik, supaya admin bisa cepat cek proyek mana
+    // yang belum disinkronkan ke Professional Experience manapun.
+    const adminExperienceFilter = ref("all");
 
     // CERTIFICATE ADMIN FORM STATES
     const getEmptyCertificateForm = () => ({
@@ -882,6 +886,16 @@ const app = createApp({
       return careerEntries.value.find(entry => experienceKey(entry) === item.experienceLink) || null;
     };
 
+    // Daftar proyek di Admin > Kelola Portofolio, disaring berdasarkan
+    // adminExperienceFilter — supaya admin bisa cepat cek proyek mana yang
+    // belum disinkronkan ("Belum Disinkronkan") atau lihat semua proyek
+    // milik satu entri Professional Experience tertentu.
+    const adminFilteredPortfolio = computed(() => {
+      if (adminExperienceFilter.value === "all") return portfolioMenu.value;
+      if (adminExperienceFilter.value === "none") return portfolioMenu.value.filter(item => !item.experienceLink);
+      return portfolioMenu.value.filter(item => item.experienceLink === adminExperienceFilter.value);
+    });
+
     const handlePrevSlide = () => {
       if (portfolioMenu.value.length === 0) return;
       currentSlideIndex.value = currentSlideIndex.value === 0 ? portfolioMenu.value.length - 1 : currentSlideIndex.value - 1;
@@ -1041,7 +1055,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
       refreshIcons();
     });
 
@@ -1064,6 +1078,7 @@ const app = createApp({
       homeShapeLeftRef, homeCareerCardHeight,
       linkCopied, copyLink,
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
+      adminExperienceFilter, adminFilteredPortfolio,
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm, togglePortfolioPin,
       handleAddField, handleRemoveField, handleFieldChange,
       portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,

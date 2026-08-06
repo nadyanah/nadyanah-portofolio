@@ -919,7 +919,7 @@
         </div>
 
         <!-- ADMIN TAB -->
-        <div v-if="activeTab === 'admin' && isAdminLoggedIn" class="max-w-5xl mx-auto text-left">
+        <div v-if="activeTab === 'admin' && isAdminLoggedIn" class="max-w-[1600px] mx-auto text-left">
           <div class="bg-white rounded-[32px] border border-neutral-200/60 p-6 md:p-8 shadow-sm min-h-[600px] text-left">
             <!-- Admin Panel Header -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-neutral-100 pb-6 mb-6">
@@ -1002,13 +1002,28 @@
                         <h3 class="text-lg font-sans font-bold text-black">Daftar Proyek Portofolio</h3>
                         <p class="text-xs text-brand-muted mt-0.5">Semua proyek yang aktif di web Anda.</p>
                       </div>
-                      <button @click="isAddingCard = true" class="chip-raised flex items-center gap-1.5 px-4 py-2 text-black rounded-full text-xs hover:text-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
-                        <i data-lucide="plus" class="h-4 w-4"></i>
-                        <span>Tambah Proyek</span>
-                      </button>
+                      <div class="flex items-center gap-2 flex-wrap justify-end">
+                        <select v-model="adminExperienceFilter" class="chip-raised px-3.5 py-2 text-black rounded-full text-xs font-semibold cursor-pointer focus:outline-none bg-white border-0">
+                          <option value="all">Filter: Semua Pengalaman</option>
+                          <option v-for="(entry, idx) in careerEntries" :key="'admin-exp-filter-'+idx" :value="experienceKey(entry)">{{ entry.heading }}</option>
+                          <option value="none">Belum Disinkronkan</option>
+                        </select>
+                        <button @click="isAddingCard = true" class="chip-raised flex items-center gap-1.5 px-4 py-2 text-black rounded-full text-xs hover:text-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
+                          <i data-lucide="plus" class="h-4 w-4"></i>
+                          <span>Tambah Proyek</span>
+                        </button>
+                      </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="item in portfolioMenu" :key="item.id" :class="['bg-white p-4 rounded-2xl border flex gap-4 shadow-sm relative items-center', item.pinned ? 'border-brand-gold/50 ring-1 ring-brand-gold/20' : 'border-neutral-150']">
+                    <p v-if="adminExperienceFilter !== 'all'" class="text-[10px] text-brand-muted -mt-1">
+                      Menampilkan {{ adminFilteredPortfolio.length }} dari {{ portfolioMenu.length }} proyek.
+                      <button @click="adminExperienceFilter = 'all'" class="text-brand-gold-dark underline underline-offset-2 cursor-pointer">Reset filter</button>
+                    </p>
+                    <div v-if="adminFilteredPortfolio.length === 0" class="text-center py-14 bg-brand-bone rounded-2xl border border-dashed border-neutral-300">
+                      <i data-lucide="search-x" class="h-8 w-8 text-brand-gold/40 mx-auto mb-2"></i>
+                      <p class="text-xs text-brand-muted">Tidak ada proyek yang cocok dengan filter ini.</p>
+                    </div>
+                    <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <div v-for="item in adminFilteredPortfolio" :key="item.id" :class="['bg-white p-4 rounded-2xl border flex gap-4 shadow-sm relative items-center', item.pinned ? 'border-brand-gold/50 ring-1 ring-brand-gold/20' : 'border-neutral-150']">
                       <div class="h-16 w-16 rounded-xl overflow-hidden bg-brand-bone shrink-0">
                         <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
                       </div>
@@ -1024,6 +1039,9 @@
                         <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
                         <p v-if="getLinkedExperience(item)" class="text-[9px] font-sans text-brand-gold-dark mt-1 font-semibold flex items-center gap-1">
                           <i data-lucide="link" class="h-2.5 w-2.5"></i> Synced: {{ getLinkedExperience(item).heading }}
+                        </p>
+                        <p v-else class="text-[9px] font-sans text-neutral-400 mt-1 font-semibold flex items-center gap-1 italic">
+                          <i data-lucide="link-2-off" class="h-2.5 w-2.5"></i> Belum disinkronkan
                         </p>
                       </div>
                       <div class="absolute right-3 flex flex-col gap-1.5">
@@ -1258,7 +1276,7 @@
                       <p class="text-xs text-brand-muted">Belum ada sertifikat. Klik "Tambah Sertifikat" untuk mulai menambahkan.</p>
                     </div>
 
-                    <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                       <div v-for="item in certificateMenu" :key="item.id" class="bg-white p-4 rounded-2xl border border-neutral-150 flex gap-4 shadow-sm relative items-center">
                         <div class="h-16 w-16 rounded-xl overflow-hidden bg-brand-bone shrink-0 flex items-center justify-center">
                           <img v-if="item.image" :src="item.image" :alt="item.title" @error="$event.target.style.display='none'" class="w-full h-full object-cover" />
