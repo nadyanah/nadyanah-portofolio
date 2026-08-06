@@ -233,8 +233,8 @@
                so the mobile top bar shows just the title, centered. -->
           <div class="w-full grid grid-cols-[1fr_auto_1fr] lg:grid-cols-[1fr_auto_1fr] items-center gap-3 pb-2.5 mb-1 border-b border-neutral-200/70">
             <div class="hidden lg:flex items-center gap-6 sm:gap-10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-muted justify-self-start">
-              <button @click="switchTab('chef')" class="pill-press hover:text-black transition-colors cursor-pointer focus:outline-none">Profile</button>
-              <button @click="switchTab('background')" class="pill-press hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
+              <button @click="switchTab('chef')" class="pill-press font-bold hover:text-black transition-colors cursor-pointer focus:outline-none">Profile</button>
+              <button @click="switchTab('background')" class="pill-press font-bold hover:text-black transition-colors cursor-pointer focus:outline-none">Background</button>
             </div>
 
             <h1 @click="handleNameClick" class="hand-title text-center text-xl sm:text-2xl text-black select-none cursor-default justify-self-center col-start-1 col-end-4 lg:col-start-2 lg:col-end-3">
@@ -243,8 +243,8 @@
 
             <div class="hidden lg:flex items-center gap-5 sm:gap-8 text-brand-muted justify-self-end">
               <div class="flex items-center gap-6 sm:gap-10">
-                <button @click="switchTab('menu')" class="pill-press text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
-                <button @click="switchTab('certificate')" class="pill-press text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
+                <button @click="switchTab('menu')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
+                <button @click="switchTab('certificate')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
               </div>
             </div>
           </div>
