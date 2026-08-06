@@ -637,6 +637,47 @@ const app = createApp({
 
     const currentDish = computed(() => portfolioMenu.value[currentSlideIndex.value] || portfolioMenu.value[0]);
 
+    // --- HOME PAGE: pin the "PERJALANAN KARIER" card's height to SHAPE 1's
+    // (profile + portfolio) height, one-way only, via ResizeObserver. This is
+    // deliberately NOT done with CSS self-stretch/items-stretch — that matches
+    // whichever sibling is tallest in EITHER direction, so a long career list
+    // would drag SHAPE 1 taller too. Here SHAPE 1 always stays its natural
+    // size, and SHAPE 2 is capped to match it; overflowing career entries just
+    // scroll inside their own card (see index.html). Only applied on xl+ where
+    // the two cards sit side by side — below that they stack and each sizes
+    // to its own natural content height.
+    const homeShapeLeftRef = ref(null);
+    const homeCareerCardHeight = ref(null);
+    const HOME_XL_BREAKPOINT = 1280;
+    let homeShapeResizeObserver = null;
+
+    const updateHomeCareerCardHeight = () => {
+      if (!homeShapeLeftRef.value) return;
+      homeCareerCardHeight.value = window.innerWidth >= HOME_XL_BREAKPOINT
+        ? homeShapeLeftRef.value.offsetHeight
+        : null;
+    };
+
+    watch(homeShapeLeftRef, (el) => {
+      if (homeShapeResizeObserver) {
+        homeShapeResizeObserver.disconnect();
+        homeShapeResizeObserver = null;
+      }
+      if (el) {
+        updateHomeCareerCardHeight();
+        homeShapeResizeObserver = new ResizeObserver(() => updateHomeCareerCardHeight());
+        homeShapeResizeObserver.observe(el);
+      } else {
+        homeCareerCardHeight.value = null;
+      }
+    });
+
+    window.addEventListener("resize", updateHomeCareerCardHeight);
+    onUnmounted(() => {
+      window.removeEventListener("resize", updateHomeCareerCardHeight);
+      if (homeShapeResizeObserver) homeShapeResizeObserver.disconnect();
+    });
+
     // Entri "Perjalanan Karier" untuk halaman Background — diambil dari section
     // "Professional Experience" (type: timeline) di data profil, supaya satu
     // sumber data yang sama dipakai di halaman Profile & Background.
@@ -721,6 +762,7 @@ const app = createApp({
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,
       certificateMenu, selectedCertificate, openCertificate,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
+      homeShapeLeftRef, homeCareerCardHeight,
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm,
       handleAddField, handleRemoveField, handleFieldChange,
