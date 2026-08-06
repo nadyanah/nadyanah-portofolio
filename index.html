@@ -582,25 +582,8 @@
                   <div v-if="chefProfileState.sections && chefProfileState.sections.some(s => s.type === 'tags' || s.type === 'timeline')"
                        class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
 
-                    <!-- LEFT: semua section "tags" -->
+                    <!-- LEFT: semua section "timeline" -->
                     <div class="space-y-10 md:pr-6 md:border-r md:border-brand-bone">
-                      <template v-for="section in chefProfileState.sections" :key="section.id + '-t'">
-                        <div v-if="section.type === 'tags'">
-                          <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
-                            <i :data-lucide="sectionIcon(section.type)" class="h-4 w-4 text-brand-gold"></i> {{section.title}}
-                          </h3>
-                          <div class="flex flex-wrap gap-2">
-                            <span v-for="(item, idx) in section.items" :key="'item'+idx"
-                              class="px-3 py-1 rounded-full border border-brand-gold/40 text-black text-[11px] italic">
-                              {{item}}
-                            </span>
-                          </div>
-                        </div>
-                      </template>
-                    </div>
-
-                    <!-- RIGHT: semua section "timeline" -->
-                    <div class="space-y-10">
                       <template v-for="section in chefProfileState.sections" :key="section.id + '-tl'">
                         <div v-if="section.type === 'timeline'">
                           <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
@@ -619,6 +602,23 @@
                                 <span>{{bullet}}</span>
                               </li>
                             </ul>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+
+                    <!-- RIGHT: semua section "tags" -->
+                    <div class="space-y-10">
+                      <template v-for="section in chefProfileState.sections" :key="section.id + '-t'">
+                        <div v-if="section.type === 'tags'">
+                          <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
+                            <i :data-lucide="sectionIcon(section.type)" class="h-4 w-4 text-brand-gold"></i> {{section.title}}
+                          </h3>
+                          <div class="flex flex-wrap gap-2">
+                            <span v-for="(item, idx) in section.items" :key="'item'+idx"
+                              class="px-3 py-1 rounded-full border border-brand-gold/40 text-black text-[11px] italic">
+                              {{item}}
+                            </span>
                           </div>
                         </div>
                       </template>
