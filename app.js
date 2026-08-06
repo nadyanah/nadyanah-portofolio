@@ -328,7 +328,7 @@ const app = createApp({
     const handlePortfolioImageUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      openCropModal(file, { assign: (url) => portfolioForm.value.image = url, folder: "portfolio", uploadingRef: portfolioImageUploading, aspect: 1 }, e.target);
+      openCropModal(file, { assign: (url) => portfolioForm.value.image = url, folder: "portfolio", uploadingRef: portfolioImageUploading, aspect: 4 / 3 }, e.target);
     };
     const handlePortfolioImageRemove = () => {
       portfolioForm.value.image = "";
@@ -397,7 +397,7 @@ const app = createApp({
     const handleCertificateImageUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      openCropModal(file, { assign: (url) => certificateForm.value.image = url, folder: "certificates", uploadingRef: certificateImageUploading, aspect: 1 }, e.target);
+      openCropModal(file, { assign: (url) => certificateForm.value.image = url, folder: "certificates", uploadingRef: certificateImageUploading, aspect: 4 / 3 }, e.target);
     };
     const handleCertificateImageRemove = () => {
       certificateForm.value.image = "";
