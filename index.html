@@ -96,25 +96,19 @@
       <transition name="fade">
         <div v-if="showWelcome" @click="showWelcome = false"
              class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
-          <div class="max-w-md mx-auto">
-            <p class="font-hack font-semibold text-lg sm:text-xl leading-normal text-black" style="white-space: pre-line;">{{ mainPageContent.welcomeQuote }}</p>
+          <div class="max-w-xl mx-auto">
+            <p class="font-hack font-semibold text-sm sm:text-base leading-normal text-black" style="white-space: pre-line;">{{ mainPageContent.welcomeQuote }}</p>
           </div>
 
           <div class="absolute bottom-10 left-8 sm:left-14 flex flex-col items-start gap-1.5">
-            <div class="flex items-center gap-1.5 font-hand text-xl text-black -rotate-3">
-              <span>click</span>
-              <svg viewBox="0 0 40 40" class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 8 C6 22 12 30 24 32" />
-                <path d="M15 29 L24 32 L22 22" />
-              </svg>
-            </div>
-            <!-- growing plant / sprout line drawing -->
-            <svg viewBox="0 0 100 100" class="h-20 w-20 sm:h-24 sm:w-24 text-black" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 90 Q50 83 82 90" />
-              <path d="M50 90 C50 68 45 58 50 42 C53 32 48 23 50 12" />
-              <path d="M50 56 C39 51 31 56 27 46 C37 42 47 46 50 56 Z" />
-              <path d="M50 41 C61 36 66 26 63 18 C53 22 48 32 50 41 Z" />
-              <path d="M50 25 C42 20 40 12 44 6 C51 10 53 18 50 25 Z" />
+            <!-- growing plant / sprout — clean, symmetric line drawing, animates growing in
+                 stroke-by-stroke (stem → leaves) then idles with a
+                 gentle sway once fully grown -->
+            <svg viewBox="0 0 100 100" class="h-28 w-28 sm:h-32 sm:w-32 text-black plant-grow" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path class="plant-path plant-path-stem" d="M50 94 C47 79 54 65 49 50 C45 38 52 27 47 12" />
+              <path class="plant-path plant-path-leaf1" d="M50 61 C39 57 33 60 29 50 C39.5 46 49 50.5 50 61 Z" />
+              <path class="plant-path plant-path-leaf2" d="M48 43 C59 39 65 29 61 20 C51 24.5 45.5 33 48 43 Z" />
+              <path class="plant-path plant-path-leaf3" d="M47 25 C40 21.5 38 15 41 9 C47.5 12 50 18.5 47 25 Z" />
             </svg>
           </div>
 

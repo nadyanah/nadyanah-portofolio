@@ -515,3 +515,45 @@ body,
 .nav-raised.nav-active[class*="text-neutral-"] {
   color: #737373 !important;
 }
+
+/* ===== WELCOME SCREEN — growing plant/sprout animation =====
+   Each path "draws" itself in with stroke-dasharray/stroke-dashoffset,
+   in order: stem → leaf 1 → leaf 2 → top leaf. Once fully
+   grown, the whole sprout gets a slow, gentle sway so it feels alive
+   instead of just sitting there static. */
+.plant-grow .plant-path {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: plant-draw-in 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.plant-grow .plant-path-stem   { animation-duration: 0.9s; animation-delay: 0s; }
+.plant-grow .plant-path-leaf1  { animation-duration: 0.5s; animation-delay: 0.8s; }
+.plant-grow .plant-path-leaf2  { animation-duration: 0.5s; animation-delay: 1s; }
+.plant-grow .plant-path-leaf3  { animation-duration: 0.5s; animation-delay: 1.2s; }
+
+@keyframes plant-draw-in {
+  to { stroke-dashoffset: 0; }
+}
+
+.plant-grow {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: plant-sway 4s ease-in-out 1.7s infinite;
+}
+
+@keyframes plant-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(1.6deg); }
+}
+
+/* Respect reduced-motion preference: show the fully-grown sprout right away,
+   no drawing or swaying animation. */
+@media (prefers-reduced-motion: reduce) {
+  .plant-grow .plant-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .plant-grow {
+    animation: none;
+  }
+}
