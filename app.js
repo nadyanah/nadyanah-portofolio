@@ -296,7 +296,36 @@ const app = createApp({
     });
 
     // HANDLERS
-    
+
+    // Turns a project title into a URL-friendly slug, e.g. "Employer
+    // Branding: Q3 Campaign!" -> "employer-branding-q3-campaign". Falls back
+    // to "porto" if the title is empty or has no usable characters (emoji-only,
+    // symbols-only, etc), so we never end up with a blank/invalid id.
+    const slugify = (str) => (str || "")
+      .toString()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "") // strip accents (é -> e)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    // Builds a slug id from the title and makes sure it's unique among the
+    // OTHER items in the given list (so two items named the same don't
+    // collide) — appends -2, -3, etc. when needed. excludeId is the item's
+    // own current id, so editing a title back to what it already was
+    // doesn't falsely "collide with itself".
+    const makeUniqueSlugId = (title, list, excludeId) => {
+      const base = slugify(title) || "item";
+      let candidate = base;
+      let n = 2;
+      while (list.some(item => item.id === candidate && item.id !== excludeId)) {
+        candidate = `${base}-${n}`;
+        n++;
+      }
+      return candidate;
+    };
+
     // PORTFOLIO ADMIN HANDLERS
     const startEditCard = (card) => {
       portfolioForm.value = JSON.parse(JSON.stringify(card));
@@ -310,7 +339,11 @@ const app = createApp({
         alert("Upload gambar proyek dulu ya.");
         return;
       }
-      const submission = { ...portfolioForm.value, id: editingCardId.value || "porto-" + Date.now() };
+      // id is re-derived from the title every save — so renaming a project
+      // also updates its shareable link (#/menu/<id>). NOTE: this means a
+      // link copied before a rename will stop working after the rename;
+      // that's the intended trade-off of having readable, title-based links.
+      const submission = { ...portfolioForm.value, id: makeUniqueSlugId(portfolioForm.value.name, portfolioMenu.value, editingCardId.value) };
       if (editingCardId.value) {
         const idx = portfolioMenu.value.findIndex(item => item.id === editingCardId.value);
         if (idx !== -1) portfolioMenu.value[idx] = submission;
@@ -379,7 +412,10 @@ const app = createApp({
 
     const saveCertificate = async (e) => {
       if (e) e.preventDefault();
-      const submission = { ...certificateForm.value, id: editingCertificateId.value || "cert-" + Date.now() };
+      // id re-derived from the title every save — see savePortfolioCard
+      // above for why (readable, title-based links; renaming breaks
+      // previously-shared links to the old id, by design).
+      const submission = { ...certificateForm.value, id: makeUniqueSlugId(certificateForm.value.title, certificateMenu.value, editingCertificateId.value) };
       if (editingCertificateId.value) {
         const idx = certificateMenu.value.findIndex(item => item.id === editingCertificateId.value);
         if (idx !== -1) certificateMenu.value[idx] = submission;
@@ -857,7 +893,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
       refreshIcons();
     });
 
