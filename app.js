@@ -271,6 +271,18 @@ const app = createApp({
 
         isAdminLoggedIn.value = !!session;
 
+        // Apply whatever page/popup is encoded in the URL hash now that
+        // portfolioMenu/certificateMenu are loaded (needed to resolve item
+        // ids into actual dish/certificate objects). If the link points
+        // somewhere other than the plain homepage, skip the welcome splash
+        // too — someone opening a shared link wants the content, not a
+        // click-to-dismiss intro screen first.
+        const initialRoute = parseHash();
+        if (initialRoute.tab !== "home" || initialRoute.itemId) {
+          showWelcome.value = false;
+        }
+        applyRouteFromHash();
+
         if (portfolioMenu.value.length > 0) {
           formDishLiked.value = portfolioMenu.value[0].name;
         }
@@ -700,6 +712,12 @@ const app = createApp({
 
     const switchTab = (tabId) => {
       activeTab.value = tabId;
+      // Navigating to a different top-level tab always closes any open
+      // portfolio/certificate popup — a "page" shouldn't carry over another
+      // page's popup, and it keeps the shareable URL for that page clean
+      // (no leftover /item-id from whatever was open before).
+      selectedDish.value = null;
+      selectedCertificate.value = null;
       refreshIcons();
     };
 
@@ -712,6 +730,85 @@ const app = createApp({
       selectedCertificate.value = cert;
       refreshIcons();
     };
+
+    // --- URL ROUTING (shareable links) ---
+    // Every page/tab AND every portfolio-card / certificate popup gets its
+    // own link via the URL hash, e.g.:
+    //   #/menu                        -> Portofolio tab
+    //   #/menu/onboarding-delight     -> Portofolio tab + that dish's popup open
+    //   #/certificate/cert-people-analytics -> Sertifikat tab + that cert's popup open
+    // Hash-based routing works on plain static hosting too (no server-side
+    // routes needed). State -> URL and URL -> state are kept in sync so
+    // browser back/forward and pasted links both work correctly.
+    const VALID_TABS = ["home", "chef", "background", "menu", "certificate"];
+    let isApplyingRouteFromHash = false; // guard against the hash<->state sync looping on itself
+
+    const parseHash = () => {
+      const raw = window.location.hash.replace(/^#\/?/, "");
+      const parts = raw.split("/").filter(Boolean);
+      const tab = VALID_TABS.includes(parts[0]) ? parts[0] : "home";
+      const itemId = parts[1] ? decodeURIComponent(parts[1]) : null;
+      return { tab, itemId };
+    };
+
+    const applyRouteFromHash = () => {
+      const { tab, itemId } = parseHash();
+      isApplyingRouteFromHash = true;
+      activeTab.value = tab;
+      selectedDish.value = (tab === "menu" && itemId)
+        ? (portfolioMenu.value.find(d => d.id === itemId) || null)
+        : null;
+      selectedCertificate.value = (tab === "certificate" && itemId)
+        ? (certificateMenu.value.find(c => c.id === itemId) || null)
+        : null;
+      refreshIcons();
+      nextTick(() => { isApplyingRouteFromHash = false; });
+    };
+
+    const updateHashFromState = () => {
+      if (isApplyingRouteFromHash) return;
+      if (activeTab.value === "admin") return; // admin area is never a public shareable route
+      let hash = "#/" + activeTab.value;
+      if (activeTab.value === "menu" && selectedDish.value) hash += "/" + encodeURIComponent(selectedDish.value.id);
+      if (activeTab.value === "certificate" && selectedCertificate.value) hash += "/" + encodeURIComponent(selectedCertificate.value.id);
+      if (window.location.hash !== hash) {
+        history.replaceState(null, "", hash);
+      }
+    };
+
+    window.addEventListener("hashchange", applyRouteFromHash);
+    onUnmounted(() => window.removeEventListener("hashchange", applyRouteFromHash));
+    watch([activeTab, selectedDish, selectedCertificate], updateHashFromState);
+
+    // "Salin Link" — copies the current shareable URL (already reflects
+    // whichever page/popup is open, thanks to the routing above) to the
+    // clipboard, with a small temporary confirmation state for the UI.
+    const linkCopied = ref(false);
+    let linkCopiedTimeoutId = null;
+    const copyLink = async () => {
+      const url = window.location.href;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = url;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        linkCopied.value = true;
+        clearTimeout(linkCopiedTimeoutId);
+        linkCopiedTimeoutId = setTimeout(() => { linkCopied.value = false; }, 1800);
+      } catch (err) {
+        console.error("Gagal menyalin link:", err);
+        alert("Gagal menyalin link. Silakan salin manual dari address bar.");
+      }
+    };
+    onUnmounted(() => clearTimeout(linkCopiedTimeoutId));
 
     // LOGIN MODAL STATE
     const password = ref("");
@@ -744,7 +841,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen], () => {
+    watch([adminTab, activeTab, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
       refreshIcons();
     });
 
@@ -763,6 +860,7 @@ const app = createApp({
       certificateMenu, selectedCertificate, openCertificate,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
       homeShapeLeftRef, homeCareerCardHeight,
+      linkCopied, copyLink,
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm,
       handleAddField, handleRemoveField, handleFieldChange,

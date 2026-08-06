@@ -141,6 +141,10 @@
             <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="05. Certificates">
               <i data-lucide="badge-check" class="h-5 w-5"></i>
             </button>
+            <div class="w-1.5"></div>
+            <button @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1 border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300">
+              <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-5 w-5"></i>
+            </button>
             <div class="relative">
               <!-- click-outside overlay -->
               <div v-if="isContactMenuOpen" @click="isContactMenuOpen = false" class="fixed inset-0 z-30"></div>
@@ -164,6 +168,15 @@
           </div>
         </div>
       </div>
+
+      <!-- MOBILE COPY-LINK BUTTON — small fixed button, top-right. The bottom
+           tab bar is already full (Home/Profile/Kisah/Karya/Sertif/Kontak),
+           so this sits on its own instead of becoming a cramped 7th item.
+           Same idea as the desktop dock's link button: copies a shareable
+           link to whatever page/popup is currently open. -->
+      <button v-if="!showWelcome && activeTab !== 'admin'" @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="lg:hidden fixed top-3 right-3 z-40 h-10 w-10 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] flex items-center justify-center text-neutral-500 active:scale-95 transition-all">
+        <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-4 w-4"></i>
+      </button>
 
       <!-- MOBILE / TABLET BOTTOM TAB BAR — replaces the floating dock below the
            lg breakpoint with a floating, neumorphic "timbul" bar (icon + label),
@@ -246,6 +259,9 @@
                 <button @click="switchTab('menu')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
                 <button @click="switchTab('certificate')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
               </div>
+              <button @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="h-8 w-8 rounded-full bg-white border border-neutral-200/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
+                <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-3.5 w-3.5"></i>
+              </button>
             </div>
           </div>
 
@@ -1616,6 +1632,10 @@
               <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-brand-charcoal/15 pointer-events-none z-30 shadow-[0_0_8px_rgba(44,40,37,0.2)]"></div>
               <div class="hidden md:block absolute top-0 bottom-0 left-[calc(50%-1px)] w-[1px] bg-white/40 pointer-events-none z-30"></div>
 
+              <button @click="copyLink" :title="linkCopied ? 'Link tersalin!' : 'Salin link ke karya ini'" class="absolute top-3 right-14 md:top-6 md:right-20 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
+                <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-3.5 w-3.5"></i>
+              </button>
+
               <button @click="selectedDish = null" class="absolute top-3 right-3 md:top-6 md:right-6 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
                 <i data-lucide="x" class="h-3.5 w-3.5"></i>
               </button>
@@ -1739,6 +1759,10 @@
           <div @click="selectedCertificate = null" class="absolute inset-0 bg-brand-charcoal/80 backdrop-blur-md cursor-pointer"></div>
 
           <div class="bg-white w-full max-w-3xl rounded-[24px] shadow-[0_30px_80px_-10px_rgba(139,130,115,0.35)] relative border border-neutral-300 z-10 max-h-[92vh] flex flex-col overflow-hidden">
+
+            <button @click="copyLink" :title="linkCopied ? 'Link tersalin!' : 'Salin link ke sertifikat ini'" class="absolute top-4 right-14 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
+              <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-3.5 w-3.5"></i>
+            </button>
 
             <button @click="selectedCertificate = null" class="absolute top-4 right-4 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
               <i data-lucide="x" class="h-3.5 w-3.5"></i>
