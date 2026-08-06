@@ -662,12 +662,27 @@ const app = createApp({
     const homeCareerCardHeight = ref(null);
     const HOME_XL_BREAKPOINT = 1280;
     let homeShapeResizeObserver = null;
+    let homeShapeResizeRaf = null;
 
     const updateHomeCareerCardHeight = () => {
       if (!homeShapeLeftRef.value) return;
       homeCareerCardHeight.value = window.innerWidth >= HOME_XL_BREAKPOINT
         ? homeShapeLeftRef.value.offsetHeight
         : null;
+    };
+
+    // Deferring the actual height read/write to the next animation frame
+    // (instead of doing it synchronously inside the ResizeObserver callback)
+    // keeps the browser from ever seeing "the thing I'm observing changed
+    // size again, in response to my own callback" in the same tick — which
+    // is exactly what triggers the harmless-but-noisy "ResizeObserver loop
+    // completed with undelivered notifications" browser warning.
+    const scheduleHomeCareerCardHeightUpdate = () => {
+      if (homeShapeResizeRaf) cancelAnimationFrame(homeShapeResizeRaf);
+      homeShapeResizeRaf = requestAnimationFrame(() => {
+        homeShapeResizeRaf = null;
+        updateHomeCareerCardHeight();
+      });
     };
 
     watch(homeShapeLeftRef, (el) => {
@@ -677,17 +692,18 @@ const app = createApp({
       }
       if (el) {
         updateHomeCareerCardHeight();
-        homeShapeResizeObserver = new ResizeObserver(() => updateHomeCareerCardHeight());
+        homeShapeResizeObserver = new ResizeObserver(() => scheduleHomeCareerCardHeightUpdate());
         homeShapeResizeObserver.observe(el);
       } else {
         homeCareerCardHeight.value = null;
       }
     });
 
-    window.addEventListener("resize", updateHomeCareerCardHeight);
+    window.addEventListener("resize", scheduleHomeCareerCardHeightUpdate);
     onUnmounted(() => {
-      window.removeEventListener("resize", updateHomeCareerCardHeight);
+      window.removeEventListener("resize", scheduleHomeCareerCardHeightUpdate);
       if (homeShapeResizeObserver) homeShapeResizeObserver.disconnect();
+      if (homeShapeResizeRaf) cancelAnimationFrame(homeShapeResizeRaf);
     });
 
     // Entri "Perjalanan Karier" untuk halaman Background — diambil dari section

@@ -17,6 +17,15 @@
         document.body.appendChild(el);
       }
       window.onerror = function(msg, url, lineNo, columnNo, error) {
+        // "ResizeObserver loop completed/limit exceeded" is a harmless
+        // browser-level notice (every major browser fires it), not a real
+        // bug — it just means a resize observer's callback triggered
+        // another resize in the same frame, so the browser deferred it.
+        // All major frameworks (Vue CLI, CRA, Next.js, etc.) filter this
+        // exact message out of their error overlays for the same reason.
+        if (typeof msg === "string" && msg.indexOf("ResizeObserver loop") !== -1) {
+          return false;
+        }
         showDebugOverlay('<strong>ERROR:</strong> ' + msg + '<br>' + url + ' (line ' + lineNo + ')<br><pre>' + (error && error.stack ? error.stack : '') + '</pre>', 0);
         return false;
       };
