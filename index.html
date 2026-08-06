@@ -473,6 +473,9 @@
                         <img :src="item.image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                         <div class="absolute top-4 left-4 flex gap-1.5">
                            <span class="bg-white/90 backdrop-blur-md text-black border border-neutral-150 text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">{{item.category}}</span>
+                           <span v-if="item.pinned && !isAnyFilterActive" class="bg-brand-gold-dark/95 backdrop-blur-md text-white text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
+                             <i data-lucide="pin" class="h-2.5 w-2.5"></i> Pinned
+                           </span>
                         </div>
                         <div class="absolute top-4 right-4">
                            <span class="bg-white/90 backdrop-blur-md border border-neutral-200/50 text-black text-[10px] font-mono font-bold px-3 py-1 rounded-full shadow-sm">{{formatProjectDate(item.price)}}</span>
@@ -1005,12 +1008,17 @@
                       </button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="item in portfolioMenu" :key="item.id" class="bg-white p-4 rounded-2xl border border-neutral-150 flex gap-4 shadow-sm relative items-center">
+                    <div v-for="item in portfolioMenu" :key="item.id" :class="['bg-white p-4 rounded-2xl border flex gap-4 shadow-sm relative items-center', item.pinned ? 'border-brand-gold/50 ring-1 ring-brand-gold/20' : 'border-neutral-150']">
                       <div class="h-16 w-16 rounded-xl overflow-hidden bg-brand-bone shrink-0">
                         <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
                       </div>
                       <div class="flex-1 min-w-0 pr-12 text-left">
-                        <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                          <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
+                          <span v-if="item.pinned" class="text-[9px] font-sans font-bold tracking-wider text-brand-gold-dark bg-brand-bone px-2 py-0.5 rounded-full uppercase flex items-center gap-1">
+                            <i data-lucide="pin" class="h-2.5 w-2.5"></i> Pinned
+                          </span>
+                        </div>
                         <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
                         <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.shortDescription}}</p>
                         <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
@@ -1019,6 +1027,9 @@
                         </p>
                       </div>
                       <div class="absolute right-3 flex flex-col gap-1.5">
+                        <button @click="togglePortfolioPin(item)" :class="['nav-raised h-7 w-7 rounded-full flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5', item.pinned ? 'bg-brand-gold-dark text-white' : 'bg-white text-brand-muted']" :title="item.pinned ? 'Lepas pin' : 'Pin ke atas'">
+                          <i data-lucide="pin" class="h-3 w-3"></i>
+                        </button>
                         <button @click="startEditCard(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
                           <i data-lucide="edit-2" class="h-3 w-3"></i>
                         </button>
@@ -1078,6 +1089,14 @@
                           <option v-for="(entry, idx) in careerEntries" :key="'exp-opt-'+idx" :value="experienceKey(entry)">{{ entry.heading }} — {{ entry.period }}</option>
                         </select>
                         <p v-if="careerEntries.length === 0" class="text-[10px] text-brand-muted italic mt-1">Belum ada entri Professional Experience. Tambahkan dulu di Admin &gt; Profil Saya.</p>
+                      </div>
+
+                      <div class="space-y-1 md:col-span-2">
+                        <label class="flex items-center gap-2.5 cursor-pointer select-none w-fit">
+                          <input type="checkbox" v-model="portfolioForm.pinned" class="h-4 w-4 rounded border-neutral-300 text-brand-gold-dark focus:ring-brand-gold/30 cursor-pointer" />
+                          <span class="font-semibold text-black flex items-center gap-1.5"><i data-lucide="pin" class="h-3.5 w-3.5 text-brand-gold-dark"></i>Pin proyek ini di paling atas</span>
+                        </label>
+                        <p class="text-[10px] text-brand-muted italic mt-1 pl-6.5">Proyek yang di-pin selalu tampil paling atas di halaman Portofolio, kecuali sedang ada filter kategori/tanggal/pengalaman/pencarian yang aktif.</p>
                       </div>
 
                       <div class="space-y-1 md:col-span-2">

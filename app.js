@@ -54,7 +54,7 @@ const app = createApp({
     const getEmptyPortfolioForm = () => ({
       name: "", category: "people-culture", categoryLabel: "", price: "", prepTime: "", 
       satisfaction: "", impactMetric: "", images: [], shortDescription: "", 
-      ingredients: [""], allergens: [""], experienceLink: "",
+      ingredients: [""], allergens: [""], experienceLink: "", pinned: false,
       chefNotes: { background: "", challenge: "", recipe: [""], results: [""], philosophy: "" }
     });
     const portfolioForm = ref(getEmptyPortfolioForm());
@@ -414,6 +414,21 @@ const app = createApp({
         }
       }
     };
+
+    // Toggle pin langsung dari daftar admin (tanpa perlu buka form edit).
+    // Proyek yang di-pin selalu naik ke atas di halaman Portofolio — tapi
+    // hanya ketika belum ada filter kategori/tanggal/pengalaman/pencarian
+    // yang aktif (lihat isAnyFilterActive di filteredMenu).
+    const togglePortfolioPin = async (item) => {
+      const prevValue = item.pinned;
+      item.pinned = !item.pinned;
+      try {
+        await window.db.saveContent("portfolio_menu", portfolioMenu.value);
+      } catch (err) {
+        item.pinned = prevValue;
+        alert("Gagal menyimpan status pin ke Supabase. Cek koneksi internet kamu.");
+      }
+    };
     
     const cancelPortfolioForm = () => {
       portfolioForm.value = getEmptyPortfolioForm();
@@ -737,28 +752,51 @@ const app = createApp({
       return Array.from(years).sort((a, b) => b.localeCompare(a));
     });
 
+    // Apakah ada filter/pencarian yang sedang aktif — dipakai untuk menentukan
+    // apakah proyek yang dipin masih boleh "dipaksa" ke atas atau tidak.
+    const isAnyFilterActive = computed(() => {
+      return selectedCategory.value !== "all" ||
+             selectedDateFilter.value !== "all" ||
+             selectedExperienceFilter.value !== "all" ||
+             !!searchQuery.value;
+    });
+
     const filteredMenu = computed(() => {
-      return portfolioMenu.value
-        .filter(item => {
-          const matchesCat = selectedCategory.value === "all" || item.category === selectedCategory.value;
-          const matchesDate = selectedDateFilter.value === "all" || (item.price || "").startsWith(selectedDateFilter.value);
-          const matchesExperience = selectedExperienceFilter.value === "all" ||
-                                     (selectedExperienceFilter.value === "none" ? !item.experienceLink : item.experienceLink === selectedExperienceFilter.value);
-          const search = searchQuery.value.toLowerCase();
-          const matchesSearch = !search ||
-                                item.name.toLowerCase().includes(search) ||
-                                (item.shortDescription && item.shortDescription.toLowerCase().includes(search)) ||
-                                (item.ingredients && item.ingredients.some(ing => ing.toLowerCase().includes(search)));
-          return matchesCat && matchesDate && matchesExperience && matchesSearch;
-        })
-        // Default urutan: proyek terbaru dulu, berdasarkan "Tanggal Pelaksanaan
-        // Proyek" (field price, format "YYYY-MM"). Proyek tanpa tanggal valid
-        // ditaruh paling belakang, bukan ikut tercampur di urutan atas.
-        .sort((a, b) => {
-          const dateA = /^\d{4}-\d{2}$/.test(a.price || "") ? a.price : "0000-00";
-          const dateB = /^\d{4}-\d{2}$/.test(b.price || "") ? b.price : "0000-00";
-          return dateB.localeCompare(dateA);
-        });
+      const filtered = portfolioMenu.value.filter(item => {
+        const matchesCat = selectedCategory.value === "all" || item.category === selectedCategory.value;
+        const matchesDate = selectedDateFilter.value === "all" || (item.price || "").startsWith(selectedDateFilter.value);
+        const matchesExperience = selectedExperienceFilter.value === "all" ||
+                                   (selectedExperienceFilter.value === "none" ? !item.experienceLink : item.experienceLink === selectedExperienceFilter.value);
+        const search = searchQuery.value.toLowerCase();
+        const matchesSearch = !search ||
+                              item.name.toLowerCase().includes(search) ||
+                              (item.shortDescription && item.shortDescription.toLowerCase().includes(search)) ||
+                              (item.ingredients && item.ingredients.some(ing => ing.toLowerCase().includes(search)));
+        return matchesCat && matchesDate && matchesExperience && matchesSearch;
+      });
+
+      // Default urutan: proyek terbaru dulu, berdasarkan "Tanggal Pelaksanaan
+      // Proyek" (field price, format "YYYY-MM"). Proyek tanpa tanggal valid
+      // ditaruh paling belakang, bukan ikut tercampur di urutan atas.
+      const byDateDesc = (a, b) => {
+        const dateA = /^\d{4}-\d{2}$/.test(a.price || "") ? a.price : "0000-00";
+        const dateB = /^\d{4}-\d{2}$/.test(b.price || "") ? b.price : "0000-00";
+        return dateB.localeCompare(dateA);
+      };
+
+      // Proyek yang di-pin selalu naik ke paling atas — TAPI hanya saat lagi
+      // tidak ada filter kategori/tanggal/pengalaman/pencarian yang aktif.
+      // Begitu ada filter aktif, urutan balik ke murni tanggal terbaru saja,
+      // supaya hasil filter tetap terasa "apa adanya" tanpa proyek pin
+      // menyerobot posisi di atas hasil pencarian/filter tertentu.
+      if (isAnyFilterActive.value) {
+        return [...filtered].sort(byDateDesc);
+      }
+      const pinned = filtered.filter(item => item.pinned);
+      const rest = filtered.filter(item => !item.pinned);
+      pinned.sort(byDateDesc);
+      rest.sort(byDateDesc);
+      return [...pinned, ...rest];
     });
 
     const currentDish = computed(() => portfolioMenu.value[currentSlideIndex.value] || portfolioMenu.value[0]);
@@ -1017,7 +1055,7 @@ const app = createApp({
     }, { immediate: true });
 
     return {
-      activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, searchQuery, selectedDish, openDishDetails,
+      activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
       selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,
       certificateMenu, selectedCertificate, openCertificate,
@@ -1026,7 +1064,7 @@ const app = createApp({
       homeShapeLeftRef, homeCareerCardHeight,
       linkCopied, copyLink,
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
-      startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm,
+      startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm, togglePortfolioPin,
       handleAddField, handleRemoveField, handleFieldChange,
       portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,
       certificateForm, isAddingCertificate, editingCertificateId,
