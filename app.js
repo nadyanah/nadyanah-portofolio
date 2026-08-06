@@ -31,6 +31,8 @@ const app = createApp({
       });
     };
     const selectedCategory = ref("all");
+    const selectedDateFilter = ref("all");
+    const selectedExperienceFilter = ref("all");
     const searchQuery = ref("");
     const selectedDish = ref(null);
 
@@ -724,16 +726,39 @@ const app = createApp({
       }
     };
 
-    const filteredMenu = computed(() => {
-      return portfolioMenu.value.filter(item => {
-        const matchesCat = selectedCategory.value === "all" || item.category === selectedCategory.value;
-        const search = searchQuery.value.toLowerCase();
-        const matchesSearch = !search ||
-                              item.name.toLowerCase().includes(search) ||
-                              (item.shortDescription && item.shortDescription.toLowerCase().includes(search)) ||
-                              (item.ingredients && item.ingredients.some(ing => ing.toLowerCase().includes(search)));
-        return matchesCat && matchesSearch;
+    // Opsi dropdown "Tanggal Pelaksanaan Proyek" — diambil otomatis dari tahun
+    // pada field price ("YYYY-MM") tiap proyek, unik & diurutkan terbaru dulu.
+    const dateFilterOptions = computed(() => {
+      const years = new Set();
+      portfolioMenu.value.forEach(item => {
+        const match = /^(\d{4})-\d{2}$/.exec(item.price || "");
+        if (match) years.add(match[1]);
       });
+      return Array.from(years).sort((a, b) => b.localeCompare(a));
+    });
+
+    const filteredMenu = computed(() => {
+      return portfolioMenu.value
+        .filter(item => {
+          const matchesCat = selectedCategory.value === "all" || item.category === selectedCategory.value;
+          const matchesDate = selectedDateFilter.value === "all" || (item.price || "").startsWith(selectedDateFilter.value);
+          const matchesExperience = selectedExperienceFilter.value === "all" ||
+                                     (selectedExperienceFilter.value === "none" ? !item.experienceLink : item.experienceLink === selectedExperienceFilter.value);
+          const search = searchQuery.value.toLowerCase();
+          const matchesSearch = !search ||
+                                item.name.toLowerCase().includes(search) ||
+                                (item.shortDescription && item.shortDescription.toLowerCase().includes(search)) ||
+                                (item.ingredients && item.ingredients.some(ing => ing.toLowerCase().includes(search)));
+          return matchesCat && matchesDate && matchesExperience && matchesSearch;
+        })
+        // Default urutan: proyek terbaru dulu, berdasarkan "Tanggal Pelaksanaan
+        // Proyek" (field price, format "YYYY-MM"). Proyek tanpa tanggal valid
+        // ditaruh paling belakang, bukan ikut tercampur di urutan atas.
+        .sort((a, b) => {
+          const dateA = /^\d{4}-\d{2}$/.test(a.price || "") ? a.price : "0000-00";
+          const dateB = /^\d{4}-\d{2}$/.test(b.price || "") ? b.price : "0000-00";
+          return dateB.localeCompare(dateA);
+        });
     });
 
     const currentDish = computed(() => portfolioMenu.value[currentSlideIndex.value] || portfolioMenu.value[0]);
@@ -978,7 +1003,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
       refreshIcons();
     });
 
@@ -992,7 +1017,7 @@ const app = createApp({
     }, { immediate: true });
 
     return {
-      activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, searchQuery, selectedDish, openDishDetails,
+      activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, searchQuery, selectedDish, openDishDetails,
       selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,
       certificateMenu, selectedCertificate, openCertificate,

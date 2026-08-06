@@ -427,19 +427,37 @@
 
             <!-- MENU TAB -->
             <div v-if="activeTab === 'menu'" class="space-y-8 fade-in-up">
-               <div class="bg-brand-cream flex flex-col sm:flex-row justify-between items-center p-3 rounded-2xl border border-neutral-200/50 shadow-inner">
-                  <div class="flex flex-wrap gap-1.5 justify-center">
-                    <button v-for="cat in [{id:'all', label:'Semua'}, {id:'people-culture', label:'People Culture'}, {id:'employer-branding', label:'Employer Branding'}, {id:'people-analytics', label:'People Analytics'}, {id:'organizational-development', label:'Organizational Development'}]" 
-                            :key="cat.id" @click="selectedCategory = cat.id" 
-                            :class="['pill-press px-4 py-1.5 text-xs font-medium tracking-wide rounded-full focus:outline-none cursor-pointer', selectedCategory === cat.id ? 'pill-press-active text-brand-muted' : 'text-brand-muted hover:text-black']">
-                      {{cat.label}}
-                    </button>
+               <div class="bg-brand-cream flex flex-col gap-3 p-3 rounded-2xl border border-neutral-200/50 shadow-inner">
+                  <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                    <div class="flex flex-col sm:flex-row gap-2 flex-1 min-w-0">
+                      <select v-model="selectedCategory" class="select-raised w-full sm:w-auto flex-1 min-w-0 px-4 py-2 text-xs font-medium text-brand-muted focus:outline-none cursor-pointer">
+                        <option value="all">Semua Kategori</option>
+                        <option value="people-culture">People Culture</option>
+                        <option value="employer-branding">Employer Branding</option>
+                        <option value="people-analytics">People Analytics</option>
+                        <option value="organizational-development">Organizational Development</option>
+                      </select>
+                      <select v-model="selectedDateFilter" class="select-raised w-full sm:w-auto flex-1 min-w-0 px-4 py-2 text-xs font-medium text-brand-muted focus:outline-none cursor-pointer">
+                        <option value="all">Semua Tahun</option>
+                        <option v-for="year in dateFilterOptions" :key="'year-'+year" :value="year">{{ year }}</option>
+                      </select>
+                      <select v-model="selectedExperienceFilter" class="select-raised w-full sm:w-auto flex-1 min-w-0 px-4 py-2 text-xs font-medium text-brand-muted focus:outline-none cursor-pointer">
+                        <option value="all">Semua Pengalaman</option>
+                        <option v-for="(entry, idx) in careerEntries" :key="'exp-filter-'+idx" :value="experienceKey(entry)">{{ entry.heading }}</option>
+                        <option value="none">Belum Disinkronkan</option>
+                      </select>
+                    </div>
+                    <div class="relative w-full sm:w-64 shrink-0">
+                      <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-brand-muted"></i>
+                      <input type="text" v-model="searchQuery" placeholder="Cari bahan / nama proyek..." class="search-raised w-full pl-9 pr-4 py-1.5 bg-white rounded-full border-0 text-xs focus:outline-none transition-all" />
+                      <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-black cursor-pointer">
+                        <i data-lucide="x" class="h-3 w-3"></i>
+                      </button>
+                    </div>
                   </div>
-                  <div class="relative w-full sm:w-64 mt-3 sm:mt-0">
-                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-brand-muted"></i>
-                    <input type="text" v-model="searchQuery" placeholder="Cari bahan / nama proyek..." class="search-raised w-full pl-9 pr-4 py-1.5 bg-white rounded-full border-0 text-xs focus:outline-none transition-all" />
-                    <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-black cursor-pointer">
-                      <i data-lucide="x" class="h-3 w-3"></i>
+                  <div v-if="selectedCategory !== 'all' || selectedDateFilter !== 'all' || selectedExperienceFilter !== 'all'" class="flex justify-end">
+                    <button @click="selectedCategory = 'all'; selectedDateFilter = 'all'; selectedExperienceFilter = 'all'" class="text-[10px] font-mono uppercase tracking-wider text-brand-muted hover:text-black underline underline-offset-2 cursor-pointer">
+                      Reset Filter
                     </button>
                   </div>
                </div>
