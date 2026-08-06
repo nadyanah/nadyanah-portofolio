@@ -482,6 +482,10 @@
                         <div class="border-t border-neutral-100 pt-3 flex items-center text-[11px] font-mono">
                            <span class="text-brand-gold-dark font-bold flex items-center gap-1"><i data-lucide="award" class="h-3 w-3 text-brand-gold"></i>{{item.impactMetric}}</span>
                         </div>
+                        <div v-if="getLinkedExperience(item)" class="flex items-center gap-1.5 text-[10px] text-brand-muted font-mono mt-1.5" :title="'Terhubung dengan pengalaman: ' + getLinkedExperience(item).heading + ' (' + getLinkedExperience(item).period + ')'">
+                           <i data-lucide="link" class="h-3 w-3 text-brand-gold shrink-0"></i>
+                           <span class="truncate">{{ getLinkedExperience(item).heading }}</span>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -992,6 +996,9 @@
                         <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
                         <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.shortDescription}}</p>
                         <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
+                        <p v-if="getLinkedExperience(item)" class="text-[9px] font-sans text-brand-gold-dark mt-1 font-semibold flex items-center gap-1">
+                          <i data-lucide="link" class="h-2.5 w-2.5"></i> Synced: {{ getLinkedExperience(item).heading }}
+                        </p>
                       </div>
                       <div class="absolute right-3 flex flex-col gap-1.5">
                         <button @click="startEditCard(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
@@ -1044,6 +1051,15 @@
                       <div class="space-y-1">
                         <label class="font-semibold text-black">Metrik Dampak (Hasil Terukur)*</label>
                         <input type="text" required placeholder="Contoh: -35% Turnover Rate" v-model="portfolioForm.impactMetric" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
+                      </div>
+
+                      <div class="space-y-1 md:col-span-2">
+                        <label class="font-semibold text-black block">Sinkronkan dengan Pengalaman <span class="text-brand-muted font-normal">(opsional — hubungkan proyek ini ke salah satu entri Professional Experience di Admin &gt; Profil Saya)</span></label>
+                        <select v-model="portfolioForm.experienceLink" class="w-full px-2 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer">
+                          <option value="">Tidak disinkronkan</option>
+                          <option v-for="(entry, idx) in careerEntries" :key="'exp-opt-'+idx" :value="experienceKey(entry)">{{ entry.heading }} — {{ entry.period }}</option>
+                        </select>
+                        <p v-if="careerEntries.length === 0" class="text-[10px] text-brand-muted italic mt-1">Belum ada entri Professional Experience. Tambahkan dulu di Admin &gt; Profil Saya.</p>
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
@@ -1710,6 +1726,17 @@
                       <p class="text-sm text-black italic border-l-2 border-brand-gold pl-4 py-0.5 font-sans leading-relaxed">
                         &ldquo;{{ selectedDish.shortDescription }}&rdquo;
                       </p>
+
+                      <!-- SYNC BADGE — muncul kalau proyek ini disinkronkan dengan salah satu
+                           entri Professional Experience (diatur di Admin > Kelola Portofolio) -->
+                      <div v-if="getLinkedExperience(selectedDish)" class="flex items-start gap-2.5 text-brand-gold-dark font-mono bg-brand-bone/60 border border-brand-gold/20 rounded-xl px-3.5 py-2.5">
+                        <i data-lucide="link" class="h-3.5 w-3.5 shrink-0 mt-0.5"></i>
+                        <div class="min-w-0">
+                          <p class="text-[10px] uppercase tracking-wider opacity-80">Bagian dari pengalaman</p>
+                          <p class="text-xs font-bold text-black leading-snug mt-0.5">{{ getLinkedExperience(selectedDish).heading }}</p>
+                          <p class="text-[10px] mt-1">{{ getLinkedExperience(selectedDish).period }}</p>
+                        </div>
+                      </div>
 
                       <!-- BORDERED / LINE-DIVIDED INFO BLOCK -->
                       <div class="border border-neutral-300 rounded-2xl overflow-hidden divide-y divide-neutral-300">

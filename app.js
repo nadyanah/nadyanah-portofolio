@@ -52,7 +52,7 @@ const app = createApp({
     const getEmptyPortfolioForm = () => ({
       name: "", category: "people-culture", categoryLabel: "", price: "", prepTime: "", 
       satisfaction: "", impactMetric: "", images: [], shortDescription: "", 
-      ingredients: [""], allergens: [""],
+      ingredients: [""], allergens: [""], experienceLink: "",
       chefNotes: { background: "", challenge: "", recipe: [""], results: [""], philosophy: "" }
     });
     const portfolioForm = ref(getEmptyPortfolioForm());
@@ -805,6 +805,20 @@ const app = createApp({
       return experienceSection.entries;
     });
 
+    // SYNC PORTOFOLIO <-> PROFESSIONAL EXPERIENCE — sebuah proyek portofolio
+    // bisa "disinkronkan" ke salah satu entri Professional Experience (dari
+    // Admin > Profil Saya). Karena entri experience tidak punya id tetap,
+    // pautannya disimpan sebagai kombinasi heading+period (lewat experienceKey)
+    // di portfolioForm.experienceLink / item.experienceLink. Kalau admin
+    // mengganti judul atau periode entri tsb, pautan lama otomatis lepas
+    // (dianggap trade-off yang wajar, sama seperti id proyek yang re-derive
+    // dari judul di savePortfolioCard).
+    const experienceKey = (entry) => `${entry.heading || ""}||${entry.period || ""}`;
+    const getLinkedExperience = (item) => {
+      if (!item || !item.experienceLink) return null;
+      return careerEntries.value.find(entry => experienceKey(entry) === item.experienceLink) || null;
+    };
+
     const handlePrevSlide = () => {
       if (portfolioMenu.value.length === 0) return;
       currentSlideIndex.value = currentSlideIndex.value === 0 ? portfolioMenu.value.length - 1 : currentSlideIndex.value - 1;
@@ -983,6 +997,7 @@ const app = createApp({
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,
       certificateMenu, selectedCertificate, openCertificate,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
+      experienceKey, getLinkedExperience,
       homeShapeLeftRef, homeCareerCardHeight,
       linkCopied, copyLink,
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
