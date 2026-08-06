@@ -51,7 +51,7 @@ const app = createApp({
     // ADMIN FORM STATES
     const getEmptyPortfolioForm = () => ({
       name: "", category: "people-culture", categoryLabel: "", price: "", prepTime: "", 
-      satisfaction: "", impactMetric: "", image: "", shortDescription: "", 
+      satisfaction: "", impactMetric: "", images: [], shortDescription: "", 
       ingredients: [""], allergens: [""],
       chefNotes: { background: "", challenge: "", recipe: [""], results: [""], philosophy: "" }
     });
@@ -326,24 +326,64 @@ const app = createApp({
       return candidate;
     };
 
+    // Normalizes a portfolio item's photos into a consistent
+    // [{ url, caption }, ...] shape, regardless of which "generation" of
+    // data it came from:
+    //  1) newest: images: [{ url, caption }, ...]
+    //  2) multi-photo (no captions yet): images: ["url1", "url2", ...]
+    //  3) oldest (single-photo): image: "url" only
+    // Used both when opening a project in the admin form and when reading
+    // selectedDishImages for the public popup, so every project — however
+    // old — always renders correctly.
+    const normalizeImages = (item) => {
+      if (!item) return [];
+      if (Array.isArray(item.images) && item.images.length) {
+        return item.images.map(img => typeof img === "string"
+          ? { url: img, caption: "" }
+          : { url: img.url, caption: img.caption || "" });
+      }
+      return item.image ? [{ url: item.image, caption: "" }] : [];
+    };
+
+    // Formats the project's "Tanggal Pelaksanaan" — stored as "YYYY-MM" from
+    // the <input type="month"> picker — into a readable "Jan 2026" label.
+    // Falls back to showing the raw value as-is for older projects saved
+    // before this field became a date picker (back when it was free text
+    // like "Est. 2026" or "Scale 100+ Staff"), so old cards don't break.
+    const formatProjectDate = (value) => {
+      if (!value) return "";
+      const match = /^(\d{4})-(\d{2})$/.exec(value);
+      if (!match) return value;
+      const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+      const monthLabel = months[parseInt(match[2], 10) - 1] || match[2];
+      return `${monthLabel} ${match[1]}`;
+    };
+
     // PORTFOLIO ADMIN HANDLERS
     const startEditCard = (card) => {
       portfolioForm.value = JSON.parse(JSON.stringify(card));
+      // Always (re)build from normalizeImages — handles old cards (single
+      // `image` string, or an `images` array of plain strings from before
+      // captions existed) as well as the current { url, caption } shape.
+      portfolioForm.value.images = normalizeImages(card);
       editingCardId.value = card.id;
       isAddingCard.value = true;
     };
     
     const savePortfolioCard = async (e) => {
       if(e) e.preventDefault();
-      if (!portfolioForm.value.image) {
-        alert("Upload gambar proyek dulu ya.");
+      if (!portfolioForm.value.images || portfolioForm.value.images.length === 0) {
+        alert("Upload minimal 1 gambar proyek dulu ya.");
         return;
       }
       // id is re-derived from the title every save — so renaming a project
       // also updates its shareable link (#/menu/<id>). NOTE: this means a
       // link copied before a rename will stop working after the rename;
       // that's the intended trade-off of having readable, title-based links.
-      const submission = { ...portfolioForm.value, id: makeUniqueSlugId(portfolioForm.value.name, portfolioMenu.value, editingCardId.value) };
+      // `image` is kept in sync as the cover photo's url so every other place
+      // that still reads the old single-image field (grid thumbnails, home
+      // highlight slider, admin card list) keeps working unchanged.
+      const submission = { ...portfolioForm.value, image: portfolioForm.value.images[0].url, id: makeUniqueSlugId(portfolioForm.value.name, portfolioMenu.value, editingCardId.value) };
       if (editingCardId.value) {
         const idx = portfolioMenu.value.findIndex(item => item.id === editingCardId.value);
         if (idx !== -1) portfolioMenu.value[idx] = submission;
@@ -379,13 +419,26 @@ const app = createApp({
       isAddingCard.value = false;
     };
 
+    // Appends each newly uploaded/cropped photo to the project's photo list
+    // (rather than replacing a single image), so a project can carry several
+    // photos. The file input has no `multiple` attribute on purpose — each
+    // photo still goes through the crop modal one at a time, then the admin
+    // can click "Tambah Foto" again for the next one.
     const handlePortfolioImageUpload = (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      openCropModal(file, { assign: (url) => portfolioForm.value.image = url, folder: "portfolio", uploadingRef: portfolioImageUploading, aspect: 4 / 3 }, e.target);
+      openCropModal(file, { assign: (url) => { portfolioForm.value.images.push({ url, caption: "" }); refreshIcons(); }, folder: "portfolio", uploadingRef: portfolioImageUploading, aspect: 4 / 3 }, e.target);
     };
-    const handlePortfolioImageRemove = () => {
-      portfolioForm.value.image = "";
+    const handlePortfolioImageRemove = (idx) => {
+      portfolioForm.value.images.splice(idx, 1);
+    };
+    // Moves a photo to the front of the list — the first photo is always the
+    // "cover" shown in grids/cards and as the popup's first photo.
+    const setPortfolioCoverImage = (idx) => {
+      if (idx <= 0 || idx >= portfolioForm.value.images.length) return;
+      const [img] = portfolioForm.value.images.splice(idx, 1);
+      portfolioForm.value.images.unshift(img);
+      refreshIcons(); // the "jadikan sampul" star button re-mounts on whichever thumbnail is no longer first
     };
 
     const handleAddField = (field, subfield = null) => {
@@ -778,6 +831,24 @@ const app = createApp({
       refreshIcons();
     };
 
+    // POPUP PHOTO GALLERY — "images" is the current project's photo list;
+    // falls back to the old single "image" field for projects saved before
+    // multi-photo support. Index resets to 0 every time a different project
+    // is opened, so you always start on the cover photo.
+    const selectedDishImageIndex = ref(0);
+    const selectedDishImages = computed(() => normalizeImages(selectedDish.value));
+    watch(selectedDish, () => { selectedDishImageIndex.value = 0; });
+    const nextDishImage = () => {
+      const total = selectedDishImages.value.length;
+      if (total < 2) return;
+      selectedDishImageIndex.value = (selectedDishImageIndex.value + 1) % total;
+    };
+    const prevDishImage = () => {
+      const total = selectedDishImages.value.length;
+      if (total < 2) return;
+      selectedDishImageIndex.value = (selectedDishImageIndex.value - 1 + total) % total;
+    };
+
     const openCertificate = (cert) => {
       selectedCertificate.value = cert;
       refreshIcons();
@@ -908,6 +979,7 @@ const app = createApp({
 
     return {
       activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, searchQuery, selectedDish, openDishDetails,
+      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,
       certificateMenu, selectedCertificate, openCertificate,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
@@ -916,7 +988,7 @@ const app = createApp({
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm,
       handleAddField, handleRemoveField, handleFieldChange,
-      portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove,
+      portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,
       certificateForm, isAddingCertificate, editingCertificateId,
       startEditCertificate, saveCertificate, deleteCertificate, cancelCertificateForm,
       certificateImageUploading, handleCertificateImageUpload, handleCertificateImageRemove,

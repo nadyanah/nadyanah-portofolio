@@ -321,7 +321,7 @@
                   <div class="relative aspect-[16/11] rounded-xl overflow-hidden bg-neutral-100">
                     <img :src="currentDish.image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <span class="absolute top-2.5 left-2.5 bg-white text-black border border-neutral-150 text-[8px] font-mono font-bold tracking-widest px-2 py-0.5 rounded-full uppercase shadow-sm">{{ currentDish.categoryLabel.split(" ")[0] }}</span>
-                    <span class="absolute top-2.5 right-2.5 bg-white text-black border border-neutral-150 text-[8px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full shadow-sm">{{ currentDish.price }}</span>
+                    <span class="absolute top-2.5 right-2.5 bg-white text-black border border-neutral-150 text-[8px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full shadow-sm">{{ formatProjectDate(currentDish.price) }}</span>
                   </div>
                   <div class="pt-3 px-1 text-left">
                     <h3 class="text-lg font-serif text-black font-bold leading-tight group-hover:text-brand-gold transition-colors mb-1 line-clamp-1">{{ currentDish.name }}</h3>
@@ -457,7 +457,7 @@
                            <span class="bg-white/90 backdrop-blur-md text-black border border-neutral-150 text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">{{item.category}}</span>
                         </div>
                         <div class="absolute top-4 right-4">
-                           <span class="bg-white/90 backdrop-blur-md border border-neutral-200/50 text-black text-[10px] font-mono font-bold px-3 py-1 rounded-full shadow-sm">{{item.price}}</span>
+                           <span class="bg-white/90 backdrop-blur-md border border-neutral-200/50 text-black text-[10px] font-mono font-bold px-3 py-1 rounded-full shadow-sm">{{formatProjectDate(item.price)}}</span>
                         </div>
                         <!-- HOVER OVERLAY -->
                         <div class="card-overlay absolute inset-0 flex flex-col justify-end p-5" style="background: linear-gradient(to top, rgba(146,140,131,0.97) 0%, rgba(146,140,131,0.75) 55%, transparent 100%); opacity: 0; transition: opacity 0.35s ease;">
@@ -991,7 +991,7 @@
                         <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
                         <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
                         <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.shortDescription}}</p>
-                        <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{item.price}}</p>
+                        <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
                       </div>
                       <div class="absolute right-3 flex flex-col gap-1.5">
                         <button @click="startEditCard(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
@@ -1037,8 +1037,8 @@
                       </div>
 
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Skala / Timeline Proyek*</label>
-                        <input type="text" required placeholder="Contoh: Est. 2026 atau Scale 100+ Staff" v-model="portfolioForm.price" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
+                        <label class="font-semibold text-black">Tanggal Pelaksanaan Proyek*</label>
+                        <input type="month" required v-model="portfolioForm.price" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer" />
                       </div>
 
                       <div class="space-y-1">
@@ -1047,19 +1047,28 @@
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Gambar Proyek*</label>
-                        <div class="flex items-center gap-4">
-                          <div class="h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
-                            <img v-if="portfolioForm.image" :src="portfolioForm.image" class="w-full h-full object-cover" />
-                            <i v-else data-lucide="image" class="h-6 w-6 text-brand-muted"></i>
+                        <label class="font-semibold text-black block">Gambar Proyek* <span class="text-brand-muted font-normal">(bisa lebih dari 1 — foto pertama jadi sampul, deskripsi opsional)</span></label>
+                        <div class="flex flex-wrap gap-3">
+                          <div v-for="(img, idx) in portfolioForm.images" :key="idx" class="w-28 shrink-0 flex flex-col gap-1.5">
+                            <div class="relative h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 group">
+                              <img :src="img.url" class="w-full h-full object-cover" />
+                              <span v-if="idx === 0" class="absolute top-1 left-1 bg-brand-gold text-white text-[8px] font-mono font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full">Sampul</span>
+                              <div class="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+                                <button type="button" v-if="idx !== 0" @click="setPortfolioCoverImage(idx)" title="Jadikan sampul" class="h-6 w-6 rounded-full bg-white/90 text-black flex items-center justify-center hover:bg-white cursor-pointer">
+                                  <i data-lucide="star" class="h-3 w-3"></i>
+                                </button>
+                                <button type="button" @click="handlePortfolioImageRemove(idx)" title="Hapus foto" class="h-6 w-6 rounded-full bg-white/90 text-red-500 flex items-center justify-center hover:bg-white cursor-pointer">
+                                  <i data-lucide="trash-2" class="h-3 w-3"></i>
+                                </button>
+                              </div>
+                            </div>
+                            <input type="text" v-model="img.caption" placeholder="Deskripsi foto (opsional)" class="w-full px-2 py-1 text-[10px] bg-white border border-neutral-200 rounded-lg focus:outline-none" />
                           </div>
-                          <div class="flex flex-col gap-1.5">
-                            <label class="chip-raised px-3 py-1.5 text-black rounded-full text-[11px] font-semibold cursor-pointer hover:text-brand-gold-dark transition-all w-fit">
-                              {{ portfolioImageUploading ? 'Mengupload...' : 'Pilih Foto' }}
-                              <input type="file" accept="image/*" :disabled="portfolioImageUploading" @change="handlePortfolioImageUpload" class="hidden" />
-                            </label>
-                            <button type="button" v-if="portfolioForm.image" @click="handlePortfolioImageRemove" class="text-[11px] text-red-500 hover:text-red-600 font-semibold text-left cursor-pointer">Hapus Foto</button>
-                          </div>
+                          <label class="h-20 w-28 rounded-xl border border-dashed border-neutral-300 shrink-0 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-brand-gold hover:text-brand-gold-dark transition-all text-brand-muted">
+                            <i data-lucide="plus" class="h-4 w-4"></i>
+                            <span class="text-[10px] font-semibold text-center px-1 leading-tight">{{ portfolioImageUploading ? 'Mengupload...' : 'Tambah Foto' }}</span>
+                            <input type="file" accept="image/*" :disabled="portfolioImageUploading" @change="handlePortfolioImageUpload" class="hidden" />
+                          </label>
                         </div>
                       </div>
 
@@ -1655,8 +1664,28 @@
                   <!-- LEFT PAGE (photo, full-bleed, 1440x1080 / 4:3 on desktop) -->
                   <div class="relative min-h-[350px] md:min-h-0 md:h-full border-b md:border-b-0 md:border-r border-neutral-200">
                     <div class="absolute inset-0 w-full h-full">
-                      <img :src="selectedDish.image" :alt="selectedDish.name" class="w-full h-full object-cover" />
+                      <img :src="selectedDishImages[selectedDishImageIndex] && selectedDishImages[selectedDishImageIndex].url" :alt="selectedDish.name" class="w-full h-full object-cover" />
                     </div>
+
+                    <!-- PER-PHOTO CAPTION — italic, overlaid near the bottom of the photo.
+                         Only shows when the current photo actually has a caption. -->
+                    <p v-if="selectedDishImages[selectedDishImageIndex] && selectedDishImages[selectedDishImageIndex].caption"
+                       class="absolute inset-x-6 md:inset-x-10 bottom-28 md:bottom-12 z-20 text-center text-white italic font-normal text-sm md:text-base leading-snug drop-shadow-[0_2px_10px_rgba(0,0,0,0.65)] pointer-events-none">
+                      {{ selectedDishImages[selectedDishImageIndex].caption }}
+                    </p>
+
+                    <!-- PREV/NEXT PHOTO NAVIGATION — only shown when the project has more than 1 photo -->
+                    <template v-if="selectedDishImages.length > 1">
+                      <button @click.stop="prevDishImage" title="Foto sebelumnya" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+                        <i data-lucide="chevron-left" class="h-4 w-4"></i>
+                      </button>
+                      <button @click.stop="nextDishImage" title="Foto berikutnya" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+                        <i data-lucide="chevron-right" class="h-4 w-4"></i>
+                      </button>
+                      <div class="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 z-20 items-center gap-1.5">
+                        <button v-for="(img, idx) in selectedDishImages" :key="idx" @click.stop="selectedDishImageIndex = idx" :title="'Foto ' + (idx + 1)" :class="['transition-all duration-300 rounded-full', idx === selectedDishImageIndex ? 'w-5 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/60 hover:bg-white/80']"></button>
+                      </div>
+                    </template>
 
                     <div class="absolute inset-x-6 bottom-6 md:hidden text-black bg-white/90 backdrop-blur-sm border border-neutral-150 p-4 rounded-xl">
                       <span class="text-[9px] font-mono uppercase tracking-wider text-brand-gold font-bold">{{ selectedDish.categoryLabel }}</span>
@@ -1671,7 +1700,7 @@
                       <!-- JUDUL / TITLE -->
                       <div class="hidden md:block">
                         <span class="text-xs font-mono tracking-widest text-brand-gold font-bold uppercase block mb-2">
-                          {{ selectedDish.categoryLabel }} • {{ selectedDish.price }}
+                          {{ selectedDish.categoryLabel }} • {{ formatProjectDate(selectedDish.price) }}
                         </span>
                         <h2 class="text-2xl lg:text-3xl font-sans font-semibold text-black tracking-tight leading-tight">
                           {{ selectedDish.name }}
