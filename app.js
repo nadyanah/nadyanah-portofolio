@@ -42,6 +42,7 @@ const app = createApp({
     const mainPageContent = ref({});
     const guestbookEntries = ref([]);
     const certificateMenu = ref([]);
+    const visitorCount = ref(0);
     const selectedCertificate = ref(null);
     
     // ADMIN STATES
@@ -298,8 +299,49 @@ const app = createApp({
       } finally {
         dataLoading.value = false;
         refreshIcons();
+        // VISITOR COUNTER — dihitung 1x per pengunjung per hari (bukan tiap
+        // refresh), pakai tanggal terakhir mampir yang disimpan di
+        // localStorage browser pengunjung itu sendiri. Kalau tanggalnya beda
+        // dari hari ini (atau belum pernah mampir sama sekali), counter di
+        // Supabase ditambah 1 dan tanggalnya diperbarui. Dijalankan terpisah
+        // (tidak ikut Promise.all di atas & tidak melempar error ke
+        // dataLoadError) supaya kalau ada masalah di sini, halaman utama
+        // tetap tampil normal — statistik pengunjung bukan konten inti.
+        trackVisitor();
       }
     });
+
+    // Reuses the same generic key-value content store as everything else
+    // (window.db.getContent/saveContent — see the main data load above),
+    // so it needs zero changes to supabase-client.js or the database schema.
+    // Storage key: "visitor_stats" -> { count: number }.
+    const VISITOR_LOCALSTORAGE_KEY = "nadyanah_portofolio_last_visit_date";
+    const trackVisitor = async () => {
+      try {
+        const todayStr = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+        const lastVisit = localStorage.getItem(VISITOR_LOCALSTORAGE_KEY);
+
+        const statsRes = await window.db.getContent("visitor_stats", { count: 0 });
+        const currentCount = (statsRes && statsRes.value && typeof statsRes.value.count === "number")
+          ? statsRes.value.count
+          : 0;
+
+        if (lastVisit === todayStr) {
+          // Sudah dihitung hari ini di browser ini, cukup tampilkan angkanya.
+          visitorCount.value = currentCount;
+          return;
+        }
+
+        const newCount = currentCount + 1;
+        await window.db.saveContent("visitor_stats", { count: newCount });
+        localStorage.setItem(VISITOR_LOCALSTORAGE_KEY, todayStr);
+        visitorCount.value = newCount;
+      } catch (err) {
+        // Statistik pengunjung bukan fitur inti — kalau gagal (mis. offline),
+        // diamkan saja dan jangan ganggu tampilan halaman utama.
+        console.warn("Gagal melacak/memuat jumlah pengunjung:", err);
+      }
+    };
 
     // HANDLERS
 
@@ -1071,7 +1113,7 @@ const app = createApp({
     return {
       activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
       selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate,
-      portfolioMenu, chefProfileState, mainPageContent, guestbookEntries,
+      portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
       experienceKey, getLinkedExperience,

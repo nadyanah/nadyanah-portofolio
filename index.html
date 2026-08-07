@@ -178,12 +178,22 @@
         </div>
       </div>
 
+      <!-- MOBILE VISITOR COUNTER (beranda only) — replaces the copy-link button
+           below with just the visitor count as a plain number while on the
+           home tab. Same fixed top-right spot, no icon this time. -->
+      <div v-if="!showWelcome && activeTab === 'home' && visitorCount > 0"
+           title="Jumlah pengunjung yang pernah mampir"
+           class="lg:hidden fixed top-3 right-3 z-40 h-10 min-w-10 px-3 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center text-black text-sm font-mono font-bold select-none">
+        {{ visitorCount.toLocaleString('id-ID') }}
+      </div>
+
       <!-- MOBILE COPY-LINK BUTTON — small fixed button, top-right. The bottom
            tab bar is already full (Home/Profile/Kisah/Karya/Sertif/Kontak),
            so this sits on its own instead of becoming a cramped 7th item.
            Same idea as the desktop dock's link button: copies a shareable
-           link to whatever page/popup is currently open. -->
-      <button v-if="!showWelcome && activeTab !== 'admin'" @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="lg:hidden fixed top-3 right-3 z-40 h-10 w-10 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] flex items-center justify-center text-neutral-500 active:scale-95 transition-all">
+           link to whatever page/popup is currently open. On the beranda
+           this button is swapped out for the visitor counter above instead. -->
+      <button v-if="!showWelcome && activeTab !== 'admin' && activeTab !== 'home'" @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="lg:hidden fixed top-3 right-3 z-40 h-10 w-10 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] flex items-center justify-center text-neutral-500 active:scale-95 transition-all">
         <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-4 w-4"></i>
       </button>
 
@@ -268,9 +278,13 @@
                 <button @click="switchTab('menu')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
                 <button @click="switchTab('certificate')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
               </div>
-              <button @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="h-8 w-8 rounded-full bg-white border border-neutral-200/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 text-brand-muted hover:text-black">
-                <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-3.5 w-3.5"></i>
-              </button>
+              <!-- VISITOR COUNTER (desktop, beranda) — dulu tombol "salin link", sekarang
+                   diganti tampilkan jumlah pengunjung sebagai angka polos saja (lihat
+                   trackVisitor() di app.js). Bentuknya cuma angka, tanpa icon. -->
+              <div v-if="visitorCount > 0" title="Jumlah pengunjung yang pernah mampir"
+                   class="h-8 min-w-8 px-3 rounded-full bg-white border border-neutral-200/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center text-black text-xs sm:text-sm font-mono font-bold select-none">
+                {{ visitorCount.toLocaleString('id-ID') }}
+              </div>
             </div>
           </div>
 
