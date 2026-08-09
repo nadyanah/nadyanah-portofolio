@@ -266,18 +266,6 @@ const CHEF_PROFILE = {
       ]
     },
     {
-      id: "skills",
-      title: "Skills",
-      type: "tags",
-      items: [
-        "Employee Journey & Experience Mapping",
-        "Tailored OKR & Balanced Scorecard Alignment",
-        "Flexi-Benefits & Rewards Engineering",
-        "Psychological Safety & Conflict Mediation",
-        "Employer Branding & Culture Campaigning"
-      ]
-    },
-    {
       id: "education",
       title: "Education",
       type: "timeline",
@@ -288,6 +276,18 @@ const CHEF_PROFILE = {
           period: "2015 - 2019",
           bullets: []
         }
+      ]
+    },
+    {
+      id: "skills",
+      title: "Skills",
+      type: "tags",
+      items: [
+        "Employee Journey & Experience Mapping",
+        "Tailored OKR & Balanced Scorecard Alignment",
+        "Flexi-Benefits & Rewards Engineering",
+        "Psychological Safety & Conflict Mediation",
+        "Employer Branding & Culture Campaigning"
       ]
     }
   ]

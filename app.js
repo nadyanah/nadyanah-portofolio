@@ -600,6 +600,12 @@ const app = createApp({
     const handleChefFormSubmit = async (e) => {
       if(e) e.preventDefault();
       const next = JSON.parse(JSON.stringify(chefForm.value));
+      // Normalisasi email: hapus spasi di awal/akhir dan prefix "mailto:" kalau
+      // tidak sengaja ikut ke-ketik, supaya link mailto di tombol Email selalu
+      // benar mengarah ke alamat yang diisi admin.
+      if (next.contactEmail) {
+        next.contactEmail = next.contactEmail.trim().replace(/^mailto:/i, "");
+      }
       try {
         await window.db.saveContent("chef_profile", next);
       } catch (err) {
@@ -607,6 +613,7 @@ const app = createApp({
         return;
       }
       chefProfileState.value = next;
+      chefForm.value.contactEmail = next.contactEmail;
       alert("Profil Chef disimpan!");
     };
     const handleChefAvatarUpload = (e) => {
