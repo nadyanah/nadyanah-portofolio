@@ -213,7 +213,8 @@ const app = createApp({
           mobileQuote: "Kami memformulasikan budaya organisasi terstruktur dengan bumbu empati, menyajikan kepuasan talenta yang matang untuk pertumbuhan bisnis.",
           drawerDesc: "People Operations Specialist obsessed with elegant administration and clean organizational designs.",
           welcomeQuote: "\ud83c\udf31 Hi, I am Nadya. Every project here started as a small seed\u2014\nwatered through daily hands-on practice, fertilized by \npurposeful learning and reflection, and cultivated to \ndeliver meaningful impact.",
-          welcomeCta: "[ Step inside the garden of growth \u2192 ]"
+          welcomeCta: "[ Step inside the garden of growth \u2192 ]",
+          alertMessage: ""
         };
 
         const defaultBackgroundHighlight = {
@@ -257,7 +258,8 @@ const app = createApp({
           ...defaultMainPage,
           ...mainRes.value,
           welcomeQuote: (mainRes.value && mainRes.value.welcomeQuote) || defaultMainPage.welcomeQuote,
-          welcomeCta: (mainRes.value && mainRes.value.welcomeCta) || defaultMainPage.welcomeCta
+          welcomeCta: (mainRes.value && mainRes.value.welcomeCta) || defaultMainPage.welcomeCta,
+          alertMessage: (mainRes.value && mainRes.value.alertMessage) || ""
         };
         homepageForm.value = JSON.parse(JSON.stringify(mainPageContent.value));
         // Normalisasi data lama: kalau di Supabase masih tersimpan format lama
@@ -726,7 +728,8 @@ const app = createApp({
           mobileQuote: "Kami memformulasikan budaya organisasi terstruktur dengan bumbu empati, menyajikan kepuasan talenta yang matang untuk pertumbuhan bisnis.",
           drawerDesc: "People Operations Specialist obsessed dengan elegant administration and clean organizational designs.",
           welcomeQuote: "\ud83c\udf31 Hi, I am Nadya. Every project here started as a small seed\u2014\nwatered through daily hands-on practice, fertilized by \npurposeful learning and reflection, and cultivated to \ndeliver meaningful impact.",
-          welcomeCta: "[ Step inside the garden of growth \u2192 ]"
+          welcomeCta: "[ Step inside the garden of growth \u2192 ]",
+          alertMessage: ""
         };
         try {
           await Promise.all([
