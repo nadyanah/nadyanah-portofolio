@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nadyanah-Portofolio</title>
+    <title>Nadyanah-Portfolio</title>
     <script>
       // NOTE: pakai createElement + appendChild (bukan document.body.innerHTML +=)
       // karena innerHTML += me-reparse SELURUH isi <body>, yang menghancurkan
@@ -144,10 +144,10 @@
             <button @click="switchTab('background')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'background' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="03. Background">
               <i data-lucide="route" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('menu')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="04. Selected Works (Portofolio)">
+            <button @click="switchTab('menu')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'menu' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="04. Selected Works (Portfolio)">
               <i data-lucide="book-open" class="h-5 w-5"></i>
             </button>
-            <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="05. Certificates">
+            <button @click="switchTab('certificate')" :class="['nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1', activeTab === 'certificate' ? 'nav-active border border-[#e7e2dc] text-neutral-500' : 'border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300']" title="05. Credentials & Publications">
               <i data-lucide="badge-check" class="h-5 w-5"></i>
             </button>
             <div class="w-1.5"></div>
@@ -275,8 +275,8 @@
 
             <div class="hidden lg:flex items-center gap-5 sm:gap-8 text-brand-muted justify-self-end">
               <div class="flex items-center gap-6 sm:gap-10">
-                <button @click="switchTab('menu')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portofolio</button>
-                <button @click="switchTab('certificate')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Sertifikat</button>
+                <button @click="switchTab('menu')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Portfolio</button>
+                <button @click="switchTab('certificate')" class="pill-press font-bold text-[10px] sm:text-xs font-mono tracking-widest hover:text-black transition-colors cursor-pointer focus:outline-none">Credentials</button>
               </div>
               <!-- VISITOR COUNTER (desktop, beranda) — dulu tombol "salin link", sekarang
                    diganti tampilkan jumlah pengunjung sebagai angka polos saja (lihat
@@ -433,7 +433,7 @@
                 <span class="brand-name text-2xl sm:text-3xl text-black select-none">nadyanah</span>
               </div>
               <div class="absolute right-0">
-                <span class="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-gold font-bold">{{ {chef:'02. Profile', background:'03. Background', menu:'04. Selected Works (Portofolio)', certificate:'05. Certificates'}[activeTab] }}</span>
+                <span class="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-gold font-bold">{{ {chef:'02. Profile', background:'03. Background', menu:'04. Selected Works (Portfolio)', certificate:'05. Credentials & Publications'}[activeTab] }}</span>
               </div>
             </div>
 
