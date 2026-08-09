@@ -69,7 +69,7 @@ const app = createApp({
 
     // CERTIFICATE ADMIN FORM STATES
     const getEmptyCertificateForm = () => ({
-      title: "", issuer: "", date: "", category: "", credentialId: "", credentialUrl: "", image: ""
+      title: "", issuer: "", date: "", category: "", credentialId: "", credentialUrl: "", supportingLinkLabel: "", supportingLinkUrl: "", image: ""
     });
     const certificateForm = ref(getEmptyCertificateForm());
     const isAddingCertificate = ref(false);

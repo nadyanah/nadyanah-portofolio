@@ -994,14 +994,6 @@
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
               <!-- Sidebar Tabs -->
               <div class="lg:col-span-1 space-y-1.5">
-                <button @click="adminTab = 'portfolio'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'portfolio' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'portfolio' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layers" class="h-4 w-4"></i></div>
-                  <div><div class="font-bold text-xs leading-normal">Kelola Portofolio</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'portfolio' ? 'text-black/60' : 'text-brand-muted']">Daftar proyek</div></div>
-                </button>
-                <button @click="adminTab = 'certificate'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'certificate' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
-                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'certificate' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="badge-check" class="h-4 w-4"></i></div>
-                  <div><div class="font-bold text-xs leading-normal">Kelola Sertifikat ({{certificateMenu.length}})</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'certificate' ? 'text-black/60' : 'text-brand-muted']">Kredensial &amp; sertifikasi</div></div>
-                </button>
                 <button @click="adminTab = 'chef'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'chef' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'chef' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="id-card" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Profil Saya</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'chef' ? 'text-black/60' : 'text-brand-muted']">Identitas diri</div></div>
@@ -1013,6 +1005,14 @@
                 <button @click="adminTab = 'background'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'background' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'background' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="sparkles" class="h-4 w-4"></i></div>
                   <div><div class="font-bold text-xs leading-normal">Highlight Background</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'background' ? 'text-black/60' : 'text-brand-muted']">Foto &amp; deskripsi halaman Background</div></div>
+                </button>
+                <button @click="adminTab = 'portfolio'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'portfolio' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'portfolio' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="layers" class="h-4 w-4"></i></div>
+                  <div><div class="font-bold text-xs leading-normal">Kelola Portofolio</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'portfolio' ? 'text-black/60' : 'text-brand-muted']">Daftar proyek</div></div>
+                </button>
+                <button @click="adminTab = 'certificate'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'certificate' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
+                  <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'certificate' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="badge-check" class="h-4 w-4"></i></div>
+                  <div><div class="font-bold text-xs leading-normal">Kelola Sertifikat ({{certificateMenu.length}})</div><div :class="['text-[9px] leading-tight mt-0.5', adminTab === 'certificate' ? 'text-black/60' : 'text-brand-muted']">Kredensial &amp; sertifikasi</div></div>
                 </button>
                 <button @click="adminTab = 'guestbook'" :class="['w-full text-left p-3.5 rounded-2xl flex items-start gap-3.5 transition-all cursor-pointer focus:outline-none chip-raised', adminTab === 'guestbook' ? 'chip-active text-brand-gold-dark' : 'text-black border border-transparent hover:border-neutral-200/50']">
                   <div :class="['p-1.5 rounded-lg shrink-0', adminTab === 'guestbook' ? 'bg-brand-gold/10 text-brand-gold-dark' : 'bg-neutral-100 text-brand-muted']"><i data-lucide="users" class="h-4 w-4"></i></div>
@@ -1356,6 +1356,16 @@
                         <div class="space-y-1 md:col-span-2">
                           <label class="font-semibold text-black block">Link Verifikasi Kredensial</label>
                           <input type="text" v-model="certificateForm.credentialUrl" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="https://..." />
+                        </div>
+
+                        <div class="space-y-1">
+                          <label class="font-semibold text-black block">Nama Link Pendukung</label>
+                          <input type="text" v-model="certificateForm.supportingLinkLabel" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="Contoh: Link Sertifikat" />
+                        </div>
+
+                        <div class="space-y-1">
+                          <label class="font-semibold text-black block">URL Link Pendukung</label>
+                          <input type="text" v-model="certificateForm.supportingLinkUrl" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="https://..." />
                         </div>
 
                       </div>
@@ -1917,10 +1927,17 @@
                   </div>
                 </div>
 
-                <a v-if="selectedCertificate.credentialUrl" :href="selectedCertificate.credentialUrl" target="_blank"
-                   class="inline-flex items-center gap-2 text-xs font-mono font-bold text-black bg-white border border-neutral-150 px-4 py-2.5 rounded-full hover:bg-brand-gold-dark transition-colors">
-                  Verifikasi Kredensial <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
-                </a>
+                <div class="flex flex-wrap items-center gap-3">
+                  <a v-if="selectedCertificate.credentialUrl" :href="selectedCertificate.credentialUrl" target="_blank"
+                     class="inline-flex items-center gap-2 text-xs font-mono font-bold text-black bg-white border border-neutral-150 px-4 py-2.5 rounded-full hover:bg-brand-gold-dark transition-colors">
+                    Verifikasi Kredensial <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+                  </a>
+
+                  <a v-if="selectedCertificate.supportingLinkUrl" :href="selectedCertificate.supportingLinkUrl" target="_blank"
+                     class="inline-flex items-center gap-2 text-xs font-mono font-bold text-black bg-white border border-neutral-150 px-4 py-2.5 rounded-full hover:bg-brand-gold-dark transition-colors">
+                    {{ selectedCertificate.supportingLinkLabel || "Link Pendukung" }} <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
