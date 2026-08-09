@@ -1163,25 +1163,6 @@
                         </div>
                       </div>
 
-                      <!-- Dynamic List: Allergens -->
-                      <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
-                        <div class="flex justify-between items-center">
-                          <label class="font-bold text-black block text-red-900">Challenge / Why Problem — Poin Kendala</label>
-                          <button type="button" @click="handleAddField('allergens')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
-                            <i data-lucide="plus" class="h-3 w-3"></i> Tambah Tantangan
-                          </button>
-                        </div>
-                        <div class="space-y-1.5">
-                          <div v-for="(alg, idx) in portfolioForm.allergens" :key="'alg'+idx" class="flex gap-2 items-center">
-                            <span class="font-sans text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
-                            <input type="text" v-model="portfolioForm.allergens[idx]" placeholder="Contoh: Kecemasan Hari Pertama (Day-1 Anxiety)" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
-                            <button type="button" @click="handleRemoveField('allergens', idx)" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
-                              <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
                       <!-- CHEF'S RECIPE NOTES SECTION -->
                       <div class="md:col-span-2 border-t border-neutral-200 pt-4 mt-2">
                         <h4 class="font-bold text-black font-sans text-sm border-b border-neutral-150 pb-2 mb-4">
@@ -1192,11 +1173,6 @@
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Challenge / Why Problem — Latar Belakang</label>
                         <textarea rows="3" placeholder="Uraikan kondisi awal sebelum dilakukan restrukturisasi..." v-model="portfolioForm.chefNotes.background" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
-                      </div>
-
-                      <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Challenge / Why Problem — Rumusan Masalah</label>
-                        <textarea rows="3" placeholder="Tantangan krusial atau rumusan masalah utama..." v-model="portfolioForm.chefNotes.challenge" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
                       </div>
 
                       <!-- Chef Notes Recipe Steps -->
@@ -1812,15 +1788,6 @@
                           <p v-if="selectedDish.chefNotes.background" class="font-sans text-brand-muted text-sm leading-relaxed">
                             {{ selectedDish.chefNotes.background }}
                           </p>
-                          <p v-if="selectedDish.chefNotes.challenge" class="font-sans text-black/90 text-sm leading-relaxed font-medium">
-                            {{ selectedDish.chefNotes.challenge }}
-                          </p>
-                          <ul class="space-y-1.5 pl-1 pt-1">
-                            <li v-for="(alg, i) in selectedDish.allergens" :key="i" class="font-sans text-brand-muted flex items-center gap-2 text-sm">
-                              <span class="h-1 w-1 rounded-full bg-brand-gold shrink-0"></span>
-                              {{ alg }}
-                            </li>
-                          </ul>
                         </div>
 
                         <!-- SOLUTION -->

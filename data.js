@@ -7,7 +7,7 @@
  * bikin browser lama otomatis "refresh" cache localStorage-nya, jadi konten baru
  * di file ini nggak ketiban data lama yang sempat tersimpan di browser.
  */
-const PORTFOLIO_DATA_VERSION = 2;
+const PORTFOLIO_DATA_VERSION = 3;
 
 const PORTFOLIO_MENU = [
   {
@@ -28,14 +28,9 @@ const PORTFOLIO_MENU = [
       "Day 1 to Day 90 Touchpoint Checklist",
       "Cross-Departmental Immersion Card"
     ],
-    allergens: [
-      "Informasi Berlebih (Cognitive Overload)",
-      "Kecemasan Hari Pertama (Day-1 Anxiety)",
-      "Proses Administrasi yang Manual & Lambat"
-    ],
+    allergens: [],
     chefNotes: {
       background: "Banyak karyawan baru merasa kebingungan dan kewalahan di minggu pertama akibat administrasi yang tidak efisien dan ketiadaan bimbingan terarah, memicu tingkat pengunduran diri dini yang cukup tinggi.",
-      challenge: "Bagaimana mendesain perjalanan onboarding yang tidak membosankan namun tetap informatif, berempati, serta mampu mengintegrasikan aspek sosial dan fungsional dengan cepat?",
       recipe: [
         "Mendemonstrasikan riset empati (Employee Journey Mapping) bersama manajer dan karyawan yang baru bergabung.",
         "Merancang 'LMS Onboarding Quest' yang interaktif, di mana karyawan baru bisa mempelajari sejarah, produk, dan nilai perusahaan secara asinkron.",
@@ -68,14 +63,9 @@ const PORTFOLIO_MENU = [
       "Continuous Feed-forward Dialogues",
       "Fair Compensation Linkage Formula"
     ],
-    allergens: [
-      "Evaluasi yang Bias & Subjektif",
-      "Ketakutan Menghadapi Review (Review Dread)",
-      "Ketidakjelasan Indikator Keberhasilan"
-    ],
+    allergens: [],
     chefNotes: {
       background: "Sistem penilaian kinerja lama dinilai tidak transparan, hanya dilakukan sekali setahun, dan memicu kecemasan kolektif tanpa memberikan solusi pengembangan karir yang riil.",
-      challenge: "Mengembangkan skema penilaian kinerja yang objektif, berbasis data, berorientasi masa depan (future-focused), serta memfasilitasi dialog dua arah antara manajer dan anggota tim.",
       recipe: [
         "Merestrukturisasi KPI tradisional menjadi sistem OKR (Objectives & Key Results) yang transparan dan dapat dipantau bersama di dashboard.",
         "Mengadakan pelatihan kalibrasi bakat (9-Box Grid) bagi para kepala divisi untuk menghilangkan bias subjektivitas.",
@@ -108,14 +98,9 @@ const PORTFOLIO_MENU = [
       "Cross-functional Idea Pitchathon",
       "Peer-to-peer Kudos Recognition App"
     ],
-    allergens: [
-      "Dinding Silo Lintas Tim",
-      "Stres Kerja & Burnout",
-      "Merasa Tidak Diapresiasi (Invisible Employee)"
-    ],
+    allergens: [],
     chefNotes: {
       background: "Setelah fase kerja hibrida (WFA), kolaborasi antar departemen mulai merenggang. Karyawan merasa lelah, jarang berkomunikasi di luar urusan tugas, dan kehangatan tim perlahan memudar.",
-      challenge: "Membangun kembali jembatan empati antar karyawan, mengedepankan keamanan psikologis, serta menyebarkan kebiasaan apresiasi positif secara konsisten.",
       recipe: [
         "Meluncurkan program 'Kudos' (Peer-to-peer Recognition), di mana rekan kerja dapat mengirimkan kartu ucapan terima kasih digital berisi poin apresiasi.",
         "Menginisiasi sesi bulanan 'Well-being Circles' yang memfasilitasi obrolan santai seputar kesehatan mental yang dibimbing psikolog profesional.",
@@ -148,14 +133,9 @@ const PORTFOLIO_MENU = [
       "Total Rewards Statement Dashboard",
       "Local Merchant Partnerships"
     ],
-    allergens: [
-      "Ketidaksetaraan Upah (Salary Disparity)",
-      "Satu Aturan untuk Semua (One-Size-Fits-All Tunjangan)",
-      "Talenta Terbaik Pindah ke Pesaing (Brain Drain)"
-    ],
+    allergens: [],
     chefNotes: {
       background: "Paket tunjangan lama dinilai kaku karena mayoritas karyawan muda tidak memanfaatkan tunjangan keluarga tradisional, sementara karyawan senior menginginkan perlindungan kesehatan yang lebih ekstensif.",
-      challenge: "Memformulasikan ulang struktur upah agar kompetitif di pasar global, sembari memperkenalkan sistem benefit fleksibel tanpa membengkakkan anggaran operasional HR.",
       recipe: [
         "Melakukan studi komparatif pasar kerja industri teknologi untuk merancang rentang gaji (salary grade) yang kompetitif dan adil.",
         "Mendirikan platform 'Flexi-Benefits' di mana setiap karyawan diberi poin tahunan untuk ditukarkan secara mandiri dengan opsi kesehatan, kebugaran, edukasi, atau hobi sesuai kebutuhan personal.",
@@ -188,14 +168,9 @@ const PORTFOLIO_MENU = [
       "Career Outplacement Support Desk",
       "Farewell Appreciation Ritual"
     ],
-    allergens: [
-      "Sakit Hati & Perselisihan Perpisahan (Bitter Exits)",
-      "Hilangnya Dokumen Tugas (Knowledge Drain)",
-      "Ulasan Buruk di Glassdoor / Media Sosial"
-    ],
+    allergens: [],
     chefNotes: {
       background: "Proses pengunduran diri sebelumnya terasa dingin, terburu-buru, dan kadang memicu ketegangan interpersonal yang merusak reputasi perusahaan (employer brand) di luar.",
-      challenge: "Bagaimana merancang akhir masa kerja yang beradab, berterima kasih, mengamankan transfer pengetahuan, dan memastikan hubungan profesional tetap terjaga dengan baik?",
       recipe: [
         "Merancang kerangka interview keluar (Exit Interview) berbasis empati untuk memetakan kritik konstruktif jujur bagi internal perusahaan.",
         "Membuat sistem serah-terima tugas terstruktur (Knowledge Transfer Hub) agar tidak ada file atau informasi penting yang lenyap bersama kepergian karyawan.",
@@ -228,14 +203,9 @@ const PORTFOLIO_MENU = [
       "Conflict Resolution Mediators Panel",
       "Interactive Town Hall Q&A Portal"
     ],
-    allergens: [
-      "Komunikasi Pasif-Agresif",
-      "Ketakutan Memberi Masukan kepada Atasan",
-      "Gossip Kantor yang Kurang Sehat"
-    ],
+    allergens: [],
     chefNotes: {
       background: "Tim cenderung memendam kritik dan masukan berharga karena takut disalahpahami atau dimusuhi, mengakibatkan miskomunikasi berulang dan menurunnya rasa saling percaya.",
-      challenge: "Membentuk budaya komunikasi berlandaskan kejujuran radikal yang penuh rasa hormat (Radical Candor), di mana masukan bisa mengalir lancar dari bawah ke atas maupun sebaliknya.",
       recipe: [
         "Meluncurkan modul pelatihan 'Radical Candor: Care Personally, Challenge Directly' ke seluruh jajaran kepemimpinan.",
         "Membuat platform aman yang dianonimkan untuk evaluasi berkala kinerja manajer oleh anggota timnya (Upward Feedback).",
