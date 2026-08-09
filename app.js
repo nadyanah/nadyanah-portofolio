@@ -1005,6 +1005,23 @@ const app = createApp({
       refreshIcons();
     };
 
+    // --- FILTER KATEGORI SERTIFIKAT (Sertifikat / HKI-Paten / Publikasi
+    // Jurnal / dll) — daftar kategori diambil otomatis & unik dari data yang
+    // ada, jadi tidak perlu di-hardcode dan otomatis nambah kalau ada
+    // kategori baru yang diinput lewat form admin.
+    const selectedCertificateCategory = ref("all");
+    const certificateCategories = computed(() => {
+      const cats = new Set();
+      certificateMenu.value.forEach(item => {
+        if (item.category && item.category.trim()) cats.add(item.category.trim());
+      });
+      return Array.from(cats).sort((a, b) => a.localeCompare(b, "id"));
+    });
+    const filteredCertificates = computed(() => {
+      if (selectedCertificateCategory.value === "all") return certificateMenu.value;
+      return certificateMenu.value.filter(item => item.category === selectedCertificateCategory.value);
+    });
+
     // --- URL ROUTING (shareable links) ---
     // Every page/tab AND every portfolio-card / certificate popup gets its
     // own link via the URL hash, e.g.:
@@ -1115,7 +1132,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
       refreshIcons();
     });
 
@@ -1133,6 +1150,7 @@ const app = createApp({
       selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
+      selectedCertificateCategory, certificateCategories, filteredCertificates,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
       experienceKey, getLinkedExperience,
       homeShapeLeftRef, homeCareerCardHeight,
