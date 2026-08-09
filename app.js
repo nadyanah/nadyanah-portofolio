@@ -407,6 +407,24 @@ const app = createApp({
       return `${monthLabel} ${match[1]}`;
     };
 
+    // Lets the admin bold parts of a plain-text field by wrapping words in
+    // **double asterisks** (same convention as Markdown/WhatsApp), without
+    // needing a full rich-text editor. Escapes the raw text first so any
+    // stray HTML the admin types can't inject markup, then turns the
+    // **...** pairs into <strong>. Used with v-html on the rendered side;
+    // the textarea itself stays a plain field, admin just types ** around
+    // the words they want bold.
+    // Also normalizes 3+ blank lines down to exactly one blank line, so
+    // paragraph gaps look consistent no matter how many extra Enters the
+    // admin happened to leave between paragraphs.
+    const renderBoldText = (text) => {
+      if (!text) return "";
+      const escaped = text.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      const normalized = escaped.replace(/\n{3,}/g, "\n\n");
+      return normalized.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    };
+
+
     // PORTFOLIO ADMIN HANDLERS
     const startEditCard = (card) => {
       portfolioForm.value = JSON.parse(JSON.stringify(card));
@@ -1112,7 +1130,7 @@ const app = createApp({
 
     return {
       activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
-      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate,
+      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,

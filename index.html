@@ -307,20 +307,18 @@
             </div>
 
             <div class="w-full flex flex-col lg:flex-row gap-6 lg:gap-10 items-start justify-between">
-            <div class="flex-1 space-y-5 text-left">
-              <div class="group h-32 w-32 md:h-40 md:w-40 rounded-full overflow-hidden bg-brand-bone shadow-sm flex items-center justify-center mb-1 transition-all duration-500 ease-out hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.18)] hover:-translate-y-1 hover:-rotate-2 cursor-pointer">
+            <div class="flex-1 space-y-2 text-left">
+              <div class="group h-32 w-32 md:h-40 md:w-40 rounded-full overflow-hidden bg-brand-bone shadow-sm flex items-center justify-center mb-3 transition-all duration-500 ease-out hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.18)] hover:-translate-y-1 hover:-rotate-2 cursor-pointer">
                 <img v-if="mainPageContent.photoUrl" :src="mainPageContent.photoUrl" class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
                 <i v-else data-lucide="user-round" class="h-9 w-9 text-brand-gold/50 transition-transform duration-500 group-hover:scale-110"></i>
               </div>
               <h1 @click="handleNameClick" class="text-2xl md:text-3xl name-title text-black tracking-tight font-medium select-none cursor-default">
                 {{ mainPageContent.name }}
               </h1>
-              <h2 class="text-sm md:text-base italic font-sans font-semibold text-black leading-snug">
+              <h2 class="text-sm md:text-base font-sans font-semibold text-black leading-snug">
                 {{ mainPageContent.slogan }}
               </h2>
-              <p class="text-xs md:text-sm text-brand-muted leading-relaxed max-w-lg pt-1" style="white-space: pre-line;">
-                {{ mainPageContent.body }}
-              </p>
+              <p class="text-xs md:text-sm text-brand-muted leading-snug max-w-lg" style="white-space: pre-line;" v-html="renderBoldText(mainPageContent.body)"></p>
             </div>
 
             <!-- RIGHT SLIDER -->
@@ -406,15 +404,15 @@
                 <!-- vertical dashed connector line -->
                 <div class="absolute left-[11px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
 
-                <div v-for="(entry, idx) in careerEntries" :key="'home-career-'+idx" class="relative pb-8 last:pb-0">
+                <div v-for="(entry, idx) in careerEntries" :key="'home-career-'+idx" class="relative pb-7 last:pb-0">
                   <!-- node dot -->
                   <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2"></span>
 
-                  <span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5 transition-all duration-300 ease-out cursor-default hover:bg-white hover:-translate-y-1 hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.18)] hover:scale-105">
+                  <span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2 transition-all duration-300 ease-out cursor-default hover:bg-white hover:-translate-y-1 hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.18)] hover:scale-105">
                     {{entry.period}}
                   </span>
-                  <p class="text-sm md:text-base name-title font-semibold text-black">{{entry.heading}}</p>
-                  <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
+                  <p class="text-sm name-title font-semibold text-black leading-snug">{{entry.heading}}</p>
+                  <p class="text-xs text-brand-muted mt-1 leading-snug">{{entry.subheading}}</p>
                   <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2">
                     {{entry.description}}
                   </p>
@@ -1569,7 +1567,7 @@
                       </div>
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Paragraf Deskripsi Beranda*</label>
-                        <p class="text-[10px] text-brand-muted mb-1">Tekan Enter di posisi yang kamu mau untuk mengatur baris barunya sendiri.</p>
+                        <p class="text-[10px] text-brand-muted mb-1">Tekan Enter untuk baris baru. Apit kata dengan **dua bintang** untuk membuatnya <strong>bold</strong>, contoh: **kata ini bold**.</p>
                         <textarea required rows="4" v-model="homepageForm.body" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
