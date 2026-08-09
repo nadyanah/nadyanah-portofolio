@@ -315,10 +315,10 @@
               <h1 @click="handleNameClick" class="text-2xl md:text-3xl name-title text-black tracking-tight font-medium select-none cursor-default">
                 {{ mainPageContent.name }}
               </h1>
-              <h2 class="text-xs md:text-sm italic font-sans font-semibold text-black leading-snug">
+              <h2 class="text-sm md:text-base italic font-sans font-semibold text-black leading-snug">
                 {{ mainPageContent.slogan }}
               </h2>
-              <p class="text-[11px] text-brand-muted leading-relaxed max-w-lg pt-1" style="white-space: pre-line;">
+              <p class="text-xs md:text-sm text-brand-muted leading-relaxed max-w-lg pt-1" style="white-space: pre-line;">
                 {{ mainPageContent.body }}
               </p>
             </div>
@@ -338,8 +338,8 @@
                     <span class="absolute top-2.5 right-2.5 bg-white text-black border border-neutral-150 text-[8px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full shadow-sm">{{ formatProjectDate(currentDish.price) }}</span>
                   </div>
                   <div class="pt-3 px-1 text-left">
-                    <h3 class="text-xs md:text-sm name-title font-bold text-black leading-tight group-hover:text-brand-gold transition-colors mb-1 line-clamp-1">{{ currentDish.name }}</h3>
-                    <p class="text-[11px] text-neutral-500 leading-relaxed line-clamp-2 mb-3">{{ currentDish.shortDescription }}</p>
+                    <h3 class="text-sm md:text-base name-title font-semibold text-black leading-tight group-hover:text-brand-gold transition-colors mb-1 line-clamp-1">{{ currentDish.name }}</h3>
+                    <p class="text-xs text-neutral-500 leading-relaxed line-clamp-2 mb-3">{{ currentDish.shortDescription }}</p>
                     <hr class="border-neutral-100 mb-2.5" />
                     <div class="flex items-center gap-1.5 text-[10px] text-brand-gold-dark font-mono font-bold">
                       <i data-lucide="award" class="h-3 w-3"></i>
@@ -413,7 +413,7 @@
                   <span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2.5 transition-all duration-300 ease-out cursor-default hover:bg-white hover:-translate-y-1 hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.18)] hover:scale-105">
                     {{entry.period}}
                   </span>
-                  <p class="text-xs md:text-sm name-title font-bold text-black">{{entry.heading}}</p>
+                  <p class="text-sm md:text-base name-title font-semibold text-black">{{entry.heading}}</p>
                   <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
                   <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2">
                     {{entry.description}}
