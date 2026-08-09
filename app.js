@@ -773,7 +773,7 @@ const app = createApp({
         message: formMessage.value,
         stars: formStars.value,
         dishLiked: formDishLiked.value,
-        date: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })
+        date: new Date().toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })
       };
       let saved;
       try {
@@ -1121,7 +1121,7 @@ const app = createApp({
           loginSuccess.value = false;
         }, 1000);
       } else {
-        loginError.value = "Password rahasia salah! Silakan coba lagi.";
+        loginError.value = "Incorrect password! Please try again.";
       }
     };
 

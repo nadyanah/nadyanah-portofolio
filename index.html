@@ -151,7 +151,7 @@
               <i data-lucide="badge-check" class="h-5 w-5"></i>
             </button>
             <div class="w-1.5"></div>
-            <button @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1 border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300">
+            <button @click="copyLink" :title="linkCopied ? 'Page link copied!' : 'Copy link to this page'" class="nav-raised h-11 w-11 rounded-full bg-white flex items-center justify-center transition-all duration-300 cursor-pointer active:scale-95 focus:outline-none hover:-translate-y-1 border border-neutral-200/60 text-neutral-500 hover:text-black hover:border-neutral-300">
               <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-5 w-5"></i>
             </button>
             <div class="relative">
@@ -182,9 +182,9 @@
            below with just the visitor count as a plain number while on the
            home tab. Same fixed top-right spot, no icon this time. -->
       <div v-if="!showWelcome && activeTab === 'home' && visitorCount > 0"
-           title="Jumlah pengunjung yang pernah mampir"
+           title="Total number of visitors"
            class="lg:hidden fixed top-3 right-3 z-40 h-10 min-w-10 px-3 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_32px_-6px_rgba(0,0,0,0.14)] hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center text-black text-sm font-mono font-bold select-none">
-        {{ visitorCount.toLocaleString('id-ID') }}
+        {{ visitorCount.toLocaleString('en-US') }}
       </div>
 
       <!-- MOBILE COPY-LINK BUTTON — small fixed button, top-right. The bottom
@@ -193,7 +193,7 @@
            Same idea as the desktop dock's link button: copies a shareable
            link to whatever page/popup is currently open. On the beranda
            this button is swapped out for the visitor counter above instead. -->
-      <button v-if="!showWelcome && activeTab !== 'admin' && activeTab !== 'home'" @click="copyLink" :title="linkCopied ? 'Link halaman ini tersalin!' : 'Salin link halaman ini'" class="lg:hidden fixed top-3 right-3 z-40 h-10 w-10 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] flex items-center justify-center text-neutral-500 active:scale-95 transition-all">
+      <button v-if="!showWelcome && activeTab !== 'admin' && activeTab !== 'home'" @click="copyLink" :title="linkCopied ? 'Page link copied!' : 'Copy link to this page'" class="lg:hidden fixed top-3 right-3 z-40 h-10 w-10 rounded-full bg-white border border-neutral-200/60 shadow-[0_10px_25px_-4px_rgba(0,0,0,0.08),0_4px_12px_-2px_rgba(0,0,0,0.04)] flex items-center justify-center text-neutral-500 active:scale-95 transition-all">
         <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-4 w-4"></i>
       </button>
 
@@ -216,15 +216,15 @@
           </button>
           <button @click="switchTab('background')" :class="['mobile-tab-item', activeTab === 'background' ? 'mobile-tab-active' : '']">
             <i data-lucide="route" class="h-5 w-5"></i>
-            <span>Kisah</span>
+            <span>Story</span>
           </button>
           <button @click="switchTab('menu')" :class="['mobile-tab-item', activeTab === 'menu' ? 'mobile-tab-active' : '']">
             <i data-lucide="book-open" class="h-5 w-5"></i>
-            <span>Karya</span>
+            <span>Work</span>
           </button>
           <button @click="switchTab('certificate')" :class="['mobile-tab-item', activeTab === 'certificate' ? 'mobile-tab-active' : '']">
             <i data-lucide="badge-check" class="h-5 w-5"></i>
-            <span>Sertif.</span>
+            <span>Creds.</span>
           </button>
           <div class="relative flex-1 flex">
             <!-- click-outside overlay -->
@@ -244,7 +244,7 @@
 
             <button @click="isContactMenuOpen = !isContactMenuOpen" :class="['mobile-tab-item', isContactMenuOpen ? 'mobile-tab-active' : '']">
               <i data-lucide="contact" class="h-5 w-5"></i>
-              <span>Kontak</span>
+              <span>Contact</span>
             </button>
           </div>
         </div>
@@ -281,9 +281,9 @@
               <!-- VISITOR COUNTER (desktop, beranda) — dulu tombol "salin link", sekarang
                    diganti tampilkan jumlah pengunjung sebagai angka polos saja (lihat
                    trackVisitor() di app.js). Bentuknya cuma angka, tanpa icon. -->
-              <div v-if="visitorCount > 0" title="Jumlah pengunjung yang pernah mampir"
+              <div v-if="visitorCount > 0" title="Total number of visitors"
                    class="h-8 min-w-8 px-3 rounded-full bg-white border border-neutral-200/60 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center text-black text-xs sm:text-sm font-mono font-bold select-none">
-                {{ visitorCount.toLocaleString('id-ID') }}
+                {{ visitorCount.toLocaleString('en-US') }}
               </div>
             </div>
           </div>
@@ -384,13 +384,13 @@
             <div class="w-full h-full min-h-0 flex-1 bg-brand-cream rounded-[28px] p-5 flex flex-col border border-neutral-200/50 shadow-inner overflow-hidden">
 
               <div class="w-full text-center mb-4 relative shrink-0">
-                <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase font-bold">PERJALANAN KARIER</span>
+                <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase font-bold">CAREER JOURNEY</span>
                 <div class="h-1 w-12 bg-neutral-300 mx-auto mt-2 rounded-full"></div>
               </div>
 
               <!-- EMPTY STATE -->
               <div v-if="!careerEntries || careerEntries.length === 0" class="text-xs text-brand-muted italic py-6 text-center">
-                Belum ada data perjalanan karier.
+                No career journey data yet.
               </div>
 
               <!-- TIMELINE (scrolls internally, always confined to the card's own height —
@@ -443,25 +443,25 @@
                   <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
                     <div class="flex flex-col sm:flex-row gap-2 flex-1 min-w-0">
                       <select v-model="selectedCategory" class="w-full sm:w-auto flex-1 min-w-0 px-3 py-2 bg-white border border-neutral-200/70 rounded-full text-xs font-medium text-brand-muted focus:outline-none focus:border-brand-gold cursor-pointer">
-                        <option value="all">Semua Kategori</option>
+                        <option value="all">All Categories</option>
                         <option value="people-culture">People Culture</option>
                         <option value="employer-branding">Employer Branding</option>
                         <option value="people-analytics">People Analytics</option>
                         <option value="organizational-development">Organizational Development</option>
                       </select>
                       <select v-model="selectedDateFilter" class="w-full sm:w-auto flex-1 min-w-0 px-3 py-2 bg-white border border-neutral-200/70 rounded-full text-xs font-medium text-brand-muted focus:outline-none focus:border-brand-gold cursor-pointer">
-                        <option value="all">Semua Tahun</option>
+                        <option value="all">All Years</option>
                         <option v-for="year in dateFilterOptions" :key="'year-'+year" :value="year">{{ year }}</option>
                       </select>
                       <select v-model="selectedExperienceFilter" class="w-full sm:w-auto flex-1 min-w-0 px-3 py-2 bg-white border border-neutral-200/70 rounded-full text-xs font-medium text-brand-muted focus:outline-none focus:border-brand-gold cursor-pointer">
-                        <option value="all">Semua Pengalaman</option>
+                        <option value="all">All Experience</option>
                         <option v-for="(entry, idx) in careerEntries" :key="'exp-filter-'+idx" :value="experienceKey(entry)">{{ entry.heading }}</option>
-                        <option value="none">Belum Disinkronkan</option>
+                        <option value="none">Not Linked</option>
                       </select>
                     </div>
                     <div class="relative w-full sm:w-64 shrink-0">
                       <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-brand-muted"></i>
-                      <input type="text" v-model="searchQuery" placeholder="Cari bahan / nama proyek..." class="search-raised w-full pl-9 pr-4 py-1.5 bg-white rounded-full border-0 text-xs focus:outline-none transition-all" />
+                      <input type="text" v-model="searchQuery" placeholder="Search keywords / project name..." class="search-raised w-full pl-9 pr-4 py-1.5 bg-white rounded-full border-0 text-xs focus:outline-none transition-all" />
                       <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-black cursor-pointer">
                         <i data-lucide="x" class="h-3 w-3"></i>
                       </button>
@@ -476,7 +476,7 @@
                
                <div v-if="filteredMenu.length === 0" class="text-center py-20 bg-brand-bone rounded-3xl border border-dashed border-neutral-300">
                   <i data-lucide="search-x" class="h-10 w-10 text-brand-gold/40 mx-auto mb-3"></i>
-                  <h3 class="text-lg font-serif font-medium text-black">Resep tidak ditemukan</h3>
+                  <h3 class="text-lg font-serif font-medium text-black">No projects found</h3>
                </div>
                
                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -492,13 +492,13 @@
                         <!-- HOVER OVERLAY -->
                         <div class="card-overlay absolute inset-0 flex flex-col justify-end p-5" style="background: linear-gradient(to top, rgba(146,140,131,0.97) 0%, rgba(146,140,131,0.75) 55%, transparent 100%); opacity: 0; transition: opacity 0.35s ease;">
                           <div class="card-overlay-content" style="transform: translateY(10px); transition: transform 0.35s ease;">
-                            <p style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 8px;">Kata Kunci / Keywords:</p>
+                            <p style="font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 8px;">Keywords:</p>
                             <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
                               <span v-for="(ing, i) in item.ingredients.slice(0, 3)" :key="i" style="background: rgba(255,255,255,0.18); color: #fff; font-size: 10px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(4px); font-family: var(--font-mono);">{{ing}}</span>
-                              <span v-if="item.ingredients.length > 3" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size: 10px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.22); font-family: var(--font-mono);">+{{item.ingredients.length - 3}} lainnya</span>
+                              <span v-if="item.ingredients.length > 3" style="background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); font-size: 10px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.22); font-family: var(--font-mono);">+{{item.ingredients.length - 3}} more</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 6px; color: #FCFAF7; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">
-                              <span>Lihat Detail Proyek</span>
+                              <span>View Project Details</span>
                               <i data-lucide="arrow-right" style="width: 13px; height: 13px;"></i>
                             </div>
                           </div>
@@ -512,7 +512,7 @@
                         <div class="border-t border-neutral-100 pt-3 flex items-center text-[11px] font-mono">
                            <span class="text-brand-gold-dark font-bold flex items-center gap-1"><i data-lucide="award" class="h-3 w-3 text-brand-gold"></i>{{item.impactMetric}}</span>
                         </div>
-                        <div v-if="getLinkedExperience(item)" class="flex items-center gap-1.5 text-[10px] text-brand-muted font-mono mt-1.5" :title="'Terhubung dengan pengalaman: ' + getLinkedExperience(item).heading + ' (' + getLinkedExperience(item).period + ')'">
+                        <div v-if="getLinkedExperience(item)" class="flex items-center gap-1.5 text-[10px] text-brand-muted font-mono mt-1.5" :title="'Linked to experience: ' + getLinkedExperience(item).heading + ' (' + getLinkedExperience(item).period + ')'">
                            <i data-lucide="link" class="h-3 w-3 text-brand-gold shrink-0"></i>
                            <span class="truncate">{{ getLinkedExperience(item).heading }}</span>
                         </div>
@@ -526,10 +526,10 @@
                  the home slider column) shows the HIGHLIGHT PORTOFOLIO MENU slider. -->
             <div v-if="activeTab === 'background'" class="w-full flex flex-col xl:flex-row gap-6 items-stretch fade-in-up">
 
-              <!-- LEFT: Perjalanan Karier -->
+              <!-- LEFT: Career Journey -->
               <div class="flex-1 bg-white rounded-3xl border border-neutral-200/60 p-6 md:p-10 shadow-sm">
-                <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-1">Perjalanan Karier</h2>
-                <p class="text-xs text-brand-muted mb-9">Jejak langkah profesional dari waktu ke waktu.</p>
+                <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-1">Career Journey</h2>
+                <p class="text-xs text-brand-muted mb-9">A timeline of professional milestones.</p>
 
                 <!-- INNER CREAM PANEL — same layered "timbul" look as the timeline
                      card on the beranda (white outer shape + cream inset inner) -->
@@ -713,7 +713,7 @@
               <div v-if="certificateMenu && certificateMenu.length > 0 && certificateCategories.length > 1" class="flex flex-wrap items-center gap-2 mb-6">
                 <button @click="selectedCertificateCategory = 'all'"
                         :class="['px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer border', selectedCertificateCategory === 'all' ? 'bg-black text-white border-black' : 'bg-white text-brand-muted border-neutral-200 hover:border-black hover:text-black']">
-                  Semua
+                  All
                 </button>
                 <button v-for="cat in certificateCategories" :key="'certcat-'+cat" @click="selectedCertificateCategory = cat"
                         :class="['px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer border', selectedCertificateCategory === cat ? 'bg-black text-white border-black' : 'bg-white text-brand-muted border-neutral-200 hover:border-black hover:text-black']">
@@ -724,15 +724,15 @@
               <!-- EMPTY STATE: belum ada sertifikat sama sekali -->
               <div v-if="!certificateMenu || certificateMenu.length === 0" class="text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-200">
                 <i data-lucide="badge-check" class="h-10 w-10 text-brand-gold/40 mx-auto mb-3"></i>
-                <h3 class="text-lg font-serif font-medium text-black">Belum ada sertifikat yang ditambahkan</h3>
-                <p class="text-xs text-brand-muted mt-1">Sertifikasi, HKI/paten, publikasi jurnal, atau kredensial profesional lain bisa ditambahkan di sini.</p>
+                <h3 class="text-lg font-serif font-medium text-black">No credentials added yet</h3>
+                <p class="text-xs text-brand-muted mt-1">Certifications, patents/IP, journal publications, or other professional credentials can be added here.</p>
               </div>
 
               <!-- EMPTY STATE: kategori aktif tidak punya hasil -->
               <div v-else-if="filteredCertificates.length === 0" class="text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-200">
                 <i data-lucide="search-x" class="h-10 w-10 text-brand-gold/40 mx-auto mb-3"></i>
-                <h3 class="text-lg font-serif font-medium text-black">Belum ada di kategori ini</h3>
-                <p class="text-xs text-brand-muted mt-1">Coba pilih kategori lain atau lihat "Semua".</p>
+                <h3 class="text-lg font-serif font-medium text-black">Nothing in this category yet</h3>
+                <p class="text-xs text-brand-muted mt-1">Try another category or view "All".</p>
               </div>
 
               <!-- CERTIFICATE GRID -->
@@ -744,7 +744,7 @@
                   <div class="relative aspect-[4/3] overflow-hidden bg-brand-bone">
                     <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-brand-gold/25">
                       <i data-lucide="badge-check" class="h-9 w-9"></i>
-                      <span class="text-[9px] font-mono uppercase tracking-widest text-brand-muted/50">Sertifikat</span>
+                      <span class="text-[9px] font-mono uppercase tracking-widest text-brand-muted/50">Credential</span>
                     </div>
                     <img v-if="cert.image" :src="cert.image" :alt="cert.title" @error="$event.target.style.display='none'"
                          class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
@@ -757,7 +757,7 @@
                     <div class="card-overlay absolute inset-0 flex flex-col justify-end p-5" style="background: linear-gradient(to top, rgba(146,140,131,0.97) 0%, rgba(146,140,131,0.75) 55%, transparent 100%); opacity: 0; transition: opacity 0.35s ease;">
                       <div class="card-overlay-content" style="transform: translateY(10px); transition: transform 0.35s ease;">
                         <div style="display: flex; align-items: center; gap: 6px; color: #FCFAF7; font-family: var(--font-mono); font-size: 11px; font-weight: 700;">
-                          <span>Lihat Sertifikat</span>
+                          <span>View Credential</span>
                           <i data-lucide="arrow-right" style="width: 13px; height: 13px;"></i>
                         </div>
                       </div>
@@ -784,8 +784,8 @@
 
               <!-- Section Header -->
               <div class="mb-6">
-                <h2 class="text-2xl font-serif font-bold text-black">Buku Tamu</h2>
-                <p class="text-xs text-brand-muted mt-1">Testimoni &amp; kesan dari rekan yang pernah bekerja bersama.</p>
+                <h2 class="text-2xl font-serif font-bold text-black">Guestbook</h2>
+                <p class="text-xs text-brand-muted mt-1">Testimonials &amp; impressions from colleagues I've worked with.</p>
               </div>
 
               <!-- Two-column layout: side by side from md breakpoint -->
@@ -799,29 +799,29 @@
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                     </div>
                     <div>
-                      <h3 class="text-lg font-serif font-bold text-black leading-tight">Tulis Ulasan Anda</h3>
-                      <p class="text-[11px] text-brand-muted leading-relaxed mt-0.5">Sampaikan kesan Anda terhadap proyek ini</p>
+                      <h3 class="text-lg font-serif font-bold text-black leading-tight">Write Your Review</h3>
+                      <p class="text-[11px] text-brand-muted leading-relaxed mt-0.5">Share your impression of this project</p>
                     </div>
                   </div>
 
                   <form @submit.prevent="handleAddGuestbook" class="space-y-5">
                     <!-- Nama Anda -->
                     <div>
-                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Nama Lengkap</label>
-                      <input type="text" v-model="formName" placeholder="Contoh: Budi Santoso" required minlength="3"
+                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Full Name</label>
+                      <input type="text" v-model="formName" placeholder="e.g. Jane Doe" required minlength="3"
                         class="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 text-sm transition-all placeholder:text-neutral-300" />
                     </div>
 
                     <!-- Jabatan & Perusahaan -->
                     <div>
-                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Jabatan &amp; Perusahaan</label>
-                      <input type="text" v-model="formRole" placeholder="Contoh: HR Manager @ TechCorp"
+                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Role &amp; Company</label>
+                      <input type="text" v-model="formRole" placeholder="e.g. HR Manager @ TechCorp"
                         class="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 text-sm transition-all placeholder:text-neutral-300" />
                     </div>
 
                     <!-- Hidangan Favorit -->
                     <div>
-                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Proyek Favorit</label>
+                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Favorite Project</label>
                       <div class="relative">
                         <select v-model="formDishLiked"
                           class="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 text-sm text-black appearance-none pr-10 transition-all cursor-pointer">
@@ -835,7 +835,7 @@
 
                     <!-- Rating Rasa -->
                     <div>
-                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Rating Kepuasan</label>
+                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Satisfaction Rating</label>
                       <div class="flex gap-2">
                         <button v-for="star in 5" :key="star" type="button"
                           @click="formStars = star"
@@ -847,22 +847,22 @@
 
                     <!-- Komentar -->
                     <div>
-                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Komentar / Masukan</label>
-                      <textarea v-model="formMessage" placeholder="Tulis testimoni, review, atau sapaan hangat..." required minlength="10" rows="3"
+                      <label class="block text-[10px] font-bold text-brand-muted mb-1.5 tracking-wider uppercase">Comment / Feedback</label>
+                      <textarea v-model="formMessage" placeholder="Write a testimonial, review, or a warm hello..." required minlength="10" rows="3"
                         class="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 text-sm resize-none transition-all placeholder:text-neutral-300"></textarea>
                     </div>
 
                     <!-- Submit -->
                     <button type="submit"
                       class="w-full py-3.5 bg-white text-black border border-neutral-150 rounded-full font-mono font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-brand-gold active:scale-[0.98] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_rgba(160,120,80,0.3)] mt-2 cursor-pointer">
-                      Kirim Ulasan Anda
+                      Submit Your Review
                     </button>
 
                     <!-- Success -->
                     <transition name="fade">
                       <div v-if="guestbookSuccess" class="text-center text-xs text-emerald-600 font-medium py-3 bg-emerald-50 rounded-xl border border-emerald-100/50 mt-4 flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Ulasan berhasil dikirimkan!
+                        Review submitted successfully!
                       </div>
                     </transition>
                   </form>
@@ -877,8 +877,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold-dark"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                       </div>
                       <div>
-                        <h3 class="text-lg font-serif font-bold text-black leading-tight">Review Pelanggan</h3>
-                        <p class="text-[11px] text-brand-muted mt-0.5">{{guestbookEntries.length}} ulasan tersimpan</p>
+                        <h3 class="text-lg font-serif font-bold text-black leading-tight">Client Reviews</h3>
+                        <p class="text-[11px] text-brand-muted mt-0.5">{{guestbookEntries.length}} reviews</p>
                       </div>
                     </div>
                     <!-- Average stars -->
@@ -887,7 +887,7 @@
                         <span v-for="s in 5" :key="s" class="text-base leading-none"
                           :class="s <= Math.round(guestbookEntries.reduce((a,b) => a + b.stars, 0) / guestbookEntries.length) ? 'text-brand-gold' : 'text-neutral-200'">★</span>
                       </div>
-                      <p class="text-[9px] uppercase tracking-widest font-mono text-brand-muted">Rata-rata Penilaian</p>
+                      <p class="text-[9px] uppercase tracking-widest font-mono text-brand-muted">Average Rating</p>
                     </div>
                   </div>
 
@@ -903,7 +903,7 @@
                           <span class="text-sm font-bold text-brand-gold-dark">{{ (entry.name && entry.name.match(/[a-zA-Z]/)) ? entry.name.replace(/[^a-zA-Z]/g, '').charAt(0).toUpperCase() : 'U' }}</span>
                         </div>
                         <div>
-                          <h4 class="font-serif font-bold text-black text-base leading-tight">{{entry.name || 'User Tanpa Nama'}}</h4>
+                          <h4 class="font-serif font-bold text-black text-base leading-tight">{{entry.name || 'Anonymous User'}}</h4>
                           <p class="text-[10px] text-brand-muted font-mono mt-1 tracking-wide">{{entry.role || 'Visitor'}}</p>
                         </div>
                       </div>
@@ -930,7 +930,7 @@
                       <button @click="handleLikeEntry(entry.id)"
                         class="flex items-center gap-1.5 text-[9px] font-mono tracking-wide text-brand-muted hover:text-brand-gold transition-colors shrink-0 bg-transparent px-2 py-1 rounded hover:bg-brand-bone/50 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
-                        Membantu ({{entry.likes}})
+                        Helpful ({{entry.likes}})
                       </button>
                     </div>
                   </div>
@@ -938,8 +938,8 @@
                   <!-- Empty state -->
                   <div v-if="guestbookEntries.length === 0" class="text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-200">
                     <div class="text-3xl mb-2">☕</div>
-                    <p class="text-xs font-mono text-brand-muted">Belum ada ulasan.</p>
-                    <p class="text-xs font-mono text-brand-muted mt-0.5">Jadilah yang pertama!</p>
+                    <p class="text-xs font-mono text-brand-muted">No reviews yet.</p>
+                    <p class="text-xs font-mono text-brand-muted mt-0.5">Be the first!</p>
                   </div>
                 </div>
               </div>
@@ -1718,7 +1718,7 @@
               <div class="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-brand-charcoal/15 pointer-events-none z-30 shadow-[0_0_8px_rgba(44,40,37,0.2)]"></div>
               <div class="hidden md:block absolute top-0 bottom-0 left-[calc(50%-1px)] w-[1px] bg-white/40 pointer-events-none z-30"></div>
 
-              <button @click="copyLink" :title="linkCopied ? 'Link tersalin!' : 'Salin link ke karya ini'" class="absolute top-3 right-14 md:top-6 md:right-20 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
+              <button @click="copyLink" :title="linkCopied ? 'Link copied!' : 'Copy link to this project'" class="absolute top-3 right-14 md:top-6 md:right-20 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
                 <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-3.5 w-3.5"></i>
               </button>
 
@@ -1744,10 +1744,10 @@
 
                     <!-- PREV/NEXT PHOTO NAVIGATION — only shown when the project has more than 1 photo -->
                     <template v-if="selectedDishImages.length > 1">
-                      <button @click.stop="prevDishImage" title="Foto sebelumnya" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+                      <button @click.stop="prevDishImage" title="Previous photo" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
                         <i data-lucide="chevron-left" class="h-4 w-4"></i>
                       </button>
-                      <button @click.stop="nextDishImage" title="Foto berikutnya" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+                      <button @click.stop="nextDishImage" title="Next photo" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
                         <i data-lucide="chevron-right" class="h-4 w-4"></i>
                       </button>
                       <div class="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 z-20 items-center gap-1.5">
@@ -1784,7 +1784,7 @@
                       <div v-if="getLinkedExperience(selectedDish)" class="flex items-start gap-2.5 text-brand-gold-dark font-mono bg-brand-bone/60 border border-brand-gold/20 rounded-xl px-3.5 py-2.5">
                         <i data-lucide="link" class="h-3.5 w-3.5 shrink-0 mt-0.5"></i>
                         <div class="min-w-0">
-                          <p class="text-[10px] uppercase tracking-wider opacity-80">Bagian dari pengalaman</p>
+                          <p class="text-[10px] uppercase tracking-wider opacity-80">Part of experience</p>
                           <p class="text-xs font-bold text-black leading-snug mt-0.5">{{ getLinkedExperience(selectedDish).heading }}</p>
                           <p class="text-[10px] mt-1">{{ getLinkedExperience(selectedDish).period }}</p>
                         </div>
@@ -1877,7 +1877,7 @@
 
           <div class="bg-white w-full max-w-3xl rounded-[24px] shadow-[0_30px_80px_-10px_rgba(139,130,115,0.35)] relative border border-neutral-300 z-10 max-h-[92vh] flex flex-col overflow-hidden">
 
-            <button @click="copyLink" :title="linkCopied ? 'Link tersalin!' : 'Salin link ke sertifikat ini'" class="absolute top-4 right-14 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
+            <button @click="copyLink" :title="linkCopied ? 'Link copied!' : 'Copy link to this credential'" class="absolute top-4 right-14 z-40 bg-brand-cream/90 text-black p-1.5 rounded-full shadow-md hover:bg-brand-bone hover:scale-105 transition-all cursor-pointer border border-neutral-300">
               <i :data-lucide="linkCopied ? 'check' : 'link'" class="h-3.5 w-3.5"></i>
             </button>
 
@@ -1890,7 +1890,7 @@
               <div class="relative aspect-[4/3] bg-brand-bone">
                 <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-brand-gold/25">
                   <i data-lucide="badge-check" class="h-14 w-14"></i>
-                  <span class="text-[10px] font-mono uppercase tracking-widest text-brand-muted/50">Sertifikat</span>
+                  <span class="text-[10px] font-mono uppercase tracking-widest text-brand-muted/50">Credential</span>
                 </div>
                 <img v-if="selectedCertificate.image" :src="selectedCertificate.image" :alt="selectedCertificate.title" @error="$event.target.style.display='none'"
                      class="absolute inset-0 w-full h-full object-contain" />
@@ -1908,11 +1908,11 @@
 
                 <div class="border border-neutral-200 rounded-2xl divide-y divide-neutral-200 overflow-hidden">
                   <div class="flex items-center justify-between px-4 py-3">
-                    <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="calendar" class="h-3.5 w-3.5 text-brand-gold"></i>Tanggal Terbit</span>
+                    <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="calendar" class="h-3.5 w-3.5 text-brand-gold"></i>Issue Date</span>
                     <span class="text-xs font-mono font-bold text-black">{{ selectedCertificate.date }}</span>
                   </div>
                   <div v-if="selectedCertificate.credentialId" class="flex items-center justify-between px-4 py-3">
-                    <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="hash" class="h-3.5 w-3.5 text-brand-gold"></i>ID Kredensial</span>
+                    <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="hash" class="h-3.5 w-3.5 text-brand-gold"></i>Credential ID</span>
                     <span class="text-xs font-mono font-bold text-black">{{ selectedCertificate.credentialId }}</span>
                   </div>
                 </div>
@@ -1936,8 +1936,8 @@
             <button type="button" @click="closeCropModal" class="absolute top-4 right-4 h-8 w-8 rounded-full hover:bg-neutral-100 flex items-center justify-center text-brand-muted cursor-pointer">
               <i data-lucide="x" class="h-4 w-4"></i>
             </button>
-            <h3 class="font-sans text-lg font-bold text-black mb-1">Atur Foto</h3>
-            <p class="text-xs text-brand-muted mb-4">Geser dan perbesar untuk memilih bagian foto yang mau ditampilkan.</p>
+            <h3 class="font-sans text-lg font-bold text-black mb-1">Adjust Photo</h3>
+            <p class="text-xs text-brand-muted mb-4">Drag and zoom to choose which part of the photo to display.</p>
 
             <div class="w-full h-72 bg-neutral-100 rounded-2xl overflow-hidden">
               <img id="cropperImage" :src="cropImageUrl" class="max-w-full block" />
@@ -1954,8 +1954,8 @@
             </div>
 
             <div class="flex justify-end gap-3 mt-5 pt-4 border-t border-neutral-100">
-              <button type="button" @click="closeCropModal" class="chip-raised px-4 py-2 rounded-xl text-black text-xs font-sans font-semibold cursor-pointer">Batal</button>
-              <button type="button" @click="confirmCrop" class="btn-raised px-6 py-2 rounded-xl text-black text-xs font-sans font-semibold uppercase cursor-pointer">Gunakan Foto</button>
+              <button type="button" @click="closeCropModal" class="chip-raised px-4 py-2 rounded-xl text-black text-xs font-sans font-semibold cursor-pointer">Cancel</button>
+              <button type="button" @click="confirmCrop" class="btn-raised px-6 py-2 rounded-xl text-black text-xs font-sans font-semibold uppercase cursor-pointer">Use Photo</button>
             </div>
           </div>
         </div>
@@ -1978,7 +1978,7 @@
             <form @submit.prevent="handleLogin" class="space-y-4">
               <input type="password" v-model="password" placeholder="••••••••" class="w-full px-4 py-2.5 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
               <div v-if="loginError" class="bg-red-50 text-red-800 text-xs p-3 rounded-xl">{{loginError}}</div>
-              <button type="submit" class="btn-raised w-full py-2.5 text-black rounded-xl font-sans font-semibold uppercase text-xs">Masuk</button>
+              <button type="submit" class="btn-raised w-full py-2.5 text-black rounded-xl font-sans font-semibold uppercase text-xs">Log In</button>
             </form>
           </div>
         </div>
