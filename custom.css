@@ -520,12 +520,15 @@ body,
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);
 }
 /* !important here because the site-wide "force text black" rule further
-   down the file would otherwise override these tab-bar colors */
+   down the file would otherwise override these tab-bar colors.
+   Colors matched to the desktop dock (.nav-raised uses text-neutral-500
+   for every state — active is shown via the inset shadow only, no color
+   change), instead of the previous muted-brown / gold-brown pairing. */
 .mobile-tab-item {
-  color: #9a948a !important;
+  color: #737373 !important;
 }
 .mobile-tab-item.mobile-tab-active {
-  color: var(--color-brand-gold-dark) !important;
+  color: #262626 !important;
   box-shadow:
     inset 2px 2px 5px rgba(44, 40, 37, 0.16),
     inset -2px -2px 5px rgba(255, 255, 255, 0.9);
