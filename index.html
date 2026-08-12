@@ -253,10 +253,6 @@
         </div>
       </div>
 
-      <!-- spacer so page content isn't hidden behind the fixed mobile tab bar -->
-      <div class="mobile-tab-bar-spacer lg:hidden"></div>
-
-
       <main class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-2 lg:mt-4 pt-10 lg:pt-0">
         
         <!-- HOME PAGE -->
@@ -496,9 +492,9 @@
                   <h3 class="text-lg font-serif font-medium text-black">No projects found</h3>
                </div>
                
-               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  <div v-for="item in filteredMenu" :key="item.id" @click="openDishDetails(item)" class="bg-white rounded-3xl overflow-hidden border border-neutral-200/60 shadow-sm hover:shadow-[0_12px_24px_-8px_rgba(26,26,24,0.1)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex flex-col h-full">
-                     <div class="relative aspect-[4/3] overflow-hidden bg-brand-bone">
+               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                  <div v-for="item in filteredMenu" :key="item.id" @click="openDishDetails(item)" class="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-neutral-200/60 shadow-sm hover:shadow-[0_12px_24px_-8px_rgba(26,26,24,0.1)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer flex flex-col h-full">
+                     <div class="relative aspect-[1.91/1] md:aspect-[4/3] overflow-hidden bg-brand-bone">
                         <img :src="item.image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                         <div class="absolute top-4 left-4 flex gap-1.5">
                            <span class="bg-white/90 backdrop-blur-md text-black border border-neutral-150 text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">{{item.category}}</span>
@@ -521,15 +517,15 @@
                           </div>
                         </div>
                      </div>
-                     <div class="p-6 flex-1 flex flex-col justify-between">
+                     <div class="p-4 md:p-6 flex-1 flex flex-col justify-between">
                         <div>
-                           <h3 class="font-serif text-lg font-medium text-black group-hover:text-brand-gold transition-colors">{{item.name}}</h3>
-                           <p class="text-xs text-brand-muted line-clamp-3 leading-relaxed mb-4 mt-2">{{item.shortDescription}}</p>
+                           <h3 class="font-serif text-base md:text-lg font-medium text-black group-hover:text-brand-gold transition-colors">{{item.name}}</h3>
+                           <p class="text-xs text-brand-muted line-clamp-3 leading-relaxed mb-3 md:mb-4 mt-1.5 md:mt-2">{{item.shortDescription}}</p>
                         </div>
-                        <div class="border-t border-neutral-100 pt-3 flex items-center text-[11px] font-mono">
+                        <div class="border-t border-neutral-100 pt-2.5 md:pt-3 flex items-center text-[11px] font-mono">
                            <span class="text-brand-gold-dark font-bold flex items-center gap-1"><i data-lucide="award" class="h-3 w-3 text-brand-gold"></i>{{item.impactMetric}}</span>
                         </div>
-                        <div v-if="getLinkedExperience(item)" class="flex items-center gap-1.5 text-[10px] text-brand-muted font-mono mt-1.5" :title="'Linked to experience: ' + getLinkedExperience(item).heading + ' (' + getLinkedExperience(item).period + ')'">
+                        <div v-if="getLinkedExperience(item)" class="hidden md:flex items-center gap-1.5 text-[10px] text-brand-muted font-mono mt-1.5" :title="'Linked to experience: ' + getLinkedExperience(item).heading + ' (' + getLinkedExperience(item).period + ')'">
                            <i data-lucide="link" class="h-3 w-3 text-brand-gold shrink-0"></i>
                            <span class="truncate">{{ getLinkedExperience(item).heading }}</span>
                         </div>
@@ -1707,6 +1703,12 @@
         </div>
       </main>
 
+      <!-- spacer so page content isn't hidden behind the fixed mobile tab bar
+           (placed after </main>, not before, so it reserves space at the
+           BOTTOM of the scrollable content instead of pushing every page
+           down from the top) -->
+      <div class="mobile-tab-bar-spacer lg:hidden"></div>
+
       <!-- DETAIL MODAL SCREEN -->
       <transition name="fade">
         <div v-if="selectedDish" class="fixed inset-0 z-[80] flex items-center justify-center p-3 md:p-6 text-left">
@@ -1745,7 +1747,7 @@
                     <!-- PER-PHOTO CAPTION — italic, overlaid near the bottom of the photo.
                          Only shows when the current photo actually has a caption. -->
                     <p v-if="selectedDishImages[selectedDishImageIndex] && selectedDishImages[selectedDishImageIndex].caption"
-                       class="absolute inset-x-6 md:inset-x-10 bottom-28 md:bottom-12 z-20 text-center text-white italic font-sans text-sm leading-snug drop-shadow-[0_2px_10px_rgba(0,0,0,0.65)] pointer-events-none">
+                       class="absolute inset-x-6 md:inset-x-10 bottom-6 md:bottom-12 z-20 text-center text-white italic font-sans text-sm leading-snug drop-shadow-[0_2px_10px_rgba(0,0,0,0.65)] pointer-events-none">
                       {{ selectedDishImages[selectedDishImageIndex].caption }}
                     </p>
 
@@ -1762,22 +1764,17 @@
                       </div>
                     </template>
 
-                    <div class="absolute inset-x-6 bottom-6 md:hidden text-black bg-white/90 backdrop-blur-sm border border-neutral-150 p-4 rounded-xl">
-                      <span class="text-[9px] font-mono uppercase tracking-wider text-brand-gold font-bold">{{ selectedDish.categoryLabel }}</span>
-                      <h2 class="text-xl font-sans mt-1 font-medium">{{ selectedDish.name }}</h2>
-                    </div>
-
                   </div>
 
                   <!-- RIGHT PAGE -->
                   <div class="md:h-full md:overflow-y-auto no-scrollbar p-6 md:pt-6 md:pb-6 md:px-7 md:pl-9 bg-brand-cream flex flex-col relative">
                     <div class="space-y-4">
                       <!-- JUDUL / TITLE -->
-                      <div class="hidden md:block">
+                      <div>
                         <span class="text-xs font-mono tracking-widest text-brand-gold font-bold uppercase block mb-2">
                           {{ selectedDish.categoryLabel }} • {{ formatProjectDate(selectedDish.price) }}
                         </span>
-                        <h2 class="text-2xl lg:text-3xl font-sans font-semibold text-black tracking-tight leading-tight">
+                        <h2 class="text-xl md:text-2xl lg:text-3xl font-sans font-semibold text-black tracking-tight leading-tight">
                           {{ selectedDish.name }}
                         </h2>
                       </div>
