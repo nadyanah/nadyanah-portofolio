@@ -67,6 +67,21 @@ const app = createApp({
     // yang belum disinkronkan ke Professional Experience manapun.
     const adminExperienceFilter = ref("all");
 
+    // Single source of truth for the admin sidebar/dropdown nav — shared by
+    // both the desktop button list and the mobile dropdown selector, so
+    // adding/renaming a section only needs to happen in one place.
+    const adminTabs = computed(() => [
+      { id: "chef", icon: "id-card", title: "Profil Saya", subtitle: "Identitas diri" },
+      { id: "homepage", icon: "layout-template", title: "Halaman Utama", subtitle: "Copywriting beranda" },
+      { id: "background", icon: "sparkles", title: "Highlight Background", subtitle: "Foto & deskripsi halaman Background" },
+      { id: "portfolio", icon: "layers", title: "Kelola Portofolio", subtitle: "Daftar proyek" },
+      { id: "certificate", icon: "badge-check", title: `Kelola Sertifikat (${certificateMenu.value.length})`, subtitle: "Kredensial & sertifikasi" },
+      { id: "guestbook", icon: "users", title: `Buku Tamu (${guestbookEntries.value.length})`, subtitle: "Moderation logs" }
+    ]);
+    // The single active tab's meta — drives the icon shown on the mobile
+    // dropdown trigger (the <select> itself can't render an icon).
+    const activeAdminTab = computed(() => adminTabs.value.find(t => t.id === adminTab.value) || adminTabs.value[0]);
+
     // CERTIFICATE ADMIN FORM STATES
     const getEmptyCertificateForm = () => ({
       title: "", issuer: "", date: "", category: "", credentialId: "", credentialUrl: "", supportingLinkLabel: "", supportingLinkUrl: "", image: ""
@@ -1214,7 +1229,7 @@ const app = createApp({
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
       adminExperienceFilter, adminFilteredPortfolio,
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm, togglePortfolioPin,
-      handleAddField, handleRemoveField, handleFieldChange, handleAddPoint, handleRemovePoint,
+      handleAddField, handleRemoveField, handleFieldChange, handleAddPoint, handleRemovePoint, adminTabs, activeAdminTab,
       portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,
       certificateForm, isAddingCertificate, editingCertificateId,
       startEditCertificate, saveCertificate, deleteCertificate, cancelCertificateForm,
