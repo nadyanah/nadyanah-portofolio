@@ -595,10 +595,18 @@ body,
   }
 }
 
-/* RICH TEXT EDITOR (admin portfolio fields) — placeholder text for the
-   empty contenteditable div, plus baseline styling so bold/italic/underline
-   and bullet lists look right both while editing (.rich-text-input) and in
-   the rendered read-only view (v-html, .rich-text-content) on the public side. */
+/* RICH TEXT EDITOR (admin portfolio + homepage fields) — placeholder text
+   for the empty contenteditable div, plus baseline styling so bold/italic/
+   underline and bullet lists look right both while editing
+   (.rich-text-input) and in the rendered read-only view (v-html,
+   .rich-text-content) on the public side. white-space: pre-line keeps
+   older plain-text values (typed before this feature existed, with literal
+   \n line breaks instead of real <div>/<br> tags) displaying on separate
+   lines exactly like they did before. */
+.rich-text-input,
+.rich-text-content {
+  white-space: pre-line;
+}
 .rich-text-input:empty:before {
   content: attr(data-placeholder);
   color: #a8a29e;

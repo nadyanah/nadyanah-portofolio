@@ -795,6 +795,21 @@ const app = createApp({
     };
     const handleHomepageSubmit = async (e) => {
       if(e) e.preventDefault();
+      // slogan/body/welcomeQuote are rich-text (contenteditable) fields now,
+      // so they lost the browser's native `required` validation — check
+      // manually, stripping tags first so e.g. "<b></b>" doesn't count as filled in.
+      const requiredRichFields = [
+        ["slogan", "Kalimat Slogan Utama (Headline)"],
+        ["body", "Paragraf Deskripsi Beranda"],
+        ["welcomeQuote", "Kalimat Layar Sambutan (Welcome Screen)"]
+      ];
+      for (const [key, label] of requiredRichFields) {
+        const plain = (homepageForm.value[key] || "").replace(/<[^>]*>/g, "").trim();
+        if (!plain) {
+          alert(`${label} wajib diisi ya.`);
+          return;
+        }
+      }
       const next = JSON.parse(JSON.stringify(homepageForm.value));
       try {
         await window.db.saveContent("main_page_content", next);
@@ -1103,7 +1118,7 @@ const app = createApp({
     // is opened, so you always start on the cover photo.
     const selectedDishImageIndex = ref(0);
     const selectedDishImages = computed(() => normalizeImages(selectedDish.value));
-    watch(selectedDish, () => { selectedDishImageIndex.value = 0; });
+    watch(selectedDish, () => { selectedDishImageIndex.value = 0; dishPhotoLightboxOpen.value = false; });
     const nextDishImage = () => {
       const total = selectedDishImages.value.length;
       if (total < 2) return;
@@ -1114,6 +1129,13 @@ const app = createApp({
       if (total < 2) return;
       selectedDishImageIndex.value = (selectedDishImageIndex.value - 1 + total) % total;
     };
+
+    // Tap-to-enlarge for the project popup's photo (mainly for mobile, where
+    // the photo sits in a cropped/cover-fit strip) — opens the current photo
+    // full-size with its real proportions (object-contain, not cropped).
+    // Reuses selectedDishImageIndex/next/prevDishImage so left/right still
+    // navigate exactly like the regular card view, just from the lightbox.
+    const dishPhotoLightboxOpen = ref(false);
 
     const openCertificate = (cert) => {
       selectedCertificate.value = cert;
@@ -1247,7 +1269,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied, previewImageUrl], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied, previewImageUrl, dishPhotoLightboxOpen], () => {
       refreshIcons();
     });
 
@@ -1262,7 +1284,7 @@ const app = createApp({
 
     return {
       activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
-      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText, stripTags,
+      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText, stripTags, dishPhotoLightboxOpen,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
       selectedCertificateCategory, certificateCategories, filteredCertificates,

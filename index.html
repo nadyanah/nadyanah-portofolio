@@ -107,7 +107,7 @@
         <div v-if="showWelcome" @click="showWelcome = false"
              class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
           <div class="max-w-xl mx-auto px-2">
-            <p class="font-hack font-semibold text-sm sm:text-base leading-relaxed sm:leading-normal text-black" style="white-space: pre-line;">{{ mainPageContent.welcomeQuote }}</p>
+            <p class="font-hack font-semibold text-sm sm:text-base leading-relaxed sm:leading-normal text-black rich-text-content" v-html="mainPageContent.welcomeQuote"></p>
             <p v-if="mainPageContent.alertMessage" class="font-sans italic font-normal text-[11px] sm:text-sm leading-snug text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 mt-6 sm:mt-5 inline-block" style="white-space: pre-line;">
               ⚠️ {{ mainPageContent.alertMessage }}
             </p>
@@ -304,10 +304,9 @@
               <h1 class="text-2xl md:text-3xl name-title text-black tracking-tight font-medium select-none cursor-default">
                 {{ mainPageContent.name }}
               </h1>
-              <h2 class="text-sm md:text-base font-sans font-semibold text-black leading-snug mt-2">
-                {{ mainPageContent.slogan }}
+              <h2 class="text-sm md:text-base font-sans font-semibold text-black leading-snug mt-2 rich-text-content" v-html="mainPageContent.slogan">
               </h2>
-              <p class="text-xs md:text-sm text-brand-muted leading-relaxed max-w-lg mt-3" style="white-space: pre-line;" v-html="renderBoldText(mainPageContent.body)"></p>
+              <p class="text-xs md:text-sm text-brand-muted leading-relaxed max-w-lg mt-3 rich-text-content" v-html="mainPageContent.body"></p>
             </div>
 
             <!-- RIGHT SLIDER — wrapper ini menampung box cream (slider) + social buttons
@@ -1215,10 +1214,10 @@
                             </div>
                             <!-- Sub-points for this step -->
                             <div class="pl-6 space-y-1.5">
-                              <div v-for="(pt, pIdx) in step.points" :key="'step'+idx+'-pt'+pIdx" class="flex gap-2 items-center">
-                                <span class="font-sans text-[9px] text-neutral-300 w-3">–</span>
-                                <input type="text" v-model="step.points[pIdx]" placeholder="Poin tambahan untuk langkah ini..." class="flex-1 px-2.5 py-1 text-[11px] bg-brand-bone/40 border border-neutral-150 rounded-lg focus:outline-none" />
-                                <button type="button" @click="handleRemovePoint('recipe', idx, pIdx)" class="text-red-500 hover:bg-red-50 p-1 rounded-lg cursor-pointer">
+                              <div v-for="(pt, pIdx) in step.points" :key="'step'+idx+'-pt'+pIdx" class="flex gap-2 items-start">
+                                <span class="font-sans text-[9px] text-neutral-300 w-3 pt-2">–</span>
+                                <rich-text-editor v-model="step.points[pIdx]" placeholder="Poin tambahan untuk langkah ini..." :min-rows="1" class="flex-1"></rich-text-editor>
+                                <button type="button" @click="handleRemovePoint('recipe', idx, pIdx)" class="text-red-500 hover:bg-red-50 p-1 rounded-lg cursor-pointer mt-1">
                                   <i data-lucide="x" class="h-3 w-3"></i>
                                 </button>
                               </div>
@@ -1249,10 +1248,10 @@
                             </div>
                             <!-- Sub-points for this result -->
                             <div class="pl-6 space-y-1.5">
-                              <div v-for="(pt, pIdx) in res.points" :key="'res'+idx+'-pt'+pIdx" class="flex gap-2 items-center">
-                                <span class="font-sans text-[9px] text-neutral-300 w-3">–</span>
-                                <input type="text" v-model="res.points[pIdx]" placeholder="Poin tambahan untuk hasil ini..." class="flex-1 px-2.5 py-1 text-[11px] bg-brand-bone/40 border border-neutral-150 rounded-lg focus:outline-none" />
-                                <button type="button" @click="handleRemovePoint('results', idx, pIdx)" class="text-red-500 hover:bg-red-50 p-1 rounded-lg cursor-pointer">
+                              <div v-for="(pt, pIdx) in res.points" :key="'res'+idx+'-pt'+pIdx" class="flex gap-2 items-start">
+                                <span class="font-sans text-[9px] text-neutral-300 w-3 pt-2">–</span>
+                                <rich-text-editor v-model="res.points[pIdx]" placeholder="Poin tambahan untuk hasil ini..." :min-rows="1" class="flex-1"></rich-text-editor>
+                                <button type="button" @click="handleRemovePoint('results', idx, pIdx)" class="text-red-500 hover:bg-red-50 p-1 rounded-lg cursor-pointer mt-1">
                                   <i data-lucide="x" class="h-3 w-3"></i>
                                 </button>
                               </div>
@@ -1627,17 +1626,16 @@
                       </div>
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Kalimat Slogan Utama (Headline)*</label>
-                        <input type="text" required v-model="homepageForm.slogan" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
+                        <rich-text-editor v-model="homepageForm.slogan" placeholder="Slogan utama yang tampil di beranda..." :min-rows="1.2"></rich-text-editor>
                       </div>
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Paragraf Deskripsi Beranda*</label>
-                        <p class="text-[10px] text-brand-muted mb-1">Tekan Enter untuk baris baru. Apit kata dengan **dua bintang** untuk membuatnya <strong>bold</strong>, contoh: **kata ini bold**.</p>
-                        <textarea required rows="4" v-model="homepageForm.body" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
+                        <rich-text-editor v-model="homepageForm.body" placeholder="Deskripsi singkat tentang dirimu di beranda..." :min-rows="4"></rich-text-editor>
                       </div>
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
                         <label class="font-semibold text-black block">Kalimat Layar Sambutan (Welcome Screen)*</label>
                         <p class="text-[10px] text-brand-muted mb-1">Ini kalimat yang muncul pertama kali saat website dibuka. Tekan Enter di posisi yang kamu mau untuk mengatur baris barunya sendiri.</p>
-                        <textarea required rows="5" v-model="homepageForm.welcomeQuote" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed font-hack"></textarea>
+                        <rich-text-editor v-model="homepageForm.welcomeQuote" placeholder="Kalimat sambutan..." :min-rows="5"></rich-text-editor>
                       </div>
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black block">Teks Ajakan di Pojok Welcome Screen*</label>
@@ -1786,8 +1784,13 @@
                   <!-- LEFT PAGE (photo: landscape aspect-ratio on mobile so it doesn't
                        eat half the screen, full-bleed 4:3-ish fill on desktop) -->
                   <div class="relative aspect-[1.91/1] md:aspect-auto md:min-h-0 md:h-full border-b md:border-b-0 md:border-r border-neutral-200">
-                    <div class="absolute inset-0 w-full h-full">
+                    <div class="absolute inset-0 w-full h-full cursor-zoom-in" @click="dishPhotoLightboxOpen = true" title="Lihat foto lebih besar">
                       <img :src="selectedDishImages[selectedDishImageIndex] && selectedDishImages[selectedDishImageIndex].url" :alt="selectedDish.name" class="w-full h-full object-cover" />
+                    </div>
+
+                    <!-- Tap-to-enlarge hint icon -->
+                    <div class="absolute top-3 left-3 z-20 h-7 w-7 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md pointer-events-none">
+                      <i data-lucide="maximize-2" class="h-3.5 w-3.5"></i>
                     </div>
 
                     <!-- PER-PHOTO CAPTION — italic, overlaid near the bottom of the photo.
@@ -1874,7 +1877,7 @@
                                     <span class="h-3.5 w-3.5 rounded-full bg-brand-cream text-brand-gold-dark flex items-center justify-center flex-shrink-0 mt-0.5 border border-neutral-300">
                                       <i data-lucide="check" class="h-2 w-2 font-bold"></i>
                                     </span>
-                                    <span class="font-sans text-brand-muted leading-relaxed text-sm">{{ pt }}</span>
+                                    <span class="font-sans text-brand-muted leading-relaxed text-sm rich-text-content" v-html="pt"></span>
                                   </li>
                                 </ul>
                               </div>
@@ -1900,7 +1903,7 @@
                                     <span class="h-3.5 w-3.5 rounded-full bg-brand-cream text-brand-gold-dark flex items-center justify-center flex-shrink-0 mt-0.5 border border-neutral-300">
                                       <i data-lucide="check" class="h-2 w-2 font-bold"></i>
                                     </span>
-                                    <span class="font-sans text-brand-muted leading-relaxed text-sm">{{ pt }}</span>
+                                    <span class="font-sans text-brand-muted leading-relaxed text-sm rich-text-content" v-html="pt"></span>
                                   </li>
                                 </ul>
                               </div>
@@ -1940,6 +1943,43 @@
 
             </div>
           </div>
+        </div>
+      </transition>
+
+      <!-- PROJECT PHOTO LIGHTBOX (public card view) — tap-to-enlarge from the
+           popup's photo strip, mainly for mobile where the photo is cropped
+           to a landscape strip. Shows the current photo at its real
+           proportions (object-contain) and reuses the same prev/next/index
+           state as the popup, so left/right navigation stays in sync with
+           the regular card view underneath. -->
+      <transition name="fade">
+        <div v-if="dishPhotoLightboxOpen && selectedDish" @click="dishPhotoLightboxOpen = false" class="fixed inset-0 z-[90] flex items-center justify-center p-4 cursor-pointer">
+          <div class="absolute inset-0 bg-brand-charcoal/90 backdrop-blur-sm"></div>
+
+          <button type="button" @click.stop="dishPhotoLightboxOpen = false" class="absolute top-4 right-4 z-20 h-9 w-9 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-black cursor-pointer">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+
+          <img :src="selectedDishImages[selectedDishImageIndex] && selectedDishImages[selectedDishImageIndex].url" :alt="selectedDish.name" @click.stop
+               class="relative z-0 max-w-full max-h-[85vh] rounded-2xl shadow-2xl object-contain cursor-default" />
+
+          <p v-if="selectedDishImages[selectedDishImageIndex] && selectedDishImages[selectedDishImageIndex].caption"
+             class="absolute bottom-6 inset-x-16 z-10 text-center text-white italic font-sans text-sm leading-snug drop-shadow-[0_2px_10px_rgba(0,0,0,0.65)] pointer-events-none">
+            {{ selectedDishImages[selectedDishImageIndex].caption }}
+          </p>
+
+          <!-- PREV/NEXT — same nextDishImage/prevDishImage as the regular card view -->
+          <template v-if="selectedDishImages.length > 1">
+            <button type="button" @click.stop="prevDishImage" title="Previous photo" class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-11 md:w-11 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+              <i data-lucide="chevron-left" class="h-4 w-4 md:h-5 md:w-5"></i>
+            </button>
+            <button type="button" @click.stop="nextDishImage" title="Next photo" class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-20 h-9 w-9 md:h-11 md:w-11 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+              <i data-lucide="chevron-right" class="h-4 w-4 md:h-5 md:w-5"></i>
+            </button>
+            <div class="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
+              <button type="button" v-for="(img, idx) in selectedDishImages" :key="'lb-dot-'+idx" @click.stop="selectedDishImageIndex = idx" :title="'Foto ' + (idx + 1)" :class="['transition-all duration-300 rounded-full', idx === selectedDishImageIndex ? 'w-5 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/60 hover:bg-white/80']"></button>
+            </div>
+          </template>
         </div>
       </transition>
 
