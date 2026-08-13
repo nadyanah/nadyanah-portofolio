@@ -463,6 +463,12 @@ const app = createApp({
     // Also normalizes 3+ blank lines down to exactly one blank line, so
     // paragraph gaps look consistent no matter how many extra Enters the
     // admin happened to leave between paragraphs.
+    // Strips HTML tags for compact single-line previews (e.g. the admin
+    // portfolio list row) where fields edited via <rich-text-editor> could
+    // otherwise contain block-level tags (like <li>) that don't play nicely
+    // with a single-line `truncate` layout.
+    const stripTags = (html) => (html || "").replace(/<[^>]*>/g, "");
+
     const renderBoldText = (text) => {
       if (!text) return "";
       const escaped = text.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -490,6 +496,15 @@ const app = createApp({
       if(e) e.preventDefault();
       if (!portfolioForm.value.images || portfolioForm.value.images.length === 0) {
         alert("Upload minimal 1 gambar proyek dulu ya.");
+        return;
+      }
+      // shortDescription is now a rich-text (contenteditable) field, so it
+      // no longer has the browser's native `required` validation — check
+      // manually, stripping tags first so "<b></b>" (bold applied to
+      // nothing) doesn't count as filled in.
+      const taglineText = (portfolioForm.value.shortDescription || "").replace(/<[^>]*>/g, "").trim();
+      if (!taglineText) {
+        alert("Deskripsi Singkat / Tagline Proyek wajib diisi ya.");
         return;
       }
       // id is re-derived from the title every save — so renaming a project
@@ -1247,7 +1262,7 @@ const app = createApp({
 
     return {
       activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
-      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText,
+      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText, stripTags,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
       selectedCertificateCategory, certificateCategories, filteredCertificates,
@@ -1288,6 +1303,112 @@ const app = createApp({
 app.config.errorHandler = (err, instance, info) => {
   console.error("Vue error tertangkap (app tetap jalan):", err, info);
 };
+
+// RICH TEXT EDITOR — small reusable contenteditable component with a
+// Bold/Italic/Underline/Bullet-list toolbar, used wherever a portfolio
+// field should support basic formatting: Tagline, Challenge, Solution
+// steps, Impact results, and "What Made It Special". It stores/emits HTML,
+// so anywhere a field edited through this component is displayed
+// elsewhere in the app, it must be rendered with v-html (not {{ }}) or the
+// tags show up literally as text.
+// Uses the classic (deprecated-but-still-universally-supported, no-bundler-
+// needed) document.execCommand — acceptable here since this is admin-only,
+// single-user input, not a public-facing WYSIWYG for untrusted users.
+app.component('rich-text-editor', {
+  props: {
+    modelValue: { type: String, default: "" },
+    placeholder: { type: String, default: "" },
+    minRows: { type: Number, default: 3 }
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const editorRef = ref(null);
+    const active = reactive({ bold: false, italic: false, underline: false, list: false });
+
+    const refreshActiveStates = () => {
+      try {
+        active.bold = document.queryCommandState('bold');
+        active.italic = document.queryCommandState('italic');
+        active.underline = document.queryCommandState('underline');
+        active.list = document.queryCommandState('insertUnorderedList');
+      } catch (e) { /* queryCommandState can throw if selection is outside the editor */ }
+    };
+
+    const emitContent = () => {
+      emit('update:modelValue', editorRef.value ? editorRef.value.innerHTML : "");
+    };
+
+    const exec = (command) => {
+      if (editorRef.value) editorRef.value.focus();
+      document.execCommand(command, false, null);
+      refreshActiveStates();
+      emitContent();
+    };
+
+    // Pastes are forced to plain text (formatting stripped) so admins can't
+    // accidentally drag in styled HTML from Word/a webpage — every bit of
+    // formatting in the field is something they applied themselves via the
+    // toolbar above, which keeps the stored HTML small and predictable.
+    const handlePaste = (e) => {
+      e.preventDefault();
+      const clipboard = e.clipboardData || window.clipboardData;
+      const text = clipboard ? clipboard.getData('text/plain') : "";
+      document.execCommand('insertText', false, text);
+      emitContent();
+    };
+
+    // Keeps the contenteditable DOM in sync when modelValue changes from
+    // *outside* this component (e.g. opening a different project to edit,
+    // or resetting the form) — but skips the write if the content already
+    // matches, so it doesn't fight the caret while the admin is typing.
+    watch(() => props.modelValue, (val) => {
+      const next = val || "";
+      if (editorRef.value && editorRef.value.innerHTML !== next) {
+        editorRef.value.innerHTML = next;
+      }
+    });
+
+    onMounted(() => {
+      if (editorRef.value) editorRef.value.innerHTML = props.modelValue || "";
+    });
+
+    return { editorRef, active, exec, emitContent, refreshActiveStates, handlePaste };
+  },
+  template: `
+    <div class="rich-text-field border border-neutral-200 rounded-xl bg-white overflow-hidden focus-within:border-brand-gold-dark transition-colors">
+      <div class="flex items-center gap-0.5 px-1.5 py-1 border-b border-neutral-100 bg-brand-bone/40">
+        <button type="button" @mousedown.prevent="exec('bold')" :class="['h-6 w-6 rounded-md flex items-center justify-center hover:bg-white cursor-pointer transition-colors', active.bold ? 'bg-white text-brand-gold-dark shadow-sm' : 'text-brand-muted']" title="Bold">
+          <i data-lucide="bold" class="h-3 w-3"></i>
+        </button>
+        <button type="button" @mousedown.prevent="exec('italic')" :class="['h-6 w-6 rounded-md flex items-center justify-center hover:bg-white cursor-pointer transition-colors', active.italic ? 'bg-white text-brand-gold-dark shadow-sm' : 'text-brand-muted']" title="Italic">
+          <i data-lucide="italic" class="h-3 w-3"></i>
+        </button>
+        <button type="button" @mousedown.prevent="exec('underline')" :class="['h-6 w-6 rounded-md flex items-center justify-center hover:bg-white cursor-pointer transition-colors', active.underline ? 'bg-white text-brand-gold-dark shadow-sm' : 'text-brand-muted']" title="Underline">
+          <i data-lucide="underline" class="h-3 w-3"></i>
+        </button>
+        <div class="w-px h-4 bg-neutral-200 mx-0.5"></div>
+        <button type="button" @mousedown.prevent="exec('insertUnorderedList')" :class="['h-6 w-6 rounded-md flex items-center justify-center hover:bg-white cursor-pointer transition-colors', active.list ? 'bg-white text-brand-gold-dark shadow-sm' : 'text-brand-muted']" title="Bullet list">
+          <i data-lucide="list" class="h-3 w-3"></i>
+        </button>
+        <button type="button" @mousedown.prevent="exec('removeFormat')" class="h-6 w-6 rounded-md flex items-center justify-center text-brand-muted hover:bg-white cursor-pointer ml-auto transition-colors" title="Hapus format">
+          <i data-lucide="remove-formatting" class="h-3 w-3"></i>
+        </button>
+      </div>
+      <div
+        ref="editorRef"
+        contenteditable="true"
+        class="rich-text-input rich-text-content px-3 py-1.5 text-sm leading-relaxed focus:outline-none"
+        :style="{ minHeight: (minRows * 1.5) + 'em' }"
+        :data-placeholder="placeholder"
+        @input="emitContent"
+        @keyup="refreshActiveStates"
+        @mouseup="refreshActiveStates"
+        @focus="refreshActiveStates"
+        @paste="handlePaste"
+      ></div>
+    </div>
+  `
+});
 
 app.mount('#root');
 

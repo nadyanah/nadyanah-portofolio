@@ -330,7 +330,7 @@
                   </div>
                   <div class="pt-3 px-1 text-left">
                     <h3 class="text-sm md:text-base name-title font-semibold text-black leading-tight group-hover:text-brand-gold transition-colors mb-1 line-clamp-1">{{ currentDish.name }}</h3>
-                    <p class="text-xs text-neutral-500 leading-relaxed line-clamp-2 mb-3">{{ currentDish.shortDescription }}</p>
+                    <p class="text-xs text-neutral-500 leading-relaxed line-clamp-2 mb-3 rich-text-content" v-html="currentDish.shortDescription"></p>
                     <hr class="border-neutral-100 mb-2.5" />
                     <div class="flex items-center gap-1.5 text-[10px] text-brand-gold-dark font-mono font-bold">
                       <i data-lucide="award" class="h-3 w-3"></i>
@@ -521,7 +521,7 @@
                      <div class="p-4 md:p-6 flex-1 flex flex-col justify-between">
                         <div>
                            <h3 class="font-serif text-base md:text-lg font-medium text-black group-hover:text-brand-gold transition-colors">{{item.name}}</h3>
-                           <p class="text-xs text-brand-muted line-clamp-3 leading-relaxed mb-3 md:mb-4 mt-1.5 md:mt-2">{{item.shortDescription}}</p>
+                           <p class="text-xs text-brand-muted line-clamp-3 leading-relaxed mb-3 md:mb-4 mt-1.5 md:mt-2 rich-text-content" v-html="item.shortDescription"></p>
                         </div>
                         <div class="border-t border-neutral-100 pt-2.5 md:pt-3 flex items-center text-[11px] font-mono">
                            <span class="text-brand-gold-dark font-bold flex items-center gap-1"><i data-lucide="award" class="h-3 w-3 text-brand-gold"></i>{{item.impactMetric}}</span>
@@ -1054,7 +1054,7 @@
                       <div class="flex-1 min-w-0 pr-12 text-left">
                         <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
                         <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
-                        <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.shortDescription}}</p>
+                        <p class="text-[10px] text-brand-muted truncate leading-snug">{{ stripTags(item.shortDescription) }}</p>
                         <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
                         <p v-if="getLinkedExperience(item)" class="text-[9px] font-sans text-brand-gold-dark mt-1 font-semibold flex items-center gap-1">
                           <i data-lucide="link" class="h-2.5 w-2.5"></i> Synced: {{ getLinkedExperience(item).heading }}
@@ -1162,7 +1162,7 @@
 
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Deskripsi Singkat / Tagline Proyek*</label>
-                        <textarea required rows="2.5" placeholder="Deskripsi singkat yang menarik perhatian pembaca..." v-model="portfolioForm.shortDescription" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
+                        <rich-text-editor v-model="portfolioForm.shortDescription" placeholder="Deskripsi singkat yang menarik perhatian pembaca..." :min-rows="2.5"></rich-text-editor>
                       </div>
 
                       <!-- Dynamic List: Ingredients -->
@@ -1193,7 +1193,7 @@
 
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Challenge / Why Problem — Latar Belakang</label>
-                        <textarea rows="3" placeholder="Uraikan kondisi awal sebelum dilakukan restrukturisasi..." v-model="portfolioForm.chefNotes.background" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
+                        <rich-text-editor v-model="portfolioForm.chefNotes.background" placeholder="Uraikan kondisi awal sebelum dilakukan restrukturisasi..." :min-rows="3"></rich-text-editor>
                       </div>
 
                       <!-- Chef Notes Recipe Steps -->
@@ -1208,7 +1208,7 @@
                           <div v-for="(step, idx) in portfolioForm.chefNotes.recipe" :key="'step'+idx" class="bg-white border border-neutral-200 rounded-lg p-2 space-y-1.5">
                             <div class="flex gap-2 items-start">
                               <span class="font-sans text-[10px] text-neutral-400 w-4 pt-2">{{idx + 1}}.</span>
-                              <textarea rows="1.5" v-model="step.text" placeholder="Contoh: Mengadakan riset empati..." class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none resize-none text-xs"></textarea>
+                              <rich-text-editor v-model="step.text" placeholder="Contoh: Mengadakan riset empati..." :min-rows="1.2" class="flex-1"></rich-text-editor>
                               <button type="button" @click="handleRemoveField(null, idx, 'recipe')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer mt-1">
                                 <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
                               </button>
@@ -1240,10 +1240,10 @@
                         </div>
                         <div class="space-y-2.5">
                           <div v-for="(res, idx) in portfolioForm.chefNotes.results" :key="'res'+idx" class="bg-white border border-neutral-200 rounded-lg p-2 space-y-1.5">
-                            <div class="flex gap-2 items-center">
-                              <span class="font-sans text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
-                              <input type="text" v-model="res.text" placeholder="Contoh: Mencapai skor kepuasan rata-rata 4.8" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
-                              <button type="button" @click="handleRemoveField(null, idx, 'results')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
+                            <div class="flex gap-2 items-start">
+                              <span class="font-sans text-[10px] text-neutral-400 w-4 pt-2">{{idx + 1}}.</span>
+                              <rich-text-editor v-model="res.text" placeholder="Contoh: Mencapai skor kepuasan rata-rata 4.8" :min-rows="1.2" class="flex-1"></rich-text-editor>
+                              <button type="button" @click="handleRemoveField(null, idx, 'results')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer mt-1">
                                 <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
                               </button>
                             </div>
@@ -1267,7 +1267,7 @@
                       <!-- Chef Notes: What Made It Special -->
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
                         <label class="font-semibold text-black">What Made It Special and What I Learned</label>
-                        <textarea rows="3" placeholder="Ceritakan hal yang membuat proyek ini istimewa dan pelajaran yang Anda dapatkan..." v-model="portfolioForm.chefNotes.philosophy" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
+                        <rich-text-editor v-model="portfolioForm.chefNotes.philosophy" placeholder="Ceritakan hal yang membuat proyek ini istimewa dan pelajaran yang Anda dapatkan..." :min-rows="3"></rich-text-editor>
                       </div>
 
                     </div>
@@ -1829,7 +1829,7 @@
                       </div>
 
                       <p class="text-sm text-black italic border-l-2 border-brand-gold pl-4 py-0.5 font-sans leading-relaxed">
-                        &ldquo;{{ selectedDish.shortDescription }}&rdquo;
+                        &ldquo;<span class="rich-text-content" v-html="selectedDish.shortDescription"></span>&rdquo;
                       </p>
 
                       <!-- SYNC BADGE — muncul kalau proyek ini disinkronkan dengan salah satu
@@ -1852,8 +1852,7 @@
                             <i data-lucide="alert-triangle" class="h-4 w-4 text-brand-gold"></i>
                             Challenge / Why Problem
                           </h4>
-                          <p v-if="selectedDish.chefNotes.background" class="font-sans text-brand-muted text-sm leading-relaxed">
-                            {{ selectedDish.chefNotes.background }}
+                          <p v-if="selectedDish.chefNotes.background" class="font-sans text-brand-muted text-sm leading-relaxed rich-text-content" v-html="selectedDish.chefNotes.background">
                           </p>
                         </div>
 
@@ -1869,11 +1868,13 @@
                                 {{ i + 1 }}
                               </span>
                               <div class="min-w-0">
-                                <p class="font-sans text-brand-muted leading-relaxed pt-0.5 text-sm">{{ step.text }}</p>
-                                <ul v-if="step.points && step.points.length" class="mt-1.5 space-y-1">
-                                  <li v-for="(pt, pi) in step.points" :key="'sp'+pi" class="flex gap-2 text-brand-muted/90">
-                                    <span class="text-brand-gold mt-0.5">–</span>
-                                    <span class="font-sans leading-relaxed text-xs">{{ pt }}</span>
+                                <p class="font-sans text-brand-muted leading-relaxed pt-0.5 text-sm rich-text-content" v-html="step.text"></p>
+                                <ul v-if="step.points && step.points.length" class="mt-2 space-y-1.5">
+                                  <li v-for="(pt, pi) in step.points" :key="'sp'+pi" class="flex items-start gap-2">
+                                    <span class="h-3.5 w-3.5 rounded-full bg-brand-cream text-brand-gold-dark flex items-center justify-center flex-shrink-0 mt-0.5 border border-neutral-300">
+                                      <i data-lucide="check" class="h-2 w-2 font-bold"></i>
+                                    </span>
+                                    <span class="font-sans text-brand-muted leading-relaxed text-sm">{{ pt }}</span>
                                   </li>
                                 </ul>
                               </div>
@@ -1893,11 +1894,13 @@
                                 <i data-lucide="check" class="h-3 w-3 font-bold"></i>
                               </span>
                               <div class="min-w-0">
-                                <span class="font-sans text-brand-muted leading-relaxed text-sm">{{ res.text }}</span>
-                                <ul v-if="res.points && res.points.length" class="mt-1.5 space-y-1">
-                                  <li v-for="(pt, pi) in res.points" :key="'rp'+pi" class="flex gap-2 text-brand-muted/90">
-                                    <span class="text-brand-gold mt-0.5">–</span>
-                                    <span class="font-sans leading-relaxed text-xs">{{ pt }}</span>
+                                <span class="font-sans text-brand-muted leading-relaxed text-sm rich-text-content" v-html="res.text"></span>
+                                <ul v-if="res.points && res.points.length" class="mt-2 space-y-1.5">
+                                  <li v-for="(pt, pi) in res.points" :key="'rp'+pi" class="flex items-start gap-2">
+                                    <span class="h-3.5 w-3.5 rounded-full bg-brand-cream text-brand-gold-dark flex items-center justify-center flex-shrink-0 mt-0.5 border border-neutral-300">
+                                      <i data-lucide="check" class="h-2 w-2 font-bold"></i>
+                                    </span>
+                                    <span class="font-sans text-brand-muted leading-relaxed text-sm">{{ pt }}</span>
                                   </li>
                                 </ul>
                               </div>
@@ -1911,8 +1914,7 @@
                             <i data-lucide="sparkles" class="h-4 w-4 text-brand-gold"></i>
                             What Made It Special and What I Learned
                           </h4>
-                          <p class="font-sans text-brand-muted text-sm leading-relaxed italic">
-                            {{ selectedDish.chefNotes.philosophy }}
+                          <p class="font-sans text-brand-muted text-sm leading-relaxed italic rich-text-content" v-html="selectedDish.chefNotes.philosophy">
                           </p>
                         </div>
 

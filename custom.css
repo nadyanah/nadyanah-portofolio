@@ -594,3 +594,22 @@ body,
     animation: none;
   }
 }
+
+/* RICH TEXT EDITOR (admin portfolio fields) — placeholder text for the
+   empty contenteditable div, plus baseline styling so bold/italic/underline
+   and bullet lists look right both while editing (.rich-text-input) and in
+   the rendered read-only view (v-html, .rich-text-content) on the public side. */
+.rich-text-input:empty:before {
+  content: attr(data-placeholder);
+  color: #a8a29e;
+  pointer-events: none;
+}
+.rich-text-content ul,
+.rich-text-content ol {
+  list-style: disc;
+  padding-left: 1.25em;
+}
+.rich-text-content b,
+.rich-text-content strong { font-weight: 700; }
+.rich-text-content i,
+.rich-text-content em { font-style: italic; }
