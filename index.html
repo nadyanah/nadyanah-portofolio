@@ -1748,17 +1748,20 @@
                     <!-- PER-PHOTO CAPTION — italic, overlaid near the bottom of the photo.
                          Only shows when the current photo actually has a caption. -->
                     <p v-if="selectedDishImages[selectedDishImageIndex] && selectedDishImages[selectedDishImageIndex].caption"
-                       class="absolute inset-x-6 md:inset-x-10 bottom-6 md:bottom-12 z-20 text-center text-white italic font-sans text-sm leading-snug drop-shadow-[0_2px_10px_rgba(0,0,0,0.65)] pointer-events-none">
+                       class="absolute inset-x-14 md:inset-x-10 bottom-6 md:bottom-12 z-20 text-center text-white italic font-sans text-sm leading-snug drop-shadow-[0_2px_10px_rgba(0,0,0,0.65)] pointer-events-none">
                       {{ selectedDishImages[selectedDishImageIndex].caption }}
                     </p>
 
-                    <!-- PREV/NEXT PHOTO NAVIGATION — only shown when the project has more than 1 photo -->
+                    <!-- PREV/NEXT PHOTO NAVIGATION — only shown when the project has more than 1 photo.
+                         On mobile these sit at the bottom, aligned with the caption row, and are
+                         smaller so they don't dominate the photo; on desktop (md+) they stay
+                         vertically centered at their original size. -->
                     <template v-if="selectedDishImages.length > 1">
-                      <button @click.stop="prevDishImage" title="Previous photo" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
-                        <i data-lucide="chevron-left" class="h-4 w-4"></i>
+                      <button @click.stop="prevDishImage" title="Previous photo" class="absolute left-3 bottom-6 md:bottom-auto md:left-3 md:top-1/2 md:-translate-y-1/2 z-20 h-7 w-7 md:h-9 md:w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+                        <i data-lucide="chevron-left" class="h-3.5 w-3.5 md:h-4 md:w-4"></i>
                       </button>
-                      <button @click.stop="nextDishImage" title="Next photo" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
-                        <i data-lucide="chevron-right" class="h-4 w-4"></i>
+                      <button @click.stop="nextDishImage" title="Next photo" class="absolute right-3 bottom-6 md:bottom-auto md:right-3 md:top-1/2 md:-translate-y-1/2 z-20 h-7 w-7 md:h-9 md:w-9 rounded-full bg-white/85 backdrop-blur-sm text-black flex items-center justify-center shadow-md hover:bg-white hover:scale-105 transition-all cursor-pointer border border-neutral-200/70">
+                        <i data-lucide="chevron-right" class="h-3.5 w-3.5 md:h-4 md:w-4"></i>
                       </button>
                       <div class="hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 z-20 items-center gap-1.5">
                         <button v-for="(img, idx) in selectedDishImages" :key="idx" @click.stop="selectedDishImageIndex = idx" :title="'Foto ' + (idx + 1)" :class="['transition-all duration-300 rounded-full', idx === selectedDishImageIndex ? 'w-5 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/60 hover:bg-white/80']"></button>
