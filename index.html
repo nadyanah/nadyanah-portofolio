@@ -1123,13 +1123,25 @@
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Gambar Proyek* <span class="text-brand-muted font-normal">(bisa lebih dari 1 — foto pertama jadi sampul, deskripsi opsional)</span></label>
+                        <label class="font-semibold text-black block">Gambar Proyek* <span class="text-brand-muted font-normal">(bisa lebih dari 1 — geser foto untuk mengurutkan, foto pertama jadi sampul, deskripsi opsional)</span></label>
                         <div class="flex flex-wrap gap-3">
                           <div v-for="(img, idx) in portfolioForm.images" :key="idx" class="w-28 shrink-0 flex flex-col gap-1.5">
-                            <div class="relative h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 group">
-                              <img :src="img.url" class="w-full h-full object-cover" />
-                              <span v-if="idx === 0" class="absolute top-1 left-1 bg-brand-gold text-white text-[8px] font-mono font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full">Sampul</span>
+                            <div draggable="true"
+                                 @dragstart="handlePortfolioImageDragStart(idx)"
+                                 @dragover.prevent="handlePortfolioImageDragOver(idx)"
+                                 @dragleave="dragOverImageIndex === idx && (dragOverImageIndex = null)"
+                                 @drop.prevent="handlePortfolioImageDrop(idx)"
+                                 @dragend="handlePortfolioImageDragEnd"
+                                 :class="['relative h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border group cursor-grab active:cursor-grabbing transition-all', dragOverImageIndex === idx && draggedImageIndex !== idx ? 'border-brand-gold ring-2 ring-brand-gold' : 'border-neutral-200', draggedImageIndex === idx ? 'opacity-40' : 'opacity-100']">
+                              <img :src="img.url" class="w-full h-full object-cover pointer-events-none" draggable="false" />
+                              <span v-if="idx === 0" class="absolute top-1 left-1 bg-brand-gold text-white text-[8px] font-mono font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full pointer-events-none">Sampul</span>
+                              <div title="Geser untuk mengurutkan" class="absolute top-1 right-1 h-4 w-4 rounded bg-black/35 text-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                <i data-lucide="grip-vertical" class="h-2.5 w-2.5"></i>
+                              </div>
                               <div class="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+                                <button type="button" @click="previewImageUrl = img.url" title="Lihat foto" class="h-6 w-6 rounded-full bg-white/90 text-black flex items-center justify-center hover:bg-white cursor-pointer">
+                                  <i data-lucide="eye" class="h-3 w-3"></i>
+                                </button>
                                 <button type="button" v-if="idx !== 0" @click="setPortfolioCoverImage(idx)" title="Jadikan sampul" class="h-6 w-6 rounded-full bg-white/90 text-black flex items-center justify-center hover:bg-white cursor-pointer">
                                   <i data-lucide="star" class="h-3 w-3"></i>
                                 </button>
@@ -2024,6 +2036,18 @@
               <button type="button" @click="confirmCrop" class="btn-raised px-6 py-2 rounded-xl text-black text-xs font-sans font-semibold uppercase cursor-pointer">Use Photo</button>
             </div>
           </div>
+        </div>
+      </transition>
+
+      <!-- PROJECT PHOTO PREVIEW LIGHTBOX — simple full-size view triggered by
+           the eye icon on each thumbnail in the "Gambar Proyek" admin grid. -->
+      <transition name="fade">
+        <div v-if="previewImageUrl" @click="previewImageUrl = null" class="fixed inset-0 z-[97] flex items-center justify-center p-4 cursor-pointer">
+          <div class="absolute inset-0 bg-brand-charcoal/85 backdrop-blur-sm"></div>
+          <button type="button" @click="previewImageUrl = null" class="absolute top-4 right-4 z-10 h-9 w-9 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-black cursor-pointer">
+            <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+          <img :src="previewImageUrl" @click.stop class="relative z-0 max-w-full max-h-[88vh] rounded-2xl shadow-2xl object-contain cursor-default" />
         </div>
       </transition>
 

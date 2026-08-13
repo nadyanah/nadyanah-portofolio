@@ -572,6 +572,35 @@ const app = createApp({
       refreshIcons(); // the "jadikan sampul" star button re-mounts on whichever thumbnail is no longer first
     };
 
+    // Drag-and-drop reordering for the project photo grid — grab any
+    // thumbnail and drop it on another to move it there. Dropping on slot 0
+    // also makes that photo the new cover, same as the star button.
+    const draggedImageIndex = ref(null);
+    const dragOverImageIndex = ref(null);
+    const handlePortfolioImageDragStart = (idx) => {
+      draggedImageIndex.value = idx;
+    };
+    const handlePortfolioImageDragOver = (idx) => {
+      dragOverImageIndex.value = idx;
+    };
+    const handlePortfolioImageDrop = (idx) => {
+      const from = draggedImageIndex.value;
+      draggedImageIndex.value = null;
+      dragOverImageIndex.value = null;
+      if (from === null || from === idx) return;
+      const imgs = portfolioForm.value.images;
+      const [moved] = imgs.splice(from, 1);
+      imgs.splice(idx, 0, moved);
+      refreshIcons(); // cover badge/star re-mount when slot 0 changes hands
+    };
+    const handlePortfolioImageDragEnd = () => {
+      draggedImageIndex.value = null;
+      dragOverImageIndex.value = null;
+    };
+
+    // Full-size "lihat foto" preview — reused for any project-photo thumbnail.
+    const previewImageUrl = ref(null);
+
     const handleAddField = (field, subfield = null) => {
       // recipe/results steps carry sub-points, so they're { text, points }
       // objects; every other dynamic list (ingredients, allergens) is still
@@ -1203,7 +1232,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied, previewImageUrl], () => {
       refreshIcons();
     });
 
@@ -1231,6 +1260,7 @@ const app = createApp({
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm, togglePortfolioPin,
       handleAddField, handleRemoveField, handleFieldChange, handleAddPoint, handleRemovePoint, adminTabs, activeAdminTab,
       portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,
+      draggedImageIndex, dragOverImageIndex, handlePortfolioImageDragStart, handlePortfolioImageDragOver, handlePortfolioImageDrop, handlePortfolioImageDragEnd, previewImageUrl,
       certificateForm, isAddingCertificate, editingCertificateId,
       startEditCertificate, saveCertificate, deleteCertificate, cancelCertificateForm,
       certificateImageUploading, handleCertificateImageUpload, handleCertificateImageRemove,
