@@ -99,12 +99,13 @@
       </div>
       <template v-else>
       <!-- WELCOME / GREETING SCREEN — shown every time the site loads.
-           Background is translucent (bg-brand-cream/85 + blur) on purpose,
-           so the dotted brand pattern behind it peeks through just a little
-           instead of hiding it completely. Click/tap anywhere to dismiss. -->
+           Background is translucent (bg-brand-cream/85 + blur-sm) on
+           purpose, same on mobile and desktop, so the dotted brand pattern
+           behind it peeks through just a little instead of hiding it
+           completely. Click/tap anywhere to dismiss. -->
       <transition name="fade">
         <div v-if="showWelcome" @click="showWelcome = false"
-             class="fixed inset-0 z-[100] bg-brand-cream/95 sm:bg-brand-cream/85 backdrop-blur-md sm:backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
+             class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
           <div class="max-w-xl mx-auto px-2">
             <p class="font-hack font-semibold text-sm sm:text-base leading-relaxed sm:leading-normal text-black" style="white-space: pre-line;">{{ mainPageContent.welcomeQuote }}</p>
             <p v-if="mainPageContent.alertMessage" class="font-sans italic font-normal text-[11px] sm:text-sm leading-snug text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 mt-6 sm:mt-5 inline-block" style="white-space: pre-line;">
