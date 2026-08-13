@@ -1195,13 +1195,28 @@
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Langkah
                           </button>
                         </div>
-                        <div class="space-y-1.5">
-                          <div v-for="(step, idx) in portfolioForm.chefNotes.recipe" :key="'step'+idx" class="flex gap-2 items-start">
-                            <span class="font-sans text-[10px] text-neutral-400 w-4 pt-2">{{idx + 1}}.</span>
-                            <textarea rows="1.5" v-model="portfolioForm.chefNotes.recipe[idx]" placeholder="Contoh: Mengadakan riset empati..." class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none resize-none text-xs"></textarea>
-                            <button type="button" @click="handleRemoveField(null, idx, 'recipe')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer mt-1">
-                              <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
-                            </button>
+                        <div class="space-y-2.5">
+                          <div v-for="(step, idx) in portfolioForm.chefNotes.recipe" :key="'step'+idx" class="bg-white border border-neutral-200 rounded-lg p-2 space-y-1.5">
+                            <div class="flex gap-2 items-start">
+                              <span class="font-sans text-[10px] text-neutral-400 w-4 pt-2">{{idx + 1}}.</span>
+                              <textarea rows="1.5" v-model="step.text" placeholder="Contoh: Mengadakan riset empati..." class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none resize-none text-xs"></textarea>
+                              <button type="button" @click="handleRemoveField(null, idx, 'recipe')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer mt-1">
+                                <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+                              </button>
+                            </div>
+                            <!-- Sub-points for this step -->
+                            <div class="pl-6 space-y-1.5">
+                              <div v-for="(pt, pIdx) in step.points" :key="'step'+idx+'-pt'+pIdx" class="flex gap-2 items-center">
+                                <span class="font-sans text-[9px] text-neutral-300 w-3">–</span>
+                                <input type="text" v-model="step.points[pIdx]" placeholder="Poin tambahan untuk langkah ini..." class="flex-1 px-2.5 py-1 text-[11px] bg-brand-bone/40 border border-neutral-150 rounded-lg focus:outline-none" />
+                                <button type="button" @click="handleRemovePoint('recipe', idx, pIdx)" class="text-red-500 hover:bg-red-50 p-1 rounded-lg cursor-pointer">
+                                  <i data-lucide="x" class="h-3 w-3"></i>
+                                </button>
+                              </div>
+                              <button type="button" @click="handleAddPoint('recipe', idx)" class="flex items-center gap-1 text-[9px] text-brand-muted hover:text-black font-semibold cursor-pointer pl-1">
+                                <i data-lucide="corner-down-right" class="h-2.5 w-2.5"></i> Tambah Poin
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1214,15 +1229,36 @@
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Hasil
                           </button>
                         </div>
-                        <div class="space-y-1.5">
-                          <div v-for="(res, idx) in portfolioForm.chefNotes.results" :key="'res'+idx" class="flex gap-2 items-center">
-                            <span class="font-sans text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
-                            <input type="text" v-model="portfolioForm.chefNotes.results[idx]" placeholder="Contoh: Mencapai skor kepuasan rata-rata 4.8" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
-                            <button type="button" @click="handleRemoveField(null, idx, 'results')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
-                              <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
-                            </button>
+                        <div class="space-y-2.5">
+                          <div v-for="(res, idx) in portfolioForm.chefNotes.results" :key="'res'+idx" class="bg-white border border-neutral-200 rounded-lg p-2 space-y-1.5">
+                            <div class="flex gap-2 items-center">
+                              <span class="font-sans text-[10px] text-neutral-400 w-4">{{idx + 1}}.</span>
+                              <input type="text" v-model="res.text" placeholder="Contoh: Mencapai skor kepuasan rata-rata 4.8" class="flex-1 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg focus:outline-none" />
+                              <button type="button" @click="handleRemoveField(null, idx, 'results')" class="text-red-500 hover:bg-red-50 p-1.5 rounded-lg cursor-pointer">
+                                <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+                              </button>
+                            </div>
+                            <!-- Sub-points for this result -->
+                            <div class="pl-6 space-y-1.5">
+                              <div v-for="(pt, pIdx) in res.points" :key="'res'+idx+'-pt'+pIdx" class="flex gap-2 items-center">
+                                <span class="font-sans text-[9px] text-neutral-300 w-3">–</span>
+                                <input type="text" v-model="res.points[pIdx]" placeholder="Poin tambahan untuk hasil ini..." class="flex-1 px-2.5 py-1 text-[11px] bg-brand-bone/40 border border-neutral-150 rounded-lg focus:outline-none" />
+                                <button type="button" @click="handleRemovePoint('results', idx, pIdx)" class="text-red-500 hover:bg-red-50 p-1 rounded-lg cursor-pointer">
+                                  <i data-lucide="x" class="h-3 w-3"></i>
+                                </button>
+                              </div>
+                              <button type="button" @click="handleAddPoint('results', idx)" class="flex items-center gap-1 text-[9px] text-brand-muted hover:text-black font-semibold cursor-pointer pl-1">
+                                <i data-lucide="corner-down-right" class="h-2.5 w-2.5"></i> Tambah Poin
+                              </button>
+                            </div>
                           </div>
                         </div>
+                      </div>
+
+                      <!-- Chef Notes: What Made It Special -->
+                      <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
+                        <label class="font-semibold text-black">What Made It Special and What I Learned</label>
+                        <textarea rows="3" placeholder="Ceritakan hal yang membuat proyek ini istimewa dan pelajaran yang Anda dapatkan..." v-model="portfolioForm.chefNotes.philosophy" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none"></textarea>
                       </div>
 
                     </div>
@@ -1823,7 +1859,15 @@
                               <span class="h-5 w-5 rounded-full bg-white text-black border border-neutral-150 font-mono flex items-center justify-center flex-shrink-0 text-[10px] font-bold mt-0.5 shadow-sm">
                                 {{ i + 1 }}
                               </span>
-                              <p class="font-sans text-brand-muted leading-relaxed pt-0.5 text-sm">{{ step }}</p>
+                              <div class="min-w-0">
+                                <p class="font-sans text-brand-muted leading-relaxed pt-0.5 text-sm">{{ step.text }}</p>
+                                <ul v-if="step.points && step.points.length" class="mt-1.5 space-y-1">
+                                  <li v-for="(pt, pi) in step.points" :key="'sp'+pi" class="flex gap-2 text-brand-muted/90">
+                                    <span class="text-brand-gold mt-0.5">–</span>
+                                    <span class="font-sans leading-relaxed text-xs">{{ pt }}</span>
+                                  </li>
+                                </ul>
+                              </div>
                             </li>
                           </ol>
                         </div>
@@ -1839,9 +1883,28 @@
                               <span class="h-4.5 w-4.5 rounded-full bg-brand-cream text-brand-gold-dark flex items-center justify-center flex-shrink-0 mt-0.5 border border-neutral-300">
                                 <i data-lucide="check" class="h-3 w-3 font-bold"></i>
                               </span>
-                              <span class="font-sans text-brand-muted leading-relaxed text-sm">{{ res }}</span>
+                              <div class="min-w-0">
+                                <span class="font-sans text-brand-muted leading-relaxed text-sm">{{ res.text }}</span>
+                                <ul v-if="res.points && res.points.length" class="mt-1.5 space-y-1">
+                                  <li v-for="(pt, pi) in res.points" :key="'rp'+pi" class="flex gap-2 text-brand-muted/90">
+                                    <span class="text-brand-gold mt-0.5">–</span>
+                                    <span class="font-sans leading-relaxed text-xs">{{ pt }}</span>
+                                  </li>
+                                </ul>
+                              </div>
                             </li>
                           </ul>
+                        </div>
+
+                        <!-- WHAT MADE IT SPECIAL / WHAT I LEARNED -->
+                        <div v-if="selectedDish.chefNotes.philosophy" class="space-y-2.5 p-3.5">
+                          <h4 class="font-sans font-bold text-black flex items-center gap-2 text-sm">
+                            <i data-lucide="sparkles" class="h-4 w-4 text-brand-gold"></i>
+                            What Made It Special and What I Learned
+                          </h4>
+                          <p class="font-sans text-brand-muted text-sm leading-relaxed italic">
+                            {{ selectedDish.chefNotes.philosophy }}
+                          </p>
                         </div>
 
                         <!-- KATA KUNCI / KEYWORDS -->

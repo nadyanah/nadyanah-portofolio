@@ -56,7 +56,7 @@ const app = createApp({
       name: "", category: "people-culture", categoryLabel: "", price: "", prepTime: "", 
       satisfaction: "", impactMetric: "", images: [], shortDescription: "", 
       ingredients: [""], allergens: [""], experienceLink: "", pinned: false,
-      chefNotes: { background: "", challenge: "", recipe: [""], results: [""], philosophy: "" }
+      chefNotes: { background: "", challenge: "", recipe: [{ text: "", points: [] }], results: [{ text: "", points: [] }], philosophy: "" }
     });
     const portfolioForm = ref(getEmptyPortfolioForm());
     const isAddingCard = ref(false);
@@ -248,7 +248,7 @@ const app = createApp({
           window.db.getSession()
         ]);
 
-        portfolioMenu.value = menuRes.value;
+        portfolioMenu.value = normalizePortfolioMenu(menuRes.value);
         certificateMenu.value = certRes.value;
         chefProfileState.value = chefRes.value;
         chefForm.value = JSON.parse(JSON.stringify(chefProfileState.value));
@@ -395,6 +395,35 @@ const app = createApp({
       return item.image ? [{ url: item.image, caption: "" }] : [];
     };
 
+    // Normalizes a "Solution" (recipe) or "Impact" (results) list into the
+    // { text, points } shape, regardless of which "generation" it came from:
+    //  1) newest: [{ text: "...", points: ["...", ...] }, ...]
+    //  2) oldest: ["...", "...", ...] (plain strings, no sub-points support)
+    // Used on load and whenever a card is opened in the admin form, so old
+    // projects (and the bundled data.js defaults) keep working unchanged
+    // while gaining the option to add sub-points.
+    const normalizeStepList = (arr) => {
+      if (!Array.isArray(arr) || arr.length === 0) return [{ text: "", points: [] }];
+      return arr.map(item => typeof item === "string"
+        ? { text: item, points: [] }
+        : { text: (item && item.text) || "", points: (item && Array.isArray(item.points)) ? item.points : [] });
+    };
+
+    // Applies normalizeStepList to every project's Solution/Impact lists —
+    // called right after portfolioMenu is loaded (and after a reset), so
+    // selectedDish in the public popup always reads the current shape too.
+    const normalizePortfolioMenu = (list) => {
+      if (!Array.isArray(list)) return [];
+      return list.map(item => ({
+        ...item,
+        chefNotes: {
+          ...item.chefNotes,
+          recipe: normalizeStepList(item.chefNotes && item.chefNotes.recipe),
+          results: normalizeStepList(item.chefNotes && item.chefNotes.results)
+        }
+      }));
+    };
+
     // Formats the project's "Tanggal Pelaksanaan" — stored as "YYYY-MM" from
     // the <input type="month"> picker — into a readable "Jan 2026" label.
     // Falls back to showing the raw value as-is for older projects saved
@@ -434,6 +463,10 @@ const app = createApp({
       // `image` string, or an `images` array of plain strings from before
       // captions existed) as well as the current { url, caption } shape.
       portfolioForm.value.images = normalizeImages(card);
+      // Same idea for Solution/Impact — handles old cards where each step
+      // was a plain string, upgrading them to { text, points } on the fly.
+      portfolioForm.value.chefNotes.recipe = normalizeStepList(card.chefNotes && card.chefNotes.recipe);
+      portfolioForm.value.chefNotes.results = normalizeStepList(card.chefNotes && card.chefNotes.results);
       editingCardId.value = card.id;
       isAddingCard.value = true;
     };
@@ -525,7 +558,10 @@ const app = createApp({
     };
 
     const handleAddField = (field, subfield = null) => {
-      if (subfield) portfolioForm.value.chefNotes[subfield].push("");
+      // recipe/results steps carry sub-points, so they're { text, points }
+      // objects; every other dynamic list (ingredients, allergens) is still
+      // a plain string.
+      if (subfield) portfolioForm.value.chefNotes[subfield].push({ text: "", points: [] });
       else portfolioForm.value[field].push("");
     };
 
@@ -537,6 +573,16 @@ const app = createApp({
     const handleFieldChange = (field, idx, val, subfield = null) => {
       if (subfield) portfolioForm.value.chefNotes[subfield][idx] = val;
       else portfolioForm.value[field][idx] = val;
+    };
+
+    // Sub-points nested under a single Solution/Impact step — e.g. extra
+    // details, examples, or breakdowns that belong to that one step.
+    const handleAddPoint = (subfield, stepIdx) => {
+      portfolioForm.value.chefNotes[subfield][stepIdx].points.push("");
+    };
+
+    const handleRemovePoint = (subfield, stepIdx, pointIdx) => {
+      portfolioForm.value.chefNotes[subfield][stepIdx].points.splice(pointIdx, 1);
     };
 
     // CERTIFICATE ADMIN HANDLERS
@@ -749,7 +795,7 @@ const app = createApp({
           return;
         }
 
-        portfolioMenu.value = JSON.parse(JSON.stringify(PORTFOLIO_MENU));
+        portfolioMenu.value = normalizePortfolioMenu(JSON.parse(JSON.stringify(PORTFOLIO_MENU)));
         chefProfileState.value = JSON.parse(JSON.stringify(CHEF_PROFILE));
         mainPageContent.value = defaultMainPage;
 
@@ -1168,7 +1214,7 @@ const app = createApp({
       portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
       adminExperienceFilter, adminFilteredPortfolio,
       startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm, togglePortfolioPin,
-      handleAddField, handleRemoveField, handleFieldChange,
+      handleAddField, handleRemoveField, handleFieldChange, handleAddPoint, handleRemovePoint,
       portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,
       certificateForm, isAddingCertificate, editingCertificateId,
       startEditCertificate, saveCertificate, deleteCertificate, cancelCertificateForm,
