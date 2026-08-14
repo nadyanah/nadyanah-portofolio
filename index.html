@@ -1121,39 +1121,48 @@
                         <p v-if="careerEntries.length === 0" class="text-[10px] text-brand-muted italic mt-1">Belum ada entri Professional Experience. Tambahkan dulu di Admin &gt; Profil Saya.</p>
                       </div>
 
-                      <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Gambar Proyek* <span class="text-brand-muted font-normal">(bisa lebih dari 1 — geser foto untuk mengurutkan, foto pertama jadi sampul, deskripsi opsional)</span></label>
-                        <div class="flex flex-wrap gap-3">
-                          <div v-for="(img, idx) in portfolioForm.images" :key="idx" class="w-28 shrink-0 flex flex-col gap-1.5">
-                            <div draggable="true"
-                                 @dragstart="handlePortfolioImageDragStart(idx)"
-                                 @dragover.prevent="handlePortfolioImageDragOver(idx)"
-                                 @dragleave="dragOverImageIndex === idx && (dragOverImageIndex = null)"
-                                 @drop.prevent="handlePortfolioImageDrop(idx)"
-                                 @dragend="handlePortfolioImageDragEnd"
-                                 :class="['relative h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border group cursor-grab active:cursor-grabbing transition-all', dragOverImageIndex === idx && draggedImageIndex !== idx ? 'border-brand-gold ring-2 ring-brand-gold' : 'border-neutral-200', draggedImageIndex === idx ? 'opacity-40' : 'opacity-100']">
+                      <div class="space-y-1.5 md:col-span-2">
+                        <div class="flex items-start justify-between gap-2">
+                          <label class="font-semibold text-black block">Gambar Proyek* <span class="text-brand-muted font-normal">(bisa lebih dari 1 — geser foto untuk mengurutkan, foto pertama jadi sampul, deskripsi opsional)</span></label>
+                          <button type="button" @click="portfolioImagesCollapsed = !portfolioImagesCollapsed" class="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-brand-muted hover:text-black cursor-pointer shrink-0 whitespace-nowrap pt-0.5" :title="portfolioImagesCollapsed ? 'Tampilkan foto' : 'Sembunyikan foto'">
+                            <span>{{ portfolioForm.images.length }} foto</span>
+                            <i :data-lucide="portfolioImagesCollapsed ? 'chevron-down' : 'chevron-up'" class="h-3.5 w-3.5"></i>
+                          </button>
+                        </div>
+
+                        <div v-show="!portfolioImagesCollapsed" class="flex flex-col gap-2">
+                          <div v-for="(img, idx) in portfolioForm.images" :key="idx"
+                               draggable="true"
+                               @dragstart="handlePortfolioImageDragStart(idx)"
+                               @dragover.prevent="handlePortfolioImageDragOver(idx)"
+                               @dragleave="dragOverImageIndex === idx && (dragOverImageIndex = null)"
+                               @drop.prevent="handlePortfolioImageDrop(idx)"
+                               @dragend="handlePortfolioImageDragEnd"
+                               :class="['flex items-center gap-2.5 p-1.5 rounded-xl border bg-white group cursor-grab active:cursor-grabbing transition-all', dragOverImageIndex === idx && draggedImageIndex !== idx ? 'border-brand-gold ring-2 ring-brand-gold' : 'border-neutral-200', draggedImageIndex === idx ? 'opacity-40' : 'opacity-100']">
+                            <div class="relative h-14 w-20 shrink-0 rounded-lg overflow-hidden bg-brand-bone">
                               <img :src="img.url" class="w-full h-full object-cover pointer-events-none" draggable="false" />
-                              <span v-if="idx === 0" class="absolute top-1 left-1 bg-brand-gold text-white text-[8px] font-mono font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full pointer-events-none">Sampul</span>
-                              <div title="Geser untuk mengurutkan" class="absolute top-1 right-1 h-4 w-4 rounded bg-black/35 text-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                                <i data-lucide="grip-vertical" class="h-2.5 w-2.5"></i>
-                              </div>
-                              <div class="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
-                                <button type="button" @click="previewImageUrl = img.url" title="Lihat foto" class="h-6 w-6 rounded-full bg-white/90 text-black flex items-center justify-center hover:bg-white cursor-pointer">
-                                  <i data-lucide="eye" class="h-3 w-3"></i>
-                                </button>
-                                <button type="button" v-if="idx !== 0" @click="setPortfolioCoverImage(idx)" title="Jadikan sampul" class="h-6 w-6 rounded-full bg-white/90 text-black flex items-center justify-center hover:bg-white cursor-pointer">
-                                  <i data-lucide="star" class="h-3 w-3"></i>
-                                </button>
-                                <button type="button" @click="handlePortfolioImageRemove(idx)" title="Hapus foto" class="h-6 w-6 rounded-full bg-white/90 text-red-500 flex items-center justify-center hover:bg-white cursor-pointer">
-                                  <i data-lucide="trash-2" class="h-3 w-3"></i>
-                                </button>
+                              <span v-if="idx === 0" class="absolute top-0.5 left-0.5 bg-brand-gold text-white text-[7px] font-mono font-bold uppercase tracking-wide px-1 py-0.5 rounded-full pointer-events-none">Sampul</span>
+                              <div title="Geser untuk mengurutkan" class="absolute top-0.5 right-0.5 h-3.5 w-3.5 rounded bg-black/35 text-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                <i data-lucide="grip-vertical" class="h-2 w-2"></i>
                               </div>
                             </div>
-                            <input type="text" v-model="img.caption" placeholder="Deskripsi foto (opsional)" class="w-full px-2 py-1 text-[10px] bg-white border border-neutral-200 rounded-lg focus:outline-none" />
+                            <input type="text" v-model="img.caption" placeholder="Deskripsi foto (opsional)" class="flex-1 min-w-0 px-2.5 py-2 text-[11px] bg-white border border-neutral-200 rounded-lg focus:outline-none" />
+                            <div class="flex items-center gap-1 shrink-0">
+                              <button type="button" @click="previewImageUrl = img.url" title="Lihat foto" class="h-7 w-7 rounded-full bg-neutral-100 text-black flex items-center justify-center hover:bg-neutral-200 cursor-pointer">
+                                <i data-lucide="eye" class="h-3 w-3"></i>
+                              </button>
+                              <button type="button" v-if="idx !== 0" @click="setPortfolioCoverImage(idx)" title="Jadikan sampul" class="h-7 w-7 rounded-full bg-neutral-100 text-black flex items-center justify-center hover:bg-neutral-200 cursor-pointer">
+                                <i data-lucide="star" class="h-3 w-3"></i>
+                              </button>
+                              <button type="button" @click="handlePortfolioImageRemove(idx)" title="Hapus foto" class="h-7 w-7 rounded-full bg-neutral-100 text-red-500 flex items-center justify-center hover:bg-neutral-200 cursor-pointer">
+                                <i data-lucide="trash-2" class="h-3 w-3"></i>
+                              </button>
+                            </div>
                           </div>
-                          <label class="h-20 w-28 rounded-xl border border-dashed border-neutral-300 shrink-0 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-brand-gold hover:text-brand-gold-dark transition-all text-brand-muted">
+
+                          <label class="h-11 rounded-xl border border-dashed border-neutral-300 flex items-center justify-center gap-2 cursor-pointer hover:border-brand-gold hover:text-brand-gold-dark transition-all text-brand-muted">
                             <i data-lucide="plus" class="h-4 w-4"></i>
-                            <span class="text-[10px] font-semibold text-center px-1 leading-tight">{{ portfolioImageUploading ? 'Mengupload...' : 'Tambah Foto' }}</span>
+                            <span class="text-[11px] font-semibold">{{ portfolioImageUploading ? 'Mengupload...' : 'Tambah Foto' }}</span>
                             <input type="file" accept="image/*" :disabled="portfolioImageUploading" @change="handlePortfolioImageUpload" class="hidden" />
                           </label>
                         </div>

@@ -490,6 +490,7 @@ const app = createApp({
       portfolioForm.value.chefNotes.results = normalizeStepList(card.chefNotes && card.chefNotes.results);
       editingCardId.value = card.id;
       isAddingCard.value = true;
+      portfolioImagesCollapsed.value = true;
     };
     
     const savePortfolioCard = async (e) => {
@@ -563,6 +564,7 @@ const app = createApp({
       portfolioForm.value = getEmptyPortfolioForm();
       editingCardId.value = null;
       isAddingCard.value = false;
+      portfolioImagesCollapsed.value = false;
     };
 
     // Appends each newly uploaded/cropped photo to the project's photo list
@@ -615,6 +617,12 @@ const app = createApp({
 
     // Full-size "lihat foto" preview — reused for any project-photo thumbnail.
     const previewImageUrl = ref(null);
+
+    // Collapses the project-photo gallery in the edit form so a project with
+    // many photos doesn't push the rest of the form (Solusi, Dampak, dll)
+    // far down the page. Defaults open for a brand-new project (nothing to
+    // hide yet) and collapsed when opening an existing project for editing.
+    const portfolioImagesCollapsed = ref(false);
 
     const handleAddField = (field, subfield = null) => {
       // recipe/results steps carry sub-points, so they're { text, points }
@@ -1269,7 +1277,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied, previewImageUrl, dishPhotoLightboxOpen], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied, previewImageUrl, dishPhotoLightboxOpen, portfolioImagesCollapsed], () => {
       refreshIcons();
     });
 
@@ -1298,6 +1306,7 @@ const app = createApp({
       handleAddField, handleRemoveField, handleFieldChange, handleAddPoint, handleRemovePoint, adminTabs, activeAdminTab,
       portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,
       draggedImageIndex, dragOverImageIndex, handlePortfolioImageDragStart, handlePortfolioImageDragOver, handlePortfolioImageDrop, handlePortfolioImageDragEnd, previewImageUrl,
+      portfolioImagesCollapsed,
       certificateForm, isAddingCertificate, editingCertificateId,
       startEditCertificate, saveCertificate, deleteCertificate, cancelCertificateForm,
       certificateImageUploading, handleCertificateImageUpload, handleCertificateImageRemove,
