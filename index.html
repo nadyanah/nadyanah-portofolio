@@ -324,8 +324,8 @@
                 <div @click="openDishDetails(currentDish)" class="w-full bg-white rounded-[24px] p-3.5 shadow-[0_15px_35px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 cursor-pointer select-none group border-none">
                   <div class="relative aspect-[16/11] rounded-xl overflow-hidden bg-neutral-100">
                     <img :src="currentDish.image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <span class="absolute top-2.5 left-2.5 bg-white text-black border border-neutral-150 text-[8px] font-mono font-bold tracking-widest px-2 py-0.5 rounded-full uppercase shadow-sm">{{ currentDish.categoryLabel.split(" ")[0] }}</span>
-                    <span class="absolute top-2.5 right-2.5 bg-white text-black border border-neutral-150 text-[8px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full shadow-sm">{{ formatProjectDate(currentDish.price) }}</span>
+                    <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-black border border-neutral-150 text-[9px] font-mono font-bold tracking-wider px-2.5 py-1 rounded-full uppercase shadow-sm">{{ currentDish.category }}</span>
+                    <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-black border border-neutral-200/50 text-[9px] font-mono font-bold px-2.5 py-1 rounded-full shadow-sm">{{ formatProjectDate(currentDish.price) }}</span>
                   </div>
                   <div class="pt-3 px-1 text-left">
                     <h3 class="text-sm md:text-base name-title font-semibold text-black leading-tight group-hover:text-brand-gold transition-colors mb-1 line-clamp-1">{{ currentDish.name }}</h3>
