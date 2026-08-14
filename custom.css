@@ -621,3 +621,108 @@ body,
 .rich-text-content strong { font-weight: 700; }
 .rich-text-content i,
 .rich-text-content em { font-style: italic; }
+
+/* ==========================================================================
+   SELECT-TO-TRANSLATE POPUP (translate-select.js)
+   Tombol mengambang yang muncul waktu pengunjung nge-block/select teks di
+   halaman, biar bisa langsung diterjemahkan ke Bahasa Indonesia.
+   ========================================================================== */
+.translate-select-popup {
+  position: fixed;
+  z-index: 99998;
+  pointer-events: auto;
+}
+
+.translate-select-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #2C2825;
+  color: #FCFAF7;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(44, 40, 37, 0.28);
+  transition: background 0.15s ease;
+}
+.translate-select-btn:hover:not(:disabled) {
+  background: #A07850;
+}
+.translate-select-btn:disabled {
+  opacity: 0.75;
+  cursor: progress;
+}
+.translate-select-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+.translate-select-spin {
+  display: inline-block;
+  animation: translate-select-spin 1s linear infinite;
+}
+@keyframes translate-select-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.translate-select-card {
+  background: #FCFAF7;
+  border: 1px solid #F0EEEB;
+  border-radius: 16px;
+  padding: 12px 14px;
+  width: 260px;
+  max-width: 78vw;
+  box-shadow: 0 12px 30px rgba(44, 40, 37, 0.2);
+  font-family: 'Outfit', sans-serif;
+  color: #2C2825;
+}
+.translate-select-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8E877B;
+  margin-bottom: 4px;
+}
+.translate-select-body {
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+.translate-select-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+.translate-select-action-btn {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #F0EEEB;
+  background: #fff;
+  color: #2C2825;
+  cursor: pointer;
+}
+.translate-select-action-btn:hover {
+  background: #F4EFE6;
+}
+.translate-select-card-error {
+  color: #B91C1C;
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .translate-select-btn span:last-child {
+    font-size: 10px;
+  }
+}
