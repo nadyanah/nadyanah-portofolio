@@ -236,6 +236,10 @@ const CHEF_PROFILE = {
      (dan versi ringkas di Beranda). Bisa diubah dari Admin > Profil Saya. */
   careerJourneyTitle: "Career Journey",
   careerJourneySubtitle: "A timeline of professional milestones.",
+  /* Teks intro singkat di kartu "CAREER JOURNEY" versi Beranda saja (halaman
+     Background tidak menampilkan teks ini, karena sudah punya heading/subheading
+     sendiri). Kosongkan dari admin kalau tidak ingin ada teks intro sama sekali. */
+  careerJourneyHomeIntro: "My non-traditional background shaped how I lead, listen, and build culture today.",
 
   /* Section-based CV content. Setiap section punya "type" yang menentukan
      bagaimana ia dirender & diedit di admin:

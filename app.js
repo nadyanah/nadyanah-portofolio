@@ -266,11 +266,12 @@ const app = createApp({
         portfolioMenu.value = normalizePortfolioMenu(menuRes.value);
         certificateMenu.value = certRes.value;
         // Normalisasi data lama: kalau di Supabase belum ada field careerJourneyTitle/
-        // careerJourneySubtitle (baru ditambahkan), pakai default dari CHEF_PROFILE
-        // supaya judul "Career Journey" di halaman Background tidak kosong.
+        // careerJourneySubtitle/careerJourneyHomeIntro (baru ditambahkan), pakai default
+        // dari CHEF_PROFILE supaya judul "Career Journey" tidak kosong.
         chefProfileState.value = {
           careerJourneyTitle: CHEF_PROFILE.careerJourneyTitle,
           careerJourneySubtitle: CHEF_PROFILE.careerJourneySubtitle,
+          careerJourneyHomeIntro: CHEF_PROFILE.careerJourneyHomeIntro,
           ...chefRes.value
         };
         chefForm.value = JSON.parse(JSON.stringify(chefProfileState.value));
@@ -1132,6 +1133,17 @@ const app = createApp({
       refreshIcons();
     };
 
+    // Dipakai dari kartu "CAREER JOURNEY" di Beranda:
+    // - Klik entri karier (mis. "Staff Administrator - HR Support & Employer
+    //   Branding Lead") → lompat ke halaman Portfolio dan otomatis set dropdown
+    //   filter "Experience" ke stage karier itu, jadi pengunjung langsung lihat
+    //   proyek-proyek yang ditautkan ke posisi tersebut.
+    const goToExperiencePortfolio = (entry) => {
+      selectedExperienceFilter.value = experienceKey(entry);
+      switchTab("menu");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     const openDishDetails = (dish) => {
       selectedDish.value = dish;
       refreshIcons();
@@ -1308,7 +1320,7 @@ const app = createApp({
     }, { immediate: true });
 
     return {
-      activeTab, showWelcome, adminTab, switchTab, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
+      activeTab, showWelcome, adminTab, switchTab, goToExperiencePortfolio, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
       selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText, stripTags, dishPhotoLightboxOpen,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,

@@ -393,6 +393,15 @@
               <div class="w-full text-center mb-4 relative shrink-0">
                 <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase font-bold">CAREER JOURNEY</span>
                 <div class="h-1 w-12 bg-neutral-300 mx-auto mt-2 rounded-full"></div>
+                <!-- Teks intro singkat (opsional, diedit dari Admin > Profil Saya) +
+                     tautan ke halaman Background untuk versi lengkapnya. -->
+                <p v-if="chefProfileState.careerJourneyHomeIntro" class="text-[11px] text-brand-muted leading-relaxed mt-3 mb-0.5">
+                  {{ chefProfileState.careerJourneyHomeIntro }}
+                </p>
+                <button type="button" @click="switchTab('background')" class="text-[10px] font-bold text-brand-gold-dark hover:text-black transition-colors cursor-pointer inline-flex items-center gap-1 mt-1 focus:outline-none">
+                  Lihat Lengkap
+                  <i data-lucide="arrow-right" class="h-3 w-3"></i>
+                </button>
               </div>
 
               <!-- EMPTY STATE -->
@@ -423,9 +432,15 @@
                     <span class="inline-block whitespace-nowrap px-3 py-1 rounded-full text-brand-gold-dark text-[10px] font-mono tracking-wide mb-2 transition-all duration-300 ease-out cursor-default hover:bg-white hover:-translate-y-1 hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.18)] hover:scale-105">
                       {{entry.period}}
                     </span>
-                    <p class="text-sm name-title font-semibold text-black leading-snug">{{entry.heading}}</p>
+                    <!-- Klik judul posisi → lompat ke Portfolio, otomatis terfilter
+                         ke stage karier ini (lewat dropdown "Experience" di sana). -->
+                    <p @click="goToExperiencePortfolio(entry)" class="text-sm name-title font-semibold text-black leading-snug cursor-pointer hover:text-brand-gold-dark hover:underline underline-offset-2 transition-colors" title="Lihat proyek terkait posisi ini di Portfolio">{{entry.heading}}</p>
                     <p class="text-xs text-brand-muted mt-1 leading-snug">{{entry.subheading}}</p>
-                    <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2">
+                    <!-- Deskripsi sengaja dipotong (line-clamp-2) khusus di kartu Beranda ini —
+                         supaya pengunjung penasaran dan klik "Lihat Lengkap" ke halaman
+                         Background untuk baca cerita lengkapnya. Halaman Background sendiri
+                         tetap menampilkan deskripsi utuh, tidak terpotong. -->
+                    <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2 line-clamp-2">
                       {{entry.description}}
                     </p>
                   </div>
@@ -468,7 +483,7 @@
                       </select>
                       <select v-model="selectedExperienceFilter" class="w-full sm:w-auto flex-1 min-w-0 px-3 py-2 bg-white border border-neutral-200/70 rounded-full text-xs font-medium text-brand-muted focus:outline-none focus:border-brand-gold cursor-pointer">
                         <option value="all">All Experience</option>
-                        <option v-for="(entry, idx) in careerEntries" :key="'exp-filter-'+idx" :value="experienceKey(entry)">{{ entry.heading }}</option>
+                        <option v-for="(entry, idx) in homeCareerEntries" :key="'exp-filter-'+idx" :value="experienceKey(entry)">{{ entry.heading }}</option>
                         <option value="none">Not Linked</option>
                       </select>
                     </div>
@@ -542,7 +557,7 @@
               <!-- LEFT: Career Journey -->
               <div class="flex-1 bg-white rounded-3xl border border-neutral-200/60 p-6 md:p-10 shadow-sm">
                 <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-1">{{ chefProfileState.careerJourneyTitle || "Career Journey" }}</h2>
-                <p class="text-xs text-brand-muted mb-9">{{ chefProfileState.careerJourneySubtitle || "A timeline of professional milestones." }}</p>
+                <p class="text-xs md:text-sm text-brand-muted mb-9 leading-relaxed">{{ chefProfileState.careerJourneySubtitle || "A timeline of professional milestones." }}</p>
 
                 <!-- INNER CREAM PANEL — same layered "timbul" look as the timeline
                      card on the beranda (white outer shape + cream inset inner) -->
@@ -567,7 +582,7 @@
                       </span>
                       <p class="text-base md:text-lg font-serif font-medium text-black">{{entry.heading}}</p>
                       <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
-                      <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2.5 max-w-xl">
+                      <p v-if="entry.description" class="text-xs md:text-sm text-brand-muted leading-relaxed italic mt-2.5 max-w-xl">
                         {{entry.description}}
                       </p>
                     </div>
@@ -603,7 +618,7 @@
                           <span class="text-[10px] font-mono font-bold tracking-widest text-brand-gold-dark">[ {{ section.label }} ]</span>
                           <span class="text-[10px] font-mono font-bold tracking-widest text-black uppercase">{{ section.title }}</span>
                         </div>
-                        <p class="text-[11px] font-mono text-brand-muted leading-relaxed pl-0.5">{{ section.body }}</p>
+                        <p class="text-xs md:text-sm font-mono text-brand-muted leading-relaxed pl-0.5">{{ section.body }}</p>
                       </div>
                     </div>
                   </div>
@@ -1505,6 +1520,11 @@
                       <div class="space-y-1">
                         <label class="font-semibold text-black">Subjudul "Career Journey" (Halaman Background)</label>
                         <input type="text" v-model="chefForm.careerJourneySubtitle" placeholder="A timeline of professional milestones." class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
+                      </div>
+                      <div class="space-y-1 md:col-span-2">
+                        <label class="font-semibold text-black">Teks Intro "Career Journey" di Beranda (opsional)</label>
+                        <textarea rows="2" v-model="chefForm.careerJourneyHomeIntro" placeholder="My non-traditional background shaped how I lead, listen, and build culture today." class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
+                        <p class="text-[10px] text-brand-muted">Kosongkan kalau tidak ingin ada teks intro. Ada tautan "Lihat Lengkap →" otomatis di bawahnya yang mengarah ke halaman Background.</p>
                       </div>
                     </div>
 
