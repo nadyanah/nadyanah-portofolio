@@ -803,7 +803,7 @@
                       <p class="text-xs text-brand-muted leading-relaxed mt-2">{{cert.issuer}}</p>
                     </div>
                     <div class="border-t border-neutral-100 pt-3 mt-4 flex items-center justify-between text-[11px] font-mono">
-                      <span class="text-brand-gold-dark font-bold flex items-center gap-1"><i data-lucide="calendar" class="h-3 w-3 text-brand-gold"></i>{{cert.date}}</span>
+                      <span class="text-brand-gold-dark font-bold flex items-center gap-1"><i data-lucide="calendar" class="h-3 w-3 text-brand-gold"></i>{{ formatCertificateDate(cert.date) }}</span>
                       <i data-lucide="expand" class="h-3.5 w-3.5 text-neutral-300 group-hover:text-brand-gold transition-colors"></i>
                     </div>
                   </div>
@@ -1337,7 +1337,7 @@
                     </div>
 
                     <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div v-for="item in certificateMenu" :key="item.id" class="bg-white p-4 rounded-2xl border border-neutral-150 flex gap-4 shadow-sm relative items-center">
+                      <div v-for="item in sortedCertificateMenu" :key="item.id" class="bg-white p-4 rounded-2xl border border-neutral-150 flex gap-4 shadow-sm relative items-center">
                         <div class="h-16 w-16 rounded-xl overflow-hidden bg-brand-bone shrink-0 flex items-center justify-center">
                           <img v-if="item.image" :src="item.image" :alt="item.title" @error="$event.target.style.display='none'" class="w-full h-full object-cover" />
                           <i v-else data-lucide="badge-check" class="h-5 w-5 text-brand-gold/40"></i>
@@ -1346,7 +1346,7 @@
                           <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
                           <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.title}}</h4>
                           <p class="text-[10px] text-brand-muted truncate leading-snug">{{item.issuer}}</p>
-                          <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📅 {{item.date}}</p>
+                          <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📅 {{ formatCertificateDate(item.date) }}</p>
                         </div>
                         <div class="absolute right-3 flex flex-col gap-1.5">
                           <button @click="startEditCertificate(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
@@ -1390,7 +1390,7 @@
 
                         <div class="space-y-1">
                           <label class="text-sm font-bold text-black">Tanggal Terbit*</label>
-                          <input type="text" required placeholder="Contoh: Maret 2024" v-model="certificateForm.date" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
+                          <input type="month" required v-model="certificateForm.date" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer" />
                         </div>
 
                         <div class="space-y-1">
@@ -2079,7 +2079,7 @@
                 <div class="border border-neutral-200 rounded-2xl divide-y divide-neutral-200 overflow-hidden">
                   <div class="flex items-center justify-between px-4 py-3">
                     <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="calendar" class="h-3.5 w-3.5 text-brand-gold"></i>Issue Date</span>
-                    <span class="text-xs font-mono font-bold text-black">{{ selectedCertificate.date }}</span>
+                    <span class="text-xs font-mono font-bold text-black">{{ formatCertificateDate(selectedCertificate.date) }}</span>
                   </div>
                   <div v-if="selectedCertificate.credentialId" class="flex items-center justify-between px-4 py-3">
                     <span class="text-xs text-brand-muted flex items-center gap-2"><i data-lucide="hash" class="h-3.5 w-3.5 text-brand-gold"></i>Credential ID</span>

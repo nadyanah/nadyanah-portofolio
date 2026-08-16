@@ -461,6 +461,59 @@ const app = createApp({
       return `${monthLabel} ${match[1]}`;
     };
 
+    // Sama seperti formatProjectDate di atas, tapi untuk "Tanggal Terbit"
+    // sertifikat (juga <input type="month"> -> "YYYY-MM"). Sertifikat lama
+    // yang tanggalnya masih teks bebas (mis. "Maret 2024", diinput sebelum
+    // field ini jadi date picker) tetap ditampilkan apa adanya.
+    const formatCertificateDate = (value) => {
+      if (!value) return "";
+      const match = /^(\d{4})-(\d{2})$/.exec(value);
+      if (!match) return value;
+      const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+      const monthLabel = months[parseInt(match[2], 10) - 1] || match[2];
+      return `${monthLabel} ${match[1]}`;
+    };
+
+    // Ubah nilai "Tanggal Terbit" jadi bentuk "YYYY-MM" yang bisa dibandingkan
+    // buat sorting, baik yang sudah rapi dari date picker maupun yang masih
+    // teks bebas dari sertifikat lama — entah nama bulan Indonesia ("Maret
+    // 2024"), nama bulan Inggris ("March 2024" / "Mar 2024"), atau cuma
+    // tahun ("2024"). Yang benar-benar tidak bisa dibaca ditaruh paling
+    // belakang (dianggap paling lama), bukan ikut tercampur di urutan atas.
+    const MONTH_NAME_MAP = {
+      // Indonesian
+      januari: "01", februari: "02", maret: "03", april: "04", mei: "05", juni: "06",
+      juli: "07", agustus: "08", september: "09", oktober: "10", november: "11", desember: "12",
+      // English (full + common abbreviations)
+      january: "01", jan: "01", february: "02", feb: "02", march: "03", mar: "03",
+      // "april" already covered above, "mei"/"may" both map to 05
+      may: "05", june: "06", jun: "06", july: "07", jul: "07",
+      august: "08", aug: "08", // "september"/"sep" already covered above via id map keys' overlap
+      sep: "09", sept: "09", october: "10", oct: "10", nov: "11",
+      december: "12", dec: "12"
+    };
+    const normalizeCertificateDateForSort = (value) => {
+      const v = (value || "").toString().trim();
+      if (!v) return "0000-00";
+      if (/^\d{4}-\d{2}$/.test(v)) return v;
+      const monthYear = /^([a-zA-Z]+)\s+(\d{4})$/.exec(v);
+      if (monthYear) {
+        const mon = MONTH_NAME_MAP[monthYear[1].toLowerCase()];
+        if (mon) return `${monthYear[2]}-${mon}`;
+      }
+      const yearOnly = /^(\d{4})$/.exec(v);
+      if (yearOnly) return `${yearOnly[1]}-01`;
+      return "0000-00";
+    };
+
+    // Sertifikat diurutkan terbaru -> terlama berdasarkan Tanggal Terbit,
+    // dipakai baik di daftar admin maupun di halaman publik.
+    const sortedCertificateMenu = computed(() => {
+      return [...certificateMenu.value].sort((a, b) =>
+        normalizeCertificateDateForSort(b.date).localeCompare(normalizeCertificateDateForSort(a.date))
+      );
+    });
+
     // Lets the admin bold parts of a plain-text field by wrapping words in
     // **double asterisks** (same convention as Markdown/WhatsApp), without
     // needing a full rich-text editor. Escapes the raw text first so any
@@ -1192,8 +1245,8 @@ const app = createApp({
       return Array.from(cats).sort((a, b) => a.localeCompare(b, "id"));
     });
     const filteredCertificates = computed(() => {
-      if (selectedCertificateCategory.value === "all") return certificateMenu.value;
-      return certificateMenu.value.filter(item => item.category === selectedCertificateCategory.value);
+      if (selectedCertificateCategory.value === "all") return sortedCertificateMenu.value;
+      return sortedCertificateMenu.value.filter(item => item.category === selectedCertificateCategory.value);
     });
 
     // --- URL ROUTING (shareable links) ---
@@ -1321,7 +1374,7 @@ const app = createApp({
 
     return {
       activeTab, showWelcome, adminTab, switchTab, goToExperiencePortfolio, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
-      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, renderBoldText, stripTags, dishPhotoLightboxOpen,
+      selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, formatCertificateDate, sortedCertificateMenu, renderBoldText, stripTags, dishPhotoLightboxOpen,
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
       selectedCertificateCategory, certificateCategories, filteredCertificates,
