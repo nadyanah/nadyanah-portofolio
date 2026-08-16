@@ -265,7 +265,14 @@ const app = createApp({
 
         portfolioMenu.value = normalizePortfolioMenu(menuRes.value);
         certificateMenu.value = certRes.value;
-        chefProfileState.value = chefRes.value;
+        // Normalisasi data lama: kalau di Supabase belum ada field careerJourneyTitle/
+        // careerJourneySubtitle (baru ditambahkan), pakai default dari CHEF_PROFILE
+        // supaya judul "Career Journey" di halaman Background tidak kosong.
+        chefProfileState.value = {
+          careerJourneyTitle: CHEF_PROFILE.careerJourneyTitle,
+          careerJourneySubtitle: CHEF_PROFILE.careerJourneySubtitle,
+          ...chefRes.value
+        };
         chefForm.value = JSON.parse(JSON.stringify(chefProfileState.value));
         // Normalisasi data lama: kalau di Supabase belum ada field welcomeQuote/welcomeCta
         // (baru ditambahkan), pakai default dari defaultMainPage supaya tidak kosong.

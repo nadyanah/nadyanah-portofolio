@@ -541,8 +541,8 @@
 
               <!-- LEFT: Career Journey -->
               <div class="flex-1 bg-white rounded-3xl border border-neutral-200/60 p-6 md:p-10 shadow-sm">
-                <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-1">Career Journey</h2>
-                <p class="text-xs text-brand-muted mb-9">A timeline of professional milestones.</p>
+                <h2 class="text-2xl md:text-3xl font-serif font-medium text-black mb-1">{{ chefProfileState.careerJourneyTitle || "Career Journey" }}</h2>
+                <p class="text-xs text-brand-muted mb-9">{{ chefProfileState.careerJourneySubtitle || "A timeline of professional milestones." }}</p>
 
                 <!-- INNER CREAM PANEL — same layered "timbul" look as the timeline
                      card on the beranda (white outer shape + cream inset inner) -->
@@ -1497,6 +1497,14 @@
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Filosofi Kerja / Value Pribadi (opsional, tampil sebagai kutipan di section Summary)</label>
                         <textarea rows="3" v-model="chefForm.philosophy" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
+                      </div>
+                      <div class="space-y-1">
+                        <label class="font-semibold text-black">Judul "Career Journey" (Halaman Background)</label>
+                        <input type="text" v-model="chefForm.careerJourneyTitle" placeholder="Career Journey" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
+                      </div>
+                      <div class="space-y-1">
+                        <label class="font-semibold text-black">Subjudul "Career Journey" (Halaman Background)</label>
+                        <input type="text" v-model="chefForm.careerJourneySubtitle" placeholder="A timeline of professional milestones." class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                     </div>
 

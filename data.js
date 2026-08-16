@@ -232,6 +232,11 @@ const CHEF_PROFILE = {
   contactEmail: "natasya.canva@email.com",
   philosophy: "Budaya kerja bukanlah hiasan dinding atau tumpukan dokumen aturan. Budaya kerja adalah resep hidup yang diramu setiap hari melalui komunikasi, apresiasi, rasa aman, dan kepemimpinan yang berempati.",
 
+  /* Judul & subjudul kartu/section "Career Journey" di halaman Background
+     (dan versi ringkas di Beranda). Bisa diubah dari Admin > Profil Saya. */
+  careerJourneyTitle: "Career Journey",
+  careerJourneySubtitle: "A timeline of professional milestones.",
+
   /* Section-based CV content. Setiap section punya "type" yang menentukan
      bagaimana ia dirender & diedit di admin:
        - "paragraph": teks panjang (mis. Summary)
