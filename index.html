@@ -1052,9 +1052,9 @@
               <div class="lg:col-span-3 bar-raised border border-neutral-200/40 p-6 rounded-3xl min-h-[500px]">
                 
                 <div v-if="adminTab === 'portfolio'" class="space-y-6">
-                  
-                  <!-- LIST VIEW -->
-                  <div v-if="!isAddingCard" class="space-y-4">
+
+                  <!-- LIST VIEW (always visible; add/edit opens in a popup) -->
+                  <div class="space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
                       <div>
                         <h3 class="text-lg font-sans font-bold text-black">Daftar Proyek Portofolio</h3>
@@ -1090,9 +1090,12 @@
                     </div>
                   </div>
                 </div>
+                </div>
 
-                <!-- ADD/EDIT FORM VIEW -->
-                <div v-else class="space-y-6">
+                <!-- PORTFOLIO ADD/EDIT — POPUP MODAL -->
+                <div v-if="adminTab === 'portfolio' && isAddingCard" class="fixed inset-0 z-[85] flex items-start md:items-center justify-center p-3 md:p-6 text-left">
+                  <div @click="cancelPortfolioForm" class="absolute inset-0 bg-brand-charcoal/70 backdrop-blur-md cursor-pointer"></div>
+                  <div class="relative z-10 w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8">
                   <form @submit.prevent="savePortfolioCard" class="space-y-6">
                     <div class="flex justify-between items-center border-b border-neutral-100 pb-3">
                       <h3 class="text-lg font-sans font-bold text-black">
@@ -1108,12 +1111,12 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                       
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Judul Proyek*</label>
+                        <label class="text-sm font-bold text-black">Judul Proyek*</label>
                         <input type="text" required placeholder="Contoh: Onboarding Delight Salad" v-model="portfolioForm.name" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
 
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Kategori Proyek*</label>
+                        <label class="text-sm font-bold text-black">Kategori Proyek*</label>
                         <select v-model="portfolioForm.category" class="w-full px-2 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer">
                           <option value="people-culture">People Culture</option>
                           <option value="employer-branding">Employer Branding</option>
@@ -1123,17 +1126,17 @@
                       </div>
 
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Tanggal Pelaksanaan Proyek*</label>
+                        <label class="text-sm font-bold text-black">Tanggal Pelaksanaan Proyek*</label>
                         <input type="month" required v-model="portfolioForm.price" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer" />
                       </div>
 
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Metrik Dampak (Hasil Terukur)*</label>
+                        <label class="text-sm font-bold text-black">Metrik Dampak (Hasil Terukur)*</label>
                         <input type="text" required placeholder="Contoh: -35% Turnover Rate" v-model="portfolioForm.impactMetric" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Sinkronkan dengan Pengalaman <span class="text-brand-muted font-normal">(opsional — hubungkan proyek ini ke salah satu entri Professional Experience di Admin &gt; Profil Saya)</span></label>
+                        <label class="text-sm font-bold text-black block">Sinkronkan dengan Pengalaman <span class="text-brand-muted font-normal">(opsional — hubungkan proyek ini ke salah satu entri Professional Experience di Admin &gt; Profil Saya)</span></label>
                         <select v-model="portfolioForm.experienceLink" class="w-full px-2 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer">
                           <option value="">Tidak disinkronkan</option>
                           <option v-for="(entry, idx) in careerEntries" :key="'exp-opt-'+idx" :value="experienceKey(entry)">{{ entry.heading }} — {{ entry.period }}</option>
@@ -1143,7 +1146,7 @@
 
                       <div class="space-y-1.5 md:col-span-2">
                         <div class="flex items-start justify-between gap-2">
-                          <label class="font-semibold text-black block">Gambar Proyek* <span class="text-brand-muted font-normal">(bisa lebih dari 1 — geser foto untuk mengurutkan, foto pertama jadi sampul, deskripsi opsional)</span></label>
+                          <label class="text-sm font-bold text-black block">Gambar Proyek* <span class="text-brand-muted font-normal">(bisa lebih dari 1 — geser foto untuk mengurutkan, foto pertama jadi sampul, deskripsi opsional)</span></label>
                           <button type="button" @click="portfolioImagesCollapsed = !portfolioImagesCollapsed" class="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-brand-muted hover:text-black cursor-pointer shrink-0 whitespace-nowrap pt-0.5" :title="portfolioImagesCollapsed ? 'Tampilkan foto' : 'Sembunyikan foto'">
                             <span>{{ portfolioForm.images.length }} foto</span>
                             <i :data-lucide="portfolioImagesCollapsed ? 'chevron-down' : 'chevron-up'" class="h-3.5 w-3.5"></i>
@@ -1189,14 +1192,14 @@
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Deskripsi Singkat / Tagline Proyek*</label>
+                        <label class="text-sm font-bold text-black">Deskripsi Singkat / Tagline Proyek*</label>
                         <rich-text-editor v-model="portfolioForm.shortDescription" placeholder="Deskripsi singkat yang menarik perhatian pembaca..." :min-rows="2.5"></rich-text-editor>
                       </div>
 
                       <!-- Dynamic List: Ingredients -->
                       <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
                         <div class="flex justify-between items-center">
-                          <label class="font-bold text-black block">Kata Kunci / Keywords (Skills &amp; Tools)</label>
+                          <label class="text-sm font-bold text-black block">Kata Kunci / Keywords (Skills &amp; Tools)</label>
                           <button type="button" @click="handleAddField('ingredients')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Skill
                           </button>
@@ -1220,14 +1223,14 @@
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Challenge / Why Problem — Latar Belakang</label>
+                        <label class="text-sm font-bold text-black">Challenge / Why Problem — Latar Belakang</label>
                         <rich-text-editor v-model="portfolioForm.chefNotes.background" placeholder="Uraikan kondisi awal sebelum dilakukan restrukturisasi..." :min-rows="3"></rich-text-editor>
                       </div>
 
                       <!-- Chef Notes Recipe Steps -->
                       <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
                         <div class="flex justify-between items-center">
-                          <label class="font-bold text-black block">Solution — Tahapan Pengerjaan</label>
+                          <label class="text-sm font-bold text-black block">Solution — Tahapan Pengerjaan</label>
                           <button type="button" @click="handleAddField(null, 'recipe')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Langkah
                           </button>
@@ -1261,7 +1264,7 @@
                       <!-- Chef Notes Results -->
                       <div class="space-y-2 md:col-span-2 border-t border-neutral-100 pt-3">
                         <div class="flex justify-between items-center">
-                          <label class="font-bold text-black block text-emerald-900">Impact — Hasil &amp; Dampak Nyata</label>
+                          <label class="text-sm font-bold text-black block text-emerald-900">Impact — Hasil &amp; Dampak Nyata</label>
                           <button type="button" @click="handleAddField(null, 'results')" class="flex items-center gap-1 text-[10px] text-brand-muted hover:text-black font-bold border border-neutral-200 px-2.5 py-1 rounded-full bg-white cursor-pointer">
                             <i data-lucide="plus" class="h-3 w-3"></i> Tambah Hasil
                           </button>
@@ -1294,7 +1297,7 @@
 
                       <!-- Chef Notes: What Made It Special -->
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
-                        <label class="font-semibold text-black">What Made It Special and What I Learned</label>
+                        <label class="text-sm font-bold text-black">What Made It Special and What I Learned</label>
                         <rich-text-editor v-model="portfolioForm.chefNotes.philosophy" placeholder="Ceritakan hal yang membuat proyek ini istimewa dan pelajaran yang Anda dapatkan..." :min-rows="3"></rich-text-editor>
                       </div>
 
@@ -1310,13 +1313,13 @@
                       </button>
                     </div>
                   </form>
-                </div>
-                </div><!-- /adminTab === 'portfolio' -->
+                  </div>
+                </div><!-- /portfolio add/edit modal -->
 
                 <div v-else-if="adminTab === 'certificate'" class="space-y-6">
 
-                  <!-- LIST VIEW -->
-                  <div v-if="!isAddingCertificate" class="space-y-4">
+                  <!-- LIST VIEW (always visible; add/edit opens in a popup) -->
+                  <div class="space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
                       <div>
                         <h3 class="text-lg font-sans font-bold text-black">Daftar Sertifikat</h3>
@@ -1356,9 +1359,12 @@
                       </div>
                     </div>
                   </div>
+                </div><!-- /adminTab === 'certificate' -->
 
-                  <!-- ADD/EDIT FORM VIEW -->
-                  <div v-else class="space-y-6">
+                <!-- CERTIFICATE ADD/EDIT — POPUP MODAL -->
+                <div v-if="adminTab === 'certificate' && isAddingCertificate" class="fixed inset-0 z-[85] flex items-start md:items-center justify-center p-3 md:p-6 text-left">
+                  <div @click="cancelCertificateForm" class="absolute inset-0 bg-brand-charcoal/70 backdrop-blur-md cursor-pointer"></div>
+                  <div class="relative z-10 w-full max-w-3xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8">
                     <form @submit.prevent="saveCertificate" class="space-y-6">
                       <div class="flex justify-between items-center border-b border-neutral-100 pb-3">
                         <h3 class="text-lg font-sans font-bold text-black">
@@ -1373,32 +1379,32 @@
                       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
 
                         <div class="space-y-1 md:col-span-2">
-                          <label class="font-semibold text-black">Nama Sertifikat*</label>
+                          <label class="text-sm font-bold text-black">Nama Sertifikat*</label>
                           <input type="text" required placeholder="Contoh: People Analytics Professional" v-model="certificateForm.title" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-black">Penerbit / Issuer*</label>
+                          <label class="text-sm font-bold text-black">Penerbit / Issuer*</label>
                           <input type="text" required placeholder="Contoh: HR Certification Institute" v-model="certificateForm.issuer" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-black">Tanggal Terbit*</label>
+                          <label class="text-sm font-bold text-black">Tanggal Terbit*</label>
                           <input type="text" required placeholder="Contoh: Maret 2024" v-model="certificateForm.date" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-black">Kategori</label>
+                          <label class="text-sm font-bold text-black">Kategori</label>
                           <input type="text" placeholder="Contoh: People Analytics" v-model="certificateForm.category" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-black">ID Kredensial</label>
+                          <label class="text-sm font-bold text-black">ID Kredensial</label>
                           <input type="text" placeholder="Contoh: HRCI-PA-2024-08213" v-model="certificateForm.credentialId" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                         </div>
 
                         <div class="space-y-1 md:col-span-2">
-                          <label class="font-semibold text-black block">Gambar Sertifikat</label>
+                          <label class="text-sm font-bold text-black block">Gambar Sertifikat</label>
                           <div class="flex items-center gap-4">
                             <div class="h-20 w-28 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                               <img v-if="certificateForm.image" :src="certificateForm.image" class="w-full h-full object-cover" />
@@ -1415,17 +1421,17 @@
                         </div>
 
                         <div class="space-y-1 md:col-span-2">
-                          <label class="font-semibold text-black block">Link Verifikasi Kredensial</label>
+                          <label class="text-sm font-bold text-black block">Link Verifikasi Kredensial</label>
                           <input type="text" v-model="certificateForm.credentialUrl" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="https://..." />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-black block">Nama Link Pendukung</label>
+                          <label class="text-sm font-bold text-black block">Nama Link Pendukung</label>
                           <input type="text" v-model="certificateForm.supportingLinkLabel" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="Contoh: Link Sertifikat" />
                         </div>
 
                         <div class="space-y-1">
-                          <label class="font-semibold text-black block">URL Link Pendukung</label>
+                          <label class="text-sm font-bold text-black block">URL Link Pendukung</label>
                           <input type="text" v-model="certificateForm.supportingLinkUrl" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="https://..." />
                         </div>
 
@@ -1442,7 +1448,7 @@
                       </div>
                     </form>
                   </div>
-                </div><!-- /adminTab === 'certificate' -->
+                </div><!-- /certificate add/edit modal -->
 
                 <div v-else-if="adminTab === 'chef'">
                   <form @submit.prevent="handleChefFormSubmit" class="space-y-6">
@@ -1453,15 +1459,15 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Nama Lengkap*</label>
+                        <label class="text-sm font-bold text-black">Nama Lengkap*</label>
                         <input type="text" required v-model="chefForm.name" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Gelar / Posisi*</label>
+                        <label class="text-sm font-bold text-black">Gelar / Posisi*</label>
                         <input type="text" required v-model="chefForm.title" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Foto Profil (Banner)*</label>
+                        <label class="text-sm font-bold text-black block">Foto Profil (Banner)*</label>
                         <div class="flex items-center gap-4">
                           <div class="h-20 w-32 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                             <img v-if="chefForm.avatar" :src="chefForm.avatar" class="w-full h-full object-cover" />
@@ -1478,7 +1484,7 @@
                         <span class="text-[9px] text-neutral-400 block mt-1">Gunakan foto landscape (mendatar) agar pas dengan banner profil. Jangan lupa klik Simpan Profil setelah memilih.</span>
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Background Header Profil</label>
+                        <label class="text-sm font-bold text-black block">Background Header Profil</label>
                         <div class="flex items-center gap-4">
                           <div class="h-20 w-32 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                             <img v-if="chefForm.headerBackground" :src="chefForm.headerBackground" class="w-full h-full object-cover" />
@@ -1495,35 +1501,35 @@
                         <span class="text-[9px] text-neutral-400 block mt-1">Opsional. Kalau tidak diisi, background polos krem bawaan yang dipakai. Jangan lupa klik Simpan Profil setelah memilih.</span>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Nomor Telepon</label>
+                        <label class="text-sm font-bold text-black">Nomor Telepon</label>
                         <input type="text" v-model="chefForm.contactPhone" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Email</label>
+                        <label class="text-sm font-bold text-black">Email</label>
                         <input type="text" v-model="chefForm.contactEmail" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Tagline Singkat (tampil di banner)*</label>
+                        <label class="text-sm font-bold text-black">Tagline Singkat (tampil di banner)*</label>
                         <textarea required rows="2" v-model="chefForm.tagline" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Tahun Pengalaman*</label>
+                        <label class="text-sm font-bold text-black">Tahun Pengalaman*</label>
                         <input type="text" required v-model="chefForm.experienceYears" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Filosofi Kerja / Value Pribadi (opsional, tampil sebagai kutipan di section Summary)</label>
+                        <label class="text-sm font-bold text-black">Filosofi Kerja / Value Pribadi (opsional, tampil sebagai kutipan di section Summary)</label>
                         <textarea rows="3" v-model="chefForm.philosophy" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Judul "Career Journey" (Halaman Background)</label>
+                        <label class="text-sm font-bold text-black">Judul "Career Journey" (Halaman Background)</label>
                         <input type="text" v-model="chefForm.careerJourneyTitle" placeholder="Career Journey" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Subjudul "Career Journey" (Halaman Background)</label>
+                        <label class="text-sm font-bold text-black">Subjudul "Career Journey" (Halaman Background)</label>
                         <input type="text" v-model="chefForm.careerJourneySubtitle" placeholder="A timeline of professional milestones." class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Teks Intro "Career Journey" di Beranda (opsional)</label>
+                        <label class="text-sm font-bold text-black">Teks Intro "Career Journey" di Beranda (opsional)</label>
                         <textarea rows="2" v-model="chefForm.careerJourneyHomeIntro" placeholder="My non-traditional background shaped how I lead, listen, and build culture today." class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                         <p class="text-[10px] text-brand-muted">Kosongkan kalau tidak ingin ada teks intro. Ada tautan "View Full Story →" otomatis di bawahnya yang mengarah ke halaman Background.</p>
                       </div>
@@ -1651,7 +1657,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Foto Profil (Lingkaran di Beranda)</label>
+                        <label class="text-sm font-bold text-black block">Foto Profil (Lingkaran di Beranda)</label>
                         <div class="flex items-center gap-4">
                           <div class="h-16 w-16 rounded-full overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                             <img v-if="homepageForm.photoUrl" :src="homepageForm.photoUrl" class="w-full h-full object-cover" />
@@ -1668,41 +1674,41 @@
                         <p class="text-[10px] text-brand-muted mt-1">Foto akan otomatis dipotong bulat, jangan lupa klik Simpan setelah memilih.</p>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Nama / Brand Tampilan*</label>
+                        <label class="text-sm font-bold text-black">Nama / Brand Tampilan*</label>
                         <input type="text" required v-model="homepageForm.name" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Judul Samping Atas*</label>
+                        <label class="text-sm font-bold text-black">Judul Samping Atas*</label>
                         <input type="text" required v-model="homepageForm.title" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Kalimat Slogan Utama (Headline)*</label>
+                        <label class="text-sm font-bold text-black">Kalimat Slogan Utama (Headline)*</label>
                         <rich-text-editor v-model="homepageForm.slogan" placeholder="Slogan utama yang tampil di beranda..." :min-rows="1.2"></rich-text-editor>
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black">Paragraf Deskripsi Beranda*</label>
+                        <label class="text-sm font-bold text-black">Paragraf Deskripsi Beranda*</label>
                         <rich-text-editor v-model="homepageForm.body" placeholder="Deskripsi singkat tentang dirimu di beranda..." :min-rows="4"></rich-text-editor>
                       </div>
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
-                        <label class="font-semibold text-black block">Kalimat Layar Sambutan (Welcome Screen)*</label>
+                        <label class="text-sm font-bold text-black block">Kalimat Layar Sambutan (Welcome Screen)*</label>
                         <p class="text-[10px] text-brand-muted mb-1">Ini kalimat yang muncul pertama kali saat website dibuka. Tekan Enter di posisi yang kamu mau untuk mengatur baris barunya sendiri.</p>
                         <rich-text-editor v-model="homepageForm.welcomeQuote" placeholder="Kalimat sambutan..." :min-rows="5"></rich-text-editor>
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Teks Ajakan di Pojok Welcome Screen*</label>
+                        <label class="text-sm font-bold text-black block">Teks Ajakan di Pojok Welcome Screen*</label>
                         <input type="text" required v-model="homepageForm.welcomeCta" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="[ Step inside the garden of growth → ]" />
                       </div>
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
-                        <label class="font-semibold text-red-600 block">Alert / Pengumuman di Welcome Screen (opsional)</label>
+                        <label class="text-sm font-bold text-red-600 block">Alert / Pengumuman di Welcome Screen (opsional)</label>
                         <p class="text-[10px] text-brand-muted mb-1">Muncul sebagai kalimat berwarna merah di layar sambutan, contoh untuk memberi tahu pengunjung kalau web sedang dalam tahap development/update. Kosongkan kalau tidak ingin menampilkan alert apapun.</p>
                         <textarea rows="2" v-model="homepageForm.alertMessage" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed" placeholder="Contoh: Website sedang dalam tahap pengembangan, beberapa bagian mungkin belum tampil sempurna."></textarea>
                       </div>
                       <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
-                        <label class="font-semibold text-black block">Jargon Pendek Versi Mobile (Quote Box)*</label>
+                        <label class="text-sm font-bold text-black block">Jargon Pendek Versi Mobile (Quote Box)*</label>
                         <textarea required rows="2.5" v-model="homepageForm.mobileQuote" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
                       <div class="space-y-1 md:col-span-2">
-                        <label class="font-semibold text-black block">Deskripsi Pendek Laci Samping (Drawer Sidebar Description)*</label>
+                        <label class="text-sm font-bold text-black block">Deskripsi Pendek Laci Samping (Drawer Sidebar Description)*</label>
                         <textarea required rows="2.5" v-model="homepageForm.drawerDesc" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
                       </div>
 
@@ -1710,11 +1716,11 @@
                         <h4 class="font-bold text-black font-sans text-xs mb-3">Link Media Sosial &amp; Kontak</h4>
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">LinkedIn URL</label>
+                        <label class="text-sm font-bold text-black">LinkedIn URL</label>
                         <input type="url" v-model="homepageForm.linkedinUrl" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" placeholder="https://linkedin.com/in/username" />
                       </div>
                       <div class="space-y-1">
-                        <label class="font-semibold text-black">Email (dari data Profil)</label>
+                        <label class="text-sm font-bold text-black">Email (dari data Profil)</label>
                         <input type="text" disabled :value="chefForm.contactEmail" class="w-full px-3 py-2 bg-neutral-100 border border-neutral-200 rounded-xl text-brand-muted cursor-not-allowed" />
                         <p class="text-[11px] text-brand-muted">Ubah email di tab Profil &rarr; field Email.</p>
                       </div>
@@ -1738,7 +1744,7 @@
 
                     <div class="grid grid-cols-1 gap-4 text-xs">
                       <div class="space-y-1">
-                        <label class="font-semibold text-black block">Foto Highlight</label>
+                        <label class="text-sm font-bold text-black block">Foto Highlight</label>
                         <div class="flex items-center gap-4">
                           <div class="h-16 w-24 rounded-xl overflow-hidden bg-brand-bone border border-neutral-200 shrink-0 flex items-center justify-center">
                             <img v-if="backgroundHighlightForm.image" :src="backgroundHighlightForm.image" class="w-full h-full object-cover" />
