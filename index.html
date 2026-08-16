@@ -399,7 +399,7 @@
                   {{ chefProfileState.careerJourneyHomeIntro }}
                 </p>
                 <button type="button" @click="switchTab('background')" class="text-[10px] font-bold text-brand-gold-dark hover:text-black transition-colors cursor-pointer inline-flex items-center gap-1 mt-1 focus:outline-none">
-                  Lihat Lengkap
+                  View Full Story
                   <i data-lucide="arrow-right" class="h-3 w-3"></i>
                 </button>
               </div>
@@ -434,13 +434,14 @@
                     </span>
                     <!-- Klik judul posisi → lompat ke Portfolio, otomatis terfilter
                          ke stage karier ini (lewat dropdown "Experience" di sana). -->
-                    <p @click="goToExperiencePortfolio(entry)" class="text-sm name-title font-semibold text-black leading-snug cursor-pointer hover:text-brand-gold-dark hover:underline underline-offset-2 transition-colors" title="Lihat proyek terkait posisi ini di Portfolio">{{entry.heading}}</p>
+                    <p @click="goToExperiencePortfolio(entry)" class="text-sm name-title font-semibold text-black leading-snug cursor-pointer hover:text-brand-gold-dark hover:underline underline-offset-2 transition-colors" title="View related projects for this role in Portfolio">{{entry.heading}}</p>
                     <p class="text-xs text-brand-muted mt-1 leading-snug">{{entry.subheading}}</p>
                     <!-- Deskripsi sengaja dipotong (line-clamp-2) khusus di kartu Beranda ini —
-                         supaya pengunjung penasaran dan klik "Lihat Lengkap" ke halaman
-                         Background untuk baca cerita lengkapnya. Halaman Background sendiri
-                         tetap menampilkan deskripsi utuh, tidak terpotong. -->
-                    <p v-if="entry.description" class="text-xs text-brand-muted leading-relaxed italic mt-2 line-clamp-2">
+                         teksnya sendiri bisa diklik (sama seperti tombol "View Full Story") supaya
+                         pengunjung yang penasaran sama potongan "..."-nya bisa langsung ke halaman
+                         Background untuk baca cerita lengkapnya. Halaman Background sendiri tetap
+                         menampilkan deskripsi utuh, tidak terpotong. -->
+                    <p v-if="entry.description" @click="switchTab('background')" class="text-xs text-brand-muted leading-relaxed italic mt-2 line-clamp-2 cursor-pointer hover:text-brand-gold-dark transition-colors" title="Read the full story on the Background page">
                       {{entry.description}}
                     </p>
                   </div>
@@ -1524,7 +1525,7 @@
                       <div class="space-y-1 md:col-span-2">
                         <label class="font-semibold text-black">Teks Intro "Career Journey" di Beranda (opsional)</label>
                         <textarea rows="2" v-model="chefForm.careerJourneyHomeIntro" placeholder="My non-traditional background shaped how I lead, listen, and build culture today." class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none resize-none leading-relaxed"></textarea>
-                        <p class="text-[10px] text-brand-muted">Kosongkan kalau tidak ingin ada teks intro. Ada tautan "Lihat Lengkap →" otomatis di bawahnya yang mengarah ke halaman Background.</p>
+                        <p class="text-[10px] text-brand-muted">Kosongkan kalau tidak ingin ada teks intro. Ada tautan "View Full Story →" otomatis di bawahnya yang mengarah ke halaman Background.</p>
                       </div>
                     </div>
 
