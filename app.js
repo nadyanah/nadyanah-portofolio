@@ -763,7 +763,7 @@ const app = createApp({
       const base = { id: "section-" + Date.now() + "-" + Math.floor(Math.random() * 1000), title: "", type };
       if (type === "paragraph") return { ...base, content: "" };
       if (type === "tags") return { ...base, items: [""] };
-      if (type === "timeline") return { ...base, entries: [{ heading: "", subheading: "", period: "", bullets: [""] }] };
+      if (type === "timeline") return { ...base, entries: [{ heading: "", subheading: "", period: "", bullets: [""], showOnHome: true }] };
       return base;
     };
     const handleSectionAdd = (type) => {
@@ -786,7 +786,7 @@ const app = createApp({
 
     // "timeline" type section helpers
     const handleSectionEntryAdd = (sectionIdx) => {
-      chefForm.value.sections[sectionIdx].entries.push({ heading: "", subheading: "", period: "", description: "", bullets: [""] });
+      chefForm.value.sections[sectionIdx].entries.push({ heading: "", subheading: "", period: "", description: "", bullets: [""], showOnHome: true });
     };
     const handleSectionEntryRemove = (sectionIdx, entryIdx) => chefForm.value.sections[sectionIdx].entries.splice(entryIdx, 1);
     const handleSectionEntryBulletAdd = (sectionIdx, entryIdx) => chefForm.value.sections[sectionIdx].entries[entryIdx].bullets.push("");
@@ -1063,12 +1063,22 @@ const app = createApp({
     // Entri "Perjalanan Karier" untuk halaman Background — diambil dari section
     // "Professional Experience" (type: timeline) di data profil, supaya satu
     // sumber data yang sama dipakai di halaman Profile & Background.
+    // Halaman Background SELALU menampilkan seluruh entri ini apa adanya
+    // (lengkap, sesuai admin panel — tidak difilter).
     const careerEntries = computed(() => {
       const sections = chefProfileState.value.sections || [];
       const experienceSection = sections.find(s => s.id === "experience");
       if (!experienceSection || !experienceSection.entries) return [];
       return experienceSection.entries;
     });
+
+    // Subset dari careerEntries khusus untuk kartu "CAREER JOURNEY" di Beranda —
+    // admin bisa memilih entri mana saja yang mau disembunyikan dari Beranda (dan
+    // juga dari bagian Professional Experience di halaman Profil/CV) lewat toggle
+    // "Tampilkan di Beranda & Profil (CV)" per entri (field entry.showOnHome, boolean).
+    // Entri lama yang belum punya field ini (showOnHome === undefined) dianggap
+    // tetap tampil by default, supaya data lama tidak tiba-tiba hilang.
+    const homeCareerEntries = computed(() => careerEntries.value.filter(entry => entry.showOnHome !== false));
 
     // SYNC PORTOFOLIO <-> PROFESSIONAL EXPERIENCE — sebuah proyek portofolio
     // bisa "disinkronkan" ke salah satu entri Professional Experience (dari
@@ -1296,7 +1306,7 @@ const app = createApp({
       portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
       selectedCertificateCategory, certificateCategories, filteredCertificates,
-      isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries,
+      isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries, homeCareerEntries,
       experienceKey, getLinkedExperience,
       homeShapeLeftRef, homeCareerCardHeight,
       linkCopied, copyLink,

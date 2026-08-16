@@ -256,6 +256,7 @@ const CHEF_PROFILE = {
           subheading: "Freelance & Mitra Perusahaan",
           period: "2020 - Sekarang",
           description: "Membangun dan mengelola berbagai inisiatif People & Culture lintas perusahaan mitra, dari strategi rekrutmen hingga program penguatan budaya kerja jangka panjang.",
+          showOnHome: true,
           bullets: [
             "Menggunakan analitik SDM (HR analytics) dan survei denyut nadi (pulse survey) untuk mengidentifikasi kebutuhan nyata sebelum merancang program.",
             "Merancang program apresiasi dan rewards yang membuat talenta merasa dihargai secara konsisten, bukan hanya secara simbolis.",

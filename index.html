@@ -396,7 +396,7 @@
               </div>
 
               <!-- EMPTY STATE -->
-              <div v-if="!careerEntries || careerEntries.length === 0" class="text-xs text-brand-muted italic py-6 text-center">
+              <div v-if="!homeCareerEntries || homeCareerEntries.length === 0" class="text-xs text-brand-muted italic py-6 text-center">
                 No career journey data yet.
               </div>
 
@@ -416,7 +416,7 @@
                 <div class="relative pl-10 w-full">
                   <div class="absolute left-[11px] top-2 bottom-2 border-l border-dashed border-neutral-300"></div>
 
-                  <div v-for="(entry, idx) in careerEntries" :key="'home-career-'+idx" class="relative pb-7 last:pb-0">
+                  <div v-for="(entry, idx) in homeCareerEntries" :key="'home-career-'+idx" class="relative pb-7 last:pb-0">
                     <!-- node dot -->
                     <span class="career-dot absolute -left-9 top-1 h-[15px] w-[15px] rounded-full bg-white border-2"></span>
 
@@ -679,10 +679,14 @@
                         <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
                           <i :data-lucide="sectionIcon(section.type)" class="h-4 w-4 text-brand-gold"></i> {{section.title}}
                         </h3>
-                        <div v-if="!section.entries || section.entries.length === 0" class="text-xs text-brand-muted italic">
+                        <!-- Entri di section "experience" yang di-uncheck "Tampilkan di Beranda"
+                             juga disembunyikan di sini (bagian Professional Experience halaman
+                             Profil/CV) — hanya halaman Background yang selalu menampilkan semua
+                             entri apa adanya, tidak peduli status showOnHome. -->
+                        <div v-if="!section.entries || !section.entries.filter(e => e.showOnHome !== false).length" class="text-xs text-brand-muted italic">
                           Belum ada data.
                         </div>
-                        <div v-for="(entry, idx) in section.entries" :key="'entry'+idx" :class="idx > 0 ? 'mt-6 pt-6 border-t border-neutral-100' : ''">
+                        <div v-for="(entry, idx) in section.entries.filter(e => e.showOnHome !== false)" :key="'entry'+idx" :class="idx > 0 ? 'mt-6 pt-6 border-t border-neutral-100' : ''">
                           <p class="text-sm font-semibold text-black">{{entry.heading}}</p>
                           <p class="text-xs text-brand-muted">{{entry.subheading}}</p>
                           <span class="inline-block mt-1.5 px-2.5 py-0.5 rounded-full bg-brand-bone text-brand-gold-dark text-[10px] font-mono italic">{{entry.period}}</span>
@@ -1542,7 +1546,7 @@
                           <!-- Isi section: TIMELINE -->
                           <div v-if="section.type === 'timeline'" class="space-y-3">
                             <p v-if="section.id === 'experience'" class="text-[10px] text-brand-gold-dark bg-brand-bone/60 border border-brand-gold/20 rounded-lg px-2.5 py-1.5 -mt-0.5">
-                              Entri di section ini juga otomatis tampil sebagai timeline "Perjalanan Karier" di halaman Background.
+                              Entri di section ini otomatis tampil lengkap sebagai timeline "Career Journey" di halaman Background (selalu, apa pun status toggle). Uncheck "Tampilkan di Beranda" pada entri di bawah kalau entri itu mau disembunyikan dari kartu ringkas di Beranda dan dari bagian Professional Experience di halaman Profil/CV.
                             </p>
                             <div v-for="(entry, eIdx) in section.entries" :key="'entry'+eIdx" class="p-3 bg-white border border-neutral-200 rounded-xl space-y-2">
                               <div class="flex justify-between items-center">
@@ -1551,6 +1555,15 @@
                                   <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
                                 </button>
                               </div>
+                              <!-- Toggle khusus section "experience": entri ini SELALU tampil
+                                   lengkap di halaman Background, tapi admin bisa memilih untuk
+                                   MENYEMBUNYIKANNYA dari kartu ringkas "CAREER JOURNEY" di Beranda
+                                   (mis. entri lama/kurang relevan yang tidak perlu dipajang di depan). -->
+                              <label v-if="section.id === 'experience'" class="flex items-center gap-2 text-[11px] font-semibold text-brand-muted cursor-pointer select-none pb-0.5">
+                                <input type="checkbox" :checked="entry.showOnHome !== false" @change="entry.showOnHome = $event.target.checked" class="h-3.5 w-3.5 rounded border-neutral-300 cursor-pointer accent-brand-gold-dark" />
+                                Tampilkan di Beranda &amp; Profil (CV)
+                                <span class="font-normal text-neutral-400 normal-case">(entri ini tetap selalu tampil lengkap di halaman Background)</span>
+                              </label>
                               <input type="text" v-model="entry.heading" placeholder="Judul, contoh: Posisi / Gelar" class="w-full px-3 py-1.5 bg-neutral-50/60 border border-neutral-200 rounded-lg focus:outline-none" />
                               <input type="text" v-model="entry.subheading" placeholder="Sub-judul, contoh: Perusahaan / Institusi" class="w-full px-3 py-1.5 bg-neutral-50/60 border border-neutral-200 rounded-lg focus:outline-none" />
                               <input type="text" v-model="entry.period" placeholder="Periode, contoh: 2020 - Sekarang" class="w-full px-3 py-1.5 bg-neutral-50/60 border border-neutral-200 rounded-lg focus:outline-none" />
