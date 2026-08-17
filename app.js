@@ -105,8 +105,8 @@ const app = createApp({
       { label: "HOW", title: "THE METHOD", body: "" },
       { label: "WHAT", title: "THE DELIVERABLES", body: "" }
     ]);
-    const backgroundHighlight = ref({ image: "", sections: makeEmptyHighlightSections() });
-    const backgroundHighlightForm = ref({ image: "", sections: makeEmptyHighlightSections() });
+    const backgroundHighlight = ref({ image: "", visible: true, sections: makeEmptyHighlightSections() });
+    const backgroundHighlightForm = ref({ image: "", visible: true, sections: makeEmptyHighlightSections() });
     const backgroundHighlightImageUploading = ref(false);
 
     // ---- SHARED IMAGE CROP MODAL (dipakai semua upload foto: avatar, header bg, portfolio, sertifikat, beranda) ----
@@ -297,7 +297,7 @@ const app = createApp({
           }
           return defaultSection;
         });
-        backgroundHighlight.value = { image: rawBgHighlight.image || "", sections: normalizedSections };
+        backgroundHighlight.value = { image: rawBgHighlight.image || "", visible: rawBgHighlight.visible !== false, sections: normalizedSections };
         backgroundHighlightForm.value = JSON.parse(JSON.stringify(backgroundHighlight.value));
         guestbookEntries.value = guestbook;
 

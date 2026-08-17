@@ -604,17 +604,20 @@
                   <div class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase mt-1">[ What Drives The Growth ]</div>
                 </div>
                 <div class="w-full h-full flex-1 bg-brand-cream rounded-[28px] p-5 flex flex-col items-center border border-neutral-200/50 shadow-inner">
-                  <div class="w-full" v-if="backgroundHighlight.image || (backgroundHighlight.sections && backgroundHighlight.sections.some(s => s.body))">
+                  <div class="w-full" v-if="backgroundHighlight.image || (backgroundHighlight.visible && backgroundHighlight.sections && backgroundHighlight.sections.some(s => s.body))">
                     <!-- FOTO HIGHLIGHT — ikut gaya "lekukan" cream (sunken/inset)
                          seperti panel lain di halaman ini, bukan gaya stiker
-                         timbul di atas cream. -->
+                         timbul di atas cream. Foto ini SELALU tampil terlepas
+                         dari toggle "visible" (toggle hanya untuk section
+                         WHY/HOW/WHAT di bawahnya). -->
                     <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-neutral-100 flex items-center justify-center">
                       <img v-if="backgroundHighlight.image" :src="backgroundHighlight.image" class="w-full h-full object-cover" />
                       <i v-else data-lucide="image" class="h-8 w-8 text-brand-gold/30"></i>
                     </div>
 
-                    <!-- DESKRIPSI HIGHLIGHT — kartu gelap 3 section gaya [ WHY ] THE PURPOSE dst -->
-                    <div v-if="backgroundHighlight.sections && backgroundHighlight.sections.some(s => s.body)" class="w-full bg-white rounded-2xl p-5 mt-4 shadow-[0_15px_35px_rgba(0,0,0,0.06)] text-left space-y-4">
+                    <!-- DESKRIPSI HIGHLIGHT — kartu gelap 3 section gaya [ WHY ] THE PURPOSE dst.
+                         Disembunyikan kalau toggle "visible" dimatikan dari Admin. -->
+                    <div v-if="backgroundHighlight.visible && backgroundHighlight.sections && backgroundHighlight.sections.some(s => s.body)" class="w-full bg-white rounded-2xl p-5 mt-4 shadow-[0_15px_35px_rgba(0,0,0,0.06)] text-left space-y-4">
                       <div v-for="(section, idx) in backgroundHighlight.sections" :key="idx" v-show="section.body">
                         <div class="flex items-baseline gap-2 mb-1.5">
                           <span class="text-[10px] font-mono font-bold tracking-widest text-brand-gold-dark">[ {{ section.label }} ]</span>
@@ -672,7 +675,7 @@
 
                   <!-- Sections berjenis "paragraph" tampil penuh lebar, berurutan -->
                   <template v-for="section in chefProfileState.sections" :key="section.id + '-p'">
-                    <div v-if="section.type === 'paragraph'">
+                    <div v-if="section.type === 'paragraph' && (section.id !== 'summary' || section.visible !== false)">
                       <h3 class="font-serif text-lg font-medium text-black flex items-center gap-2 border-b border-brand-bone pb-2 mb-3">
                         <i :data-lucide="sectionIcon(section.type)" class="h-4 w-4 text-brand-gold"></i> {{section.title}}
                       </h3>
@@ -1067,7 +1070,10 @@
                       </button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="item in portfolioMenu" :key="item.id" class="bg-white p-4 rounded-2xl border border-neutral-150 flex gap-4 shadow-sm relative items-center">
+                    <div v-for="item in portfolioMenu" :key="item.id" :class="['bg-white p-4 rounded-2xl border flex gap-4 shadow-sm relative items-center', item.pinned ? 'border-brand-gold' : 'border-neutral-150']">
+                      <div v-if="item.pinned" class="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-brand-gold text-white flex items-center justify-center shadow-sm" title="Proyek ini dipin">
+                        <i data-lucide="pin" class="h-3 w-3"></i>
+                      </div>
                       <div class="h-16 w-16 rounded-xl overflow-hidden bg-brand-bone shrink-0">
                         <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
                       </div>
@@ -1081,6 +1087,9 @@
                         </p>
                       </div>
                       <div class="absolute right-3 flex flex-col gap-1.5">
+                        <button @click="togglePortfolioPin(item)" :class="['nav-raised h-7 w-7 rounded-full flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5', item.pinned ? 'bg-brand-gold text-white' : 'bg-white text-black']" :title="item.pinned ? 'Lepas pin' : 'Pin ke atas'">
+                          <i data-lucide="pin" class="h-3 w-3"></i>
+                        </button>
                         <button @click="startEditCard(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
                           <i data-lucide="edit-2" class="h-3 w-3"></i>
                         </button>
@@ -1135,6 +1144,14 @@
                       <div class="space-y-1">
                         <label class="text-sm font-bold text-black">Metrik Dampak (Hasil Terukur)*</label>
                         <input type="text" required placeholder="Contoh: -35% Turnover Rate" v-model="portfolioForm.impactMetric" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
+                      </div>
+
+                      <div class="space-y-1 md:col-span-2">
+                        <label class="flex items-center gap-2 cursor-pointer w-fit">
+                          <input type="checkbox" v-model="portfolioForm.pinned" class="h-4 w-4 rounded border-neutral-300 text-brand-gold-dark focus:ring-brand-gold cursor-pointer" />
+                          <span class="text-sm font-bold text-black flex items-center gap-1"><i data-lucide="pin" class="h-3.5 w-3.5"></i> Pin proyek ini ke paling atas</span>
+                        </label>
+                        <p class="text-[10px] text-brand-muted pl-6">Proyek yang dipin akan selalu tampil paling atas di halaman Portofolio publik (kecuali saat pengunjung sedang memakai filter/pencarian).</p>
                       </div>
 
                       <div class="space-y-1 md:col-span-2">
@@ -1562,6 +1579,13 @@
                             </button>
                           </div>
 
+                          <!-- Toggle khusus section "summary": bisa disembunyikan dari
+                               halaman Profil (CV) tanpa perlu menghapus isinya. -->
+                          <label v-if="section.id === 'summary'" class="flex items-center gap-2 text-[11px] font-semibold text-brand-muted cursor-pointer select-none">
+                            <input type="checkbox" :checked="section.visible !== false" @change="section.visible = $event.target.checked" class="h-3.5 w-3.5 rounded border-neutral-300 cursor-pointer accent-brand-gold-dark" />
+                            Tampilkan section ini di halaman Profil
+                          </label>
+
                           <!-- Isi section: PARAGRAPH -->
                           <textarea v-if="section.type === 'paragraph'" rows="4" v-model="section.content" placeholder="Isi teks section..."
                             class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-lg focus:outline-none resize-none leading-relaxed"></textarea>
@@ -1761,6 +1785,16 @@
                           </div>
                         </div>
                         <p class="text-[10px] text-brand-muted mt-1">Rasio foto 4:5, jangan lupa klik Simpan setelah memilih.</p>
+                      </div>
+
+                      <div class="flex items-center justify-between gap-3 bg-brand-cream/60 border border-neutral-200/60 rounded-2xl px-4 py-3">
+                        <div>
+                          <label class="flex items-center gap-2 cursor-pointer w-fit">
+                            <input type="checkbox" v-model="backgroundHighlightForm.visible" class="h-4 w-4 rounded border-neutral-300 text-brand-gold-dark focus:ring-brand-gold cursor-pointer" />
+                            <span class="text-sm font-bold text-black">Tampilkan section WHY / HOW / WHAT di bawah ini</span>
+                          </label>
+                          <p class="text-[10px] text-brand-muted mt-1 pl-6">Kalau dimatikan, hanya 3 kotak deskripsi di bawah ini yang disembunyikan dari halaman Background. Foto highlight di atas tetap tampil seperti biasa, dan isi teksnya tetap tersimpan di sini.</p>
+                        </div>
                       </div>
 
                       <div v-for="(section, idx) in backgroundHighlightForm.sections" :key="idx" class="space-y-2 border border-neutral-100 rounded-xl p-3">
