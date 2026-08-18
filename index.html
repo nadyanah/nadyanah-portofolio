@@ -344,7 +344,7 @@
                   <i data-lucide="chevron-left" class="h-4 w-4"></i>
                 </button>
                 <div class="flex items-center gap-1.5">
-                  <button v-for="(item, idx) in portfolioMenu" :key="idx" @click="currentSlideIndex = idx" :class="['transition-all duration-300 rounded-full', idx === currentSlideIndex ? 'w-5 h-1 bg-neutral-700' : 'w-1 h-1 bg-neutral-200']"></button>
+                  <button v-for="(item, idx) in publicPortfolioMenu" :key="idx" @click="currentSlideIndex = idx" :class="['transition-all duration-300 rounded-full', idx === currentSlideIndex ? 'w-5 h-1 bg-neutral-700' : 'w-1 h-1 bg-neutral-200']"></button>
                 </div>
                 <button @click="handleNextSlide" class="slider-nav-btn h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted flex items-center justify-center cursor-pointer focus:outline-none">
                   <i data-lucide="chevron-right" class="h-4 w-4"></i>
@@ -864,7 +864,7 @@
                       <div class="relative">
                         <select v-model="formDishLiked"
                           class="w-full px-4 py-3 bg-neutral-50/50 border border-neutral-200/60 rounded-xl focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 text-sm text-black appearance-none pr-10 transition-all cursor-pointer">
-                          <option v-for="item in portfolioMenu" :key="item.id" :value="item.name">{{item.name}}</option>
+                          <option v-for="item in publicPortfolioMenu" :key="item.id" :value="item.name">{{item.name}}</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center">
                           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-muted"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1082,6 +1082,7 @@
                       </div>
                       <div class="flex-1 min-w-0 pr-12 text-left">
                         <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
+                        <span :class="['text-[9px] font-sans font-bold tracking-wider px-2 py-0.5 rounded-full uppercase ml-1', item.status === 'draft' ? 'text-neutral-500 bg-neutral-150' : 'text-emerald-700 bg-emerald-100']">{{ item.status === 'draft' ? 'Draft' : 'Publish' }}</span>
                         <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
                         <p class="text-[10px] text-brand-muted truncate leading-snug">{{ stripTags(item.shortDescription) }}</p>
                         <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
@@ -1149,8 +1150,17 @@
                         <input type="text" required placeholder="Contoh: -35% Turnover Rate" v-model="portfolioForm.impactMetric" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none" />
                       </div>
 
-                      <div class="space-y-1 md:col-span-2">
-                        <label class="flex items-center gap-2 cursor-pointer w-fit">
+                      <div class="space-y-1">
+                        <label class="text-sm font-bold text-black">Status Proyek*</label>
+                        <select v-model="portfolioForm.status" class="w-full px-2 py-2 bg-white border border-neutral-200 rounded-xl focus:outline-none cursor-pointer">
+                          <option value="draft">Draft</option>
+                          <option value="published">Publish</option>
+                        </select>
+                        <p class="text-[10px] text-brand-muted">Draft = hanya kamu yang bisa lihat di panel admin. Publish = langsung tampil di halaman Portofolio publik.</p>
+                      </div>
+
+                      <div class="space-y-1">
+                        <label class="flex items-center gap-2 cursor-pointer w-fit mt-6">
                           <input type="checkbox" v-model="portfolioForm.pinned" class="h-4 w-4 rounded border-neutral-300 text-brand-gold-dark focus:ring-brand-gold cursor-pointer" />
                           <span class="text-sm font-bold text-black flex items-center gap-1"><i data-lucide="pin" class="h-3.5 w-3.5"></i> Pin proyek ini ke paling atas</span>
                         </label>

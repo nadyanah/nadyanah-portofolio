@@ -55,7 +55,7 @@ const app = createApp({
     const getEmptyPortfolioForm = () => ({
       name: "", category: "people-culture", categoryLabel: "", price: "", prepTime: "", 
       satisfaction: "", impactMetric: "", images: [], shortDescription: "", 
-      ingredients: [""], allergens: [""], experienceLink: "", pinned: false,
+      ingredients: [""], allergens: [""], experienceLink: "", pinned: false, status: "draft",
       chefNotes: { background: "", challenge: "", recipe: [{ text: "", points: [] }], results: [{ text: "", points: [] }], philosophy: "" }
     });
     const portfolioForm = ref(getEmptyPortfolioForm());
@@ -315,8 +315,8 @@ const app = createApp({
         }
         applyRouteFromHash();
 
-        if (portfolioMenu.value.length > 0) {
-          formDishLiked.value = portfolioMenu.value[0].name;
+        if (publicPortfolioMenu.value.length > 0) {
+          formDishLiked.value = publicPortfolioMenu.value[0].name;
         }
       } catch (err) {
         console.error("Gagal memuat data dari Supabase:", err);
@@ -439,6 +439,10 @@ const app = createApp({
       if (!Array.isArray(list)) return [];
       return list.map(item => ({
         ...item,
+        // Proyek lama (dari sebelum fitur draft/publish ada) belum punya field
+        // "status" sama sekali — dianggap "published" supaya tetap tampil di
+        // halaman publik persis seperti sebelumnya, tidak tiba-tiba hilang.
+        status: item.status === "draft" ? "draft" : "published",
         chefNotes: {
           ...item.chefNotes,
           recipe: normalizeStepList(item.chefNotes && item.chefNotes.recipe),
@@ -1004,11 +1008,16 @@ const app = createApp({
       }
     };
 
+    // Proyek yang boleh tampil di halaman PUBLIK (bukan panel admin) — proyek
+    // berstatus "draft" disembunyikan dari sini, tapi tetap ada & bisa
+    // diedit di daftar admin (Kelola Portofolio memakai portfolioMenu langsung).
+    const publicPortfolioMenu = computed(() => portfolioMenu.value.filter(item => item.status !== "draft"));
+
     // Opsi dropdown "Tanggal Pelaksanaan Proyek" — diambil otomatis dari tahun
     // pada field price ("YYYY-MM") tiap proyek, unik & diurutkan terbaru dulu.
     const dateFilterOptions = computed(() => {
       const years = new Set();
-      portfolioMenu.value.forEach(item => {
+      publicPortfolioMenu.value.forEach(item => {
         const match = /^(\d{4})-\d{2}$/.exec(item.price || "");
         if (match) years.add(match[1]);
       });
@@ -1025,7 +1034,7 @@ const app = createApp({
     });
 
     const filteredMenu = computed(() => {
-      const filtered = portfolioMenu.value.filter(item => {
+      const filtered = publicPortfolioMenu.value.filter(item => {
         const matchesCat = selectedCategory.value === "all" || item.category === selectedCategory.value;
         const matchesDate = selectedDateFilter.value === "all" || (item.price || "").startsWith(selectedDateFilter.value);
         const matchesExperience = selectedExperienceFilter.value === "all" ||
@@ -1062,7 +1071,7 @@ const app = createApp({
       return [...pinned, ...rest];
     });
 
-    const currentDish = computed(() => portfolioMenu.value[currentSlideIndex.value] || portfolioMenu.value[0]);
+    const currentDish = computed(() => publicPortfolioMenu.value[currentSlideIndex.value] || publicPortfolioMenu.value[0]);
 
     // --- HOME PAGE: pin the "PERJALANAN KARIER" card's height to SHAPE 1's
     // (profile + portfolio) height, one-way only, via ResizeObserver. This is
@@ -1166,13 +1175,13 @@ const app = createApp({
     });
 
     const handlePrevSlide = () => {
-      if (portfolioMenu.value.length === 0) return;
-      currentSlideIndex.value = currentSlideIndex.value === 0 ? portfolioMenu.value.length - 1 : currentSlideIndex.value - 1;
+      if (publicPortfolioMenu.value.length === 0) return;
+      currentSlideIndex.value = currentSlideIndex.value === 0 ? publicPortfolioMenu.value.length - 1 : currentSlideIndex.value - 1;
     };
 
     const handleNextSlide = () => {
-      if (portfolioMenu.value.length === 0) return;
-      currentSlideIndex.value = currentSlideIndex.value === portfolioMenu.value.length - 1 ? 0 : currentSlideIndex.value + 1;
+      if (publicPortfolioMenu.value.length === 0) return;
+      currentSlideIndex.value = currentSlideIndex.value === publicPortfolioMenu.value.length - 1 ? 0 : currentSlideIndex.value + 1;
     };
 
     const switchTab = (tabId) => {
@@ -1274,7 +1283,7 @@ const app = createApp({
       isApplyingRouteFromHash = true;
       activeTab.value = tab;
       selectedDish.value = (tab === "menu" && itemId)
-        ? (portfolioMenu.value.find(d => d.id === itemId) || null)
+        ? (publicPortfolioMenu.value.find(d => d.id === itemId) || null)
         : null;
       selectedCertificate.value = (tab === "certificate" && itemId)
         ? (certificateMenu.value.find(c => c.id === itemId) || null)
@@ -1375,7 +1384,7 @@ const app = createApp({
     return {
       activeTab, showWelcome, adminTab, switchTab, goToExperiencePortfolio, isContactMenuOpen, currentSlideIndex, selectedCategory, selectedDateFilter, selectedExperienceFilter, dateFilterOptions, isAnyFilterActive, searchQuery, selectedDish, openDishDetails,
       selectedDishImages, selectedDishImageIndex, nextDishImage, prevDishImage, formatProjectDate, formatCertificateDate, sortedCertificateMenu, renderBoldText, stripTags, dishPhotoLightboxOpen,
-      portfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
+      portfolioMenu, publicPortfolioMenu, chefProfileState, mainPageContent, guestbookEntries, visitorCount,
       certificateMenu, selectedCertificate, openCertificate,
       selectedCertificateCategory, certificateCategories, filteredCertificates,
       isAdminLoggedIn, isLoginModalOpen, handleNameClick, filteredMenu, currentDish, handlePrevSlide, handleNextSlide, careerEntries, homeCareerEntries,
