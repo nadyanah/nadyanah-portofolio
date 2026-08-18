@@ -344,7 +344,7 @@
                   <i data-lucide="chevron-left" class="h-4 w-4"></i>
                 </button>
                 <div class="flex items-center gap-1.5">
-                  <button v-for="(item, idx) in publicPortfolioMenu" :key="idx" @click="currentSlideIndex = idx" :class="['transition-all duration-300 rounded-full', idx === currentSlideIndex ? 'w-5 h-1 bg-neutral-700' : 'w-1 h-1 bg-neutral-200']"></button>
+                  <button v-for="(item, idx) in homeSlideMenu" :key="idx" @click="currentSlideIndex = idx" :class="['transition-all duration-300 rounded-full', idx === currentSlideIndex ? 'w-5 h-1 bg-neutral-700' : 'w-1 h-1 bg-neutral-200']"></button>
                 </div>
                 <button @click="handleNextSlide" class="slider-nav-btn h-9 w-9 rounded-full bg-white border border-neutral-200/80 text-brand-muted flex items-center justify-center cursor-pointer focus:outline-none">
                   <i data-lucide="chevron-right" class="h-4 w-4"></i>
@@ -1058,52 +1058,149 @@
               <!-- Dynamic Workspace Panel -->
               <div class="lg:col-span-3 bar-raised border border-neutral-200/40 p-6 rounded-3xl min-h-[500px]">
                 
-                <div v-if="adminTab === 'portfolio'" class="space-y-6">
-
-                  <!-- LIST VIEW (always visible; add/edit opens in a popup) -->
-                  <div class="space-y-4">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
-                      <div>
-                        <h3 class="text-lg font-sans font-bold text-black">Daftar Proyek Portofolio</h3>
-                        <p class="text-xs text-brand-muted mt-0.5">Semua proyek yang aktif di web Anda.</p>
-                      </div>
+                <div v-if="adminTab === 'portfolio'" class="space-y-4">
+                  <!-- COMPACT TRIGGER — daftar lengkapnya dibuka lewat popup lebar,
+                       supaya nggak sempit kejepit sidebar admin. -->
+                  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
+                    <div>
+                      <h3 class="text-lg font-sans font-bold text-black">Daftar Proyek Portofolio</h3>
+                      <p class="text-xs text-brand-muted mt-0.5">{{ portfolioMenu.length }} proyek tersimpan · {{ pinnedPortfolioMenu.length }} dipin.</p>
+                    </div>
+                    <div class="flex gap-2">
+                      <button @click="isPortfolioListOpen = true" class="chip-raised flex items-center gap-1.5 px-4 py-2 text-black rounded-full text-xs hover:text-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
+                        <i data-lucide="layout-grid" class="h-4 w-4"></i>
+                        <span>Buka Daftar Proyek</span>
+                      </button>
                       <button @click="isAddingCard = true" class="chip-raised flex items-center gap-1.5 px-4 py-2 text-black rounded-full text-xs hover:text-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
                         <i data-lucide="plus" class="h-4 w-4"></i>
                         <span>Tambah Proyek</span>
                       </button>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="item in portfolioMenu" :key="item.id" :class="['bg-white p-4 rounded-2xl border flex gap-4 shadow-sm relative items-center', item.pinned ? 'border-brand-gold' : 'border-neutral-150']">
-                      <div v-if="item.pinned" class="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-brand-gold text-white flex items-center justify-center shadow-sm" title="Proyek ini dipin">
-                        <i data-lucide="pin" class="h-3 w-3"></i>
+                  </div>
+
+                  <!-- Preview HANYA proyek yang di-PIN (bukan lagi 4 teratas
+                       apa adanya). Urutan di sini bisa digeser naik/turun lewat
+                       tombol panah, dan urutan itu jugalah yang dipakai buat
+                       urutan slide "Explore My Work" di Beranda (lihat
+                       homeSlideMenu di app.js). Proyek yang belum dipin tetap
+                       ada & bisa diedit lewat popup "Buka Daftar Proyek". -->
+                  <div v-if="pinnedPortfolioMenu.length > 0" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div v-for="(item, idx) in pinnedPortfolioMenu" :key="'pinned-'+item.id" class="group">
+                      <div @click="isPortfolioListOpen = true" class="aspect-square rounded-xl overflow-hidden bg-brand-bone border border-brand-gold/50 relative cursor-pointer">
+                        <img :src="item.image" :alt="item.name" class="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                        <span class="absolute top-1.5 left-1.5 h-5 w-5 rounded-full bg-brand-gold text-white text-[9px] font-sans font-bold flex items-center justify-center shadow-sm" :title="'Urutan pin #' + (idx + 1)">{{ idx + 1 }}</span>
+                        <span :class="['absolute top-1.5 right-1.5 text-[8px] font-sans font-bold tracking-wider px-1.5 py-0.5 rounded-full uppercase', item.status === 'draft' ? 'text-neutral-600 bg-white/90' : 'text-emerald-700 bg-white/90']">{{ item.status === 'draft' ? 'Draft' : 'Publish' }}</span>
                       </div>
-                      <div class="h-16 w-16 rounded-xl overflow-hidden bg-brand-bone shrink-0">
-                        <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
-                      </div>
-                      <div class="flex-1 min-w-0 pr-12 text-left">
-                        <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-neutral-100 px-2 py-0.5 rounded-full uppercase">{{item.category}}</span>
-                        <span :class="['text-[9px] font-sans font-bold tracking-wider px-2 py-0.5 rounded-full uppercase ml-1', item.status === 'draft' ? 'text-neutral-500 bg-neutral-150' : 'text-emerald-700 bg-emerald-100']">{{ item.status === 'draft' ? 'Draft' : 'Publish' }}</span>
-                        <h4 class="font-sans font-bold text-sm text-black truncate mt-1">{{item.name}}</h4>
-                        <p class="text-[10px] text-brand-muted truncate leading-snug">{{ stripTags(item.shortDescription) }}</p>
-                        <p class="text-[9px] font-sans text-brand-muted mt-1 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
-                        <p v-if="getLinkedExperience(item)" class="text-[9px] font-sans text-brand-gold-dark mt-1 font-semibold flex items-center gap-1">
-                          <i data-lucide="link" class="h-2.5 w-2.5"></i> Synced: {{ getLinkedExperience(item).heading }}
-                        </p>
-                      </div>
-                      <div class="absolute right-3 flex flex-col gap-1.5">
-                        <button @click="togglePortfolioPin(item)" :class="['nav-raised h-7 w-7 rounded-full flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5', item.pinned ? 'bg-brand-gold text-white' : 'bg-white text-black']" :title="item.pinned ? 'Lepas pin' : 'Pin ke atas'">
-                          <i data-lucide="pin" class="h-3 w-3"></i>
+                      <p class="text-[10px] font-sans font-bold text-black truncate mt-1">{{ item.name }}</p>
+                      <p v-if="item.status === 'draft'" class="text-[9px] font-sans font-semibold text-amber-600 flex items-center gap-1 mt-0.5">
+                        <i data-lucide="alert-triangle" class="h-2.5 w-2.5 shrink-0"></i>
+                        <span class="truncate">Draft — belum tampil di Beranda</span>
+                      </p>
+                      <div class="flex items-center gap-1 mt-1">
+                        <button @click.stop="movePinnedProject(item, 'up')" :disabled="idx === 0" class="flex-1 h-6 rounded-lg border border-neutral-200 text-brand-muted hover:text-black hover:border-neutral-300 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer transition-colors" title="Geser urutan pin ke atas">
+                          <i data-lucide="chevron-up" class="h-3.5 w-3.5"></i>
                         </button>
-                        <button @click="startEditCard(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
-                          <i data-lucide="edit-2" class="h-3 w-3"></i>
-                        </button>
-                        <button @click="deletePortfolioCard(item.id)" class="nav-raised h-7 w-7 rounded-full bg-white text-red-600 flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Delete">
-                          <i data-lucide="trash-2" class="h-3 w-3"></i>
+                        <button @click.stop="movePinnedProject(item, 'down')" :disabled="idx === pinnedPortfolioMenu.length - 1" class="flex-1 h-6 rounded-lg border border-neutral-200 text-brand-muted hover:text-black hover:border-neutral-300 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer transition-colors" title="Geser urutan pin ke bawah">
+                          <i data-lucide="chevron-down" class="h-3.5 w-3.5"></i>
                         </button>
                       </div>
                     </div>
                   </div>
+                  <div v-else class="text-center py-14 bg-brand-bone rounded-3xl border border-dashed border-neutral-300">
+                    <i data-lucide="pin" class="h-8 w-8 text-brand-gold/40 mx-auto mb-2"></i>
+                    <h4 class="text-sm font-sans font-bold text-black">Belum ada proyek yang di-pin</h4>
+                    <p class="text-xs text-brand-muted mt-1 max-w-xs mx-auto">Pin proyek lewat "Buka Daftar Proyek" (ikon pin di tiap kartu) biar muncul di sini — urutannya juga menentukan urutan slide di Beranda.</p>
+                  </div>
                 </div>
+
+                <!-- PORTFOLIO LIST — POPUP MODAL (lebar & lega, dengan filter) -->
+                <div v-if="adminTab === 'portfolio' && isPortfolioListOpen" class="fixed inset-0 z-[82] flex items-start md:items-center justify-center p-3 md:p-6 text-left">
+                  <div @click="isPortfolioListOpen = false" class="absolute inset-0 bg-brand-charcoal/70 backdrop-blur-md cursor-pointer"></div>
+                  <div class="relative z-10 w-full max-w-6xl max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8">
+                    <div class="space-y-4">
+                      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-neutral-100 pb-4">
+                        <div>
+                          <h3 class="text-lg font-sans font-bold text-black">Daftar Proyek Portofolio</h3>
+                          <p class="text-xs text-brand-muted mt-0.5">Semua proyek yang aktif di web Anda.</p>
+                        </div>
+                        <div class="flex gap-2">
+                          <button @click="isAddingCard = true" class="chip-raised flex items-center gap-1.5 px-4 py-2 text-black rounded-full text-xs hover:text-brand-gold-dark transition-all font-semibold uppercase tracking-wider cursor-pointer">
+                            <i data-lucide="plus" class="h-4 w-4"></i>
+                            <span>Tambah Proyek</span>
+                          </button>
+                          <button @click="isPortfolioListOpen = false" class="nav-raised h-8 w-8 rounded-full bg-white text-brand-muted hover:text-black flex items-center justify-center cursor-pointer transition-all" title="Tutup">
+                            <i data-lucide="x" class="h-4 w-4"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- FILTER: Kategori & Pengalaman — biar admin gampang nyari/edit
+                           proyek tanpa harus scroll semua kartu satu-satu. -->
+                      <div class="bg-brand-bone/60 flex flex-col gap-2 p-3 rounded-2xl border border-neutral-200/50">
+                        <div class="flex flex-col sm:flex-row gap-2">
+                          <select v-model="adminCategoryFilter" class="w-full sm:w-auto flex-1 min-w-0 px-3 py-2 bg-white border border-neutral-200/70 rounded-full text-xs font-medium text-brand-muted focus:outline-none focus:border-brand-gold cursor-pointer">
+                            <option value="all">Semua Kategori</option>
+                            <option value="people-culture">People Culture</option>
+                            <option value="employer-branding">Employer Branding</option>
+                            <option value="people-analytics">People Analytics</option>
+                            <option value="organizational-development">Organizational Development</option>
+                            <option value="hr-people-operations">HR People Operations</option>
+                          </select>
+                          <select v-model="adminExperienceFilter" class="w-full sm:w-auto flex-1 min-w-0 px-3 py-2 bg-white border border-neutral-200/70 rounded-full text-xs font-medium text-brand-muted focus:outline-none focus:border-brand-gold cursor-pointer">
+                            <option value="all">Semua Pengalaman</option>
+                            <option v-for="(entry, idx) in careerEntries" :key="'admin-exp-filter-'+idx" :value="experienceKey(entry)">{{ entry.heading }}</option>
+                            <option value="none">Belum Disinkronkan</option>
+                          </select>
+                        </div>
+                        <div v-if="adminCategoryFilter !== 'all' || adminExperienceFilter !== 'all'" class="flex justify-between items-center">
+                          <p class="text-[10px] text-brand-muted">Menampilkan {{ adminFilteredPortfolio.length }} dari {{ portfolioMenu.length }} proyek.</p>
+                          <button @click="adminCategoryFilter = 'all'; adminExperienceFilter = 'all'" class="text-[10px] font-mono uppercase tracking-wider text-brand-muted hover:text-black underline underline-offset-2 cursor-pointer">
+                            Reset Filter
+                          </button>
+                        </div>
+                      </div>
+
+                      <div v-if="adminFilteredPortfolio.length === 0" class="text-center py-14 bg-brand-bone rounded-3xl border border-dashed border-neutral-300">
+                        <i data-lucide="search-x" class="h-8 w-8 text-brand-gold/40 mx-auto mb-2"></i>
+                        <h4 class="text-sm font-sans font-bold text-black">Tidak ada proyek yang cocok dengan filter ini</h4>
+                      </div>
+                      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                      <div v-for="item in adminFilteredPortfolio" :key="item.id" :class="['bg-white rounded-2xl border shadow-sm overflow-hidden flex flex-col', item.pinned ? 'border-brand-gold' : 'border-neutral-150']">
+                        <div class="relative h-32 bg-brand-bone shrink-0">
+                          <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
+                          <div class="absolute top-2 left-2 flex items-center gap-1.5">
+                            <span v-if="item.pinned" class="h-6 w-6 rounded-full bg-brand-gold text-white flex items-center justify-center shadow-sm shrink-0" title="Proyek ini dipin">
+                              <i data-lucide="pin" class="h-3 w-3"></i>
+                            </span>
+                            <span class="text-[9px] font-sans font-bold tracking-wider text-brand-gold bg-white/95 backdrop-blur-sm px-2 py-1 rounded-full uppercase shadow-sm truncate">{{item.category}}</span>
+                          </div>
+                          <button @click="togglePortfolioStatus(item)" :class="['absolute top-2 right-2 text-[9px] font-sans font-bold tracking-wider px-2 py-1 rounded-full uppercase cursor-pointer shadow-sm transition-colors', item.status === 'draft' ? 'text-neutral-600 bg-white/95 hover:bg-neutral-100' : 'text-emerald-700 bg-emerald-100 hover:bg-emerald-200']" :title="item.status === 'draft' ? 'Klik untuk Publish' : 'Klik untuk jadikan Draft'">
+                            {{ item.status === 'draft' ? 'Draft' : 'Publish' }}
+                          </button>
+                        </div>
+                        <div class="flex-1 p-3.5 text-left">
+                          <h4 class="font-sans font-bold text-sm text-black truncate">{{item.name}}</h4>
+                          <p class="text-[10px] text-brand-muted truncate leading-snug mt-0.5">{{ stripTags(item.shortDescription) }}</p>
+                          <p class="text-[9px] font-sans text-brand-muted mt-1.5 font-semibold">📈 {{item.impactMetric}} • {{formatProjectDate(item.price)}}</p>
+                          <p v-if="getLinkedExperience(item)" class="text-[9px] font-sans text-brand-gold-dark mt-1 font-semibold flex items-center gap-1 truncate">
+                            <i data-lucide="link" class="h-2.5 w-2.5 shrink-0"></i> <span class="truncate">Synced: {{ getLinkedExperience(item).heading }}</span>
+                          </p>
+                        </div>
+                        <div class="flex items-center justify-end gap-1.5 px-3.5 py-2.5 border-t border-neutral-100">
+                          <button @click="togglePortfolioPin(item)" :class="['nav-raised h-7 w-7 rounded-full flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5', item.pinned ? 'bg-brand-gold text-white' : 'bg-white text-black']" :title="item.pinned ? 'Lepas pin' : 'Pin ke atas'">
+                            <i data-lucide="pin" class="h-3 w-3"></i>
+                          </button>
+                          <button @click="startEditCard(item)" class="nav-raised h-7 w-7 rounded-full bg-white text-black flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Edit">
+                            <i data-lucide="edit-2" class="h-3 w-3"></i>
+                          </button>
+                          <button @click="deletePortfolioCard(item.id)" class="nav-raised h-7 w-7 rounded-full bg-white text-red-600 flex items-center justify-center cursor-pointer transition-all hover:-translate-y-0.5" title="Delete">
+                            <i data-lucide="trash-2" class="h-3 w-3"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- PORTFOLIO ADD/EDIT — POPUP MODAL -->

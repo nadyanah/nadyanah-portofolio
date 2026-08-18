@@ -60,12 +60,19 @@ const app = createApp({
     });
     const portfolioForm = ref(getEmptyPortfolioForm());
     const isAddingCard = ref(false);
+    // Popup lebar buat "Daftar Proyek Portofolio" — dipisah dari isAddingCard
+    // (popup form tambah/edit) supaya keduanya bisa numpuk: buka daftar,
+    // klik edit, form muncul di atasnya, batal/simpan balik ke daftar lagi.
+    const isPortfolioListOpen = ref(false);
     const editingCardId = ref(null);
     const portfolioImageUploading = ref(false);
     // Filter "Pengalaman" khusus di daftar admin (Kelola Portofolio) — beda
     // dari filter di halaman publik, supaya admin bisa cepat cek proyek mana
     // yang belum disinkronkan ke Professional Experience manapun.
     const adminExperienceFilter = ref("all");
+    // Filter "Kategori" khusus di daftar admin, sama alasannya — supaya admin
+    // gampang nyari & edit proyek per kategori tanpa harus scroll semua.
+    const adminCategoryFilter = ref("all");
 
     // Single source of truth for the admin sidebar/dropdown nav — shared by
     // both the desktop button list and the mobile dropdown selector, so
@@ -624,6 +631,19 @@ const app = createApp({
         alert("Gagal menyimpan status pin ke Supabase. Cek koneksi internet kamu.");
       }
     };
+
+    // Toggle cepat Draft <-> Publish langsung dari daftar admin, tanpa perlu
+    // buka popup edit. Sama pola optimistic-update-nya dengan togglePortfolioPin.
+    const togglePortfolioStatus = async (item) => {
+      const prevValue = item.status;
+      item.status = item.status === "draft" ? "published" : "draft";
+      try {
+        await window.db.saveContent("portfolio_menu", portfolioMenu.value);
+      } catch (err) {
+        item.status = prevValue;
+        alert("Gagal menyimpan status Draft/Publish ke Supabase. Cek koneksi internet kamu.");
+      }
+    };
     
     const cancelPortfolioForm = () => {
       portfolioForm.value = getEmptyPortfolioForm();
@@ -1013,6 +1033,17 @@ const app = createApp({
     // diedit di daftar admin (Kelola Portofolio memakai portfolioMenu langsung).
     const publicPortfolioMenu = computed(() => portfolioMenu.value.filter(item => item.status !== "draft"));
 
+    // Urutan proyek buat slider "Explore My Work" di Beranda — proyek yang
+    // di-pin selalu muncul duluan, sesuai URUTAN PIN yang diatur admin
+    // (lihat pinnedPortfolioMenu + movePinnedProject di bawah; urutan pin itu
+    // sendiri disimpan sebagai posisi array di portfolioMenu, bukan field
+    // terpisah). Sisanya (belum dipin) mengikuti di belakang, apa adanya.
+    const homeSlideMenu = computed(() => {
+      const pinned = publicPortfolioMenu.value.filter(item => item.pinned);
+      const rest = publicPortfolioMenu.value.filter(item => !item.pinned);
+      return [...pinned, ...rest];
+    });
+
     // Opsi dropdown "Tanggal Pelaksanaan Proyek" — diambil otomatis dari tahun
     // pada field price ("YYYY-MM") tiap proyek, unik & diurutkan terbaru dulu.
     const dateFilterOptions = computed(() => {
@@ -1071,7 +1102,7 @@ const app = createApp({
       return [...pinned, ...rest];
     });
 
-    const currentDish = computed(() => publicPortfolioMenu.value[currentSlideIndex.value] || publicPortfolioMenu.value[0]);
+    const currentDish = computed(() => homeSlideMenu.value[currentSlideIndex.value] || homeSlideMenu.value[0]);
 
     // --- HOME PAGE: pin the "PERJALANAN KARIER" card's height to SHAPE 1's
     // (profile + portfolio) height, one-way only, via ResizeObserver. This is
@@ -1165,23 +1196,62 @@ const app = createApp({
     };
 
     // Daftar proyek di Admin > Kelola Portofolio, disaring berdasarkan
-    // adminExperienceFilter — supaya admin bisa cepat cek proyek mana yang
-    // belum disinkronkan ("Belum Disinkronkan") atau lihat semua proyek
-    // milik satu entri Professional Experience tertentu.
+    // adminCategoryFilter & adminExperienceFilter — supaya admin bisa cepat
+    // cek/edit proyek per kategori, dan/atau proyek mana yang belum
+    // disinkronkan ("Belum Disinkronkan") atau milik satu entri Professional
+    // Experience tertentu. Kedua filter ini bisa dipakai bersamaan.
+    // Cuplikan proyek di panel depan Admin > Kelola Portofolio (sebelum popup
+    // "Buka Daftar Proyek" dibuka) — cuma proyek yang DI-PIN yang tampil di
+    // sini, sesuai urutan pin (lihat movePinnedProject). Urutan pin ini juga
+    // yang menentukan urutan slide "Explore My Work" di Beranda (homeSlideMenu).
+    const pinnedPortfolioMenu = computed(() => portfolioMenu.value.filter(item => item.pinned));
+
+    // Geser urutan pin satu langkah naik/turun. Urutan pin disimpan sebagai
+    // posisi relatif antar-item-yang-dipin di dalam array portfolioMenu itu
+    // sendiri (bukan field angka terpisah) — jadi "menggeser" cukup menukar
+    // posisi dua item di portfolioMenu, lalu simpan ulang ke Supabase.
+    // Optimistic update dengan rollback, sama pola dengan togglePortfolioPin.
+    const movePinnedProject = async (item, direction) => {
+      const pinnedList = pinnedPortfolioMenu.value;
+      const posInPinned = pinnedList.findIndex(p => p.id === item.id);
+      const targetPos = direction === "up" ? posInPinned - 1 : posInPinned + 1;
+      if (posInPinned === -1 || targetPos < 0 || targetPos >= pinnedList.length) return;
+
+      const otherItem = pinnedList[targetPos];
+      const idxA = portfolioMenu.value.findIndex(p => p.id === item.id);
+      const idxB = portfolioMenu.value.findIndex(p => p.id === otherItem.id);
+      if (idxA === -1 || idxB === -1) return;
+
+      const prevOrder = portfolioMenu.value.slice();
+      const reordered = portfolioMenu.value.slice();
+      [reordered[idxA], reordered[idxB]] = [reordered[idxB], reordered[idxA]];
+      portfolioMenu.value = reordered;
+
+      try {
+        await window.db.saveContent("portfolio_menu", portfolioMenu.value);
+      } catch (err) {
+        portfolioMenu.value = prevOrder;
+        alert("Gagal menyimpan urutan pin ke Supabase. Cek koneksi internet kamu.");
+      }
+    };
+
     const adminFilteredPortfolio = computed(() => {
-      if (adminExperienceFilter.value === "all") return portfolioMenu.value;
-      if (adminExperienceFilter.value === "none") return portfolioMenu.value.filter(item => !item.experienceLink);
-      return portfolioMenu.value.filter(item => item.experienceLink === adminExperienceFilter.value);
+      return portfolioMenu.value.filter(item => {
+        const matchesCategory = adminCategoryFilter.value === "all" || item.category === adminCategoryFilter.value;
+        const matchesExperience = adminExperienceFilter.value === "all" ||
+          (adminExperienceFilter.value === "none" ? !item.experienceLink : item.experienceLink === adminExperienceFilter.value);
+        return matchesCategory && matchesExperience;
+      });
     });
 
     const handlePrevSlide = () => {
-      if (publicPortfolioMenu.value.length === 0) return;
-      currentSlideIndex.value = currentSlideIndex.value === 0 ? publicPortfolioMenu.value.length - 1 : currentSlideIndex.value - 1;
+      if (homeSlideMenu.value.length === 0) return;
+      currentSlideIndex.value = currentSlideIndex.value === 0 ? homeSlideMenu.value.length - 1 : currentSlideIndex.value - 1;
     };
 
     const handleNextSlide = () => {
-      if (publicPortfolioMenu.value.length === 0) return;
-      currentSlideIndex.value = currentSlideIndex.value === publicPortfolioMenu.value.length - 1 ? 0 : currentSlideIndex.value + 1;
+      if (homeSlideMenu.value.length === 0) return;
+      currentSlideIndex.value = currentSlideIndex.value === homeSlideMenu.value.length - 1 ? 0 : currentSlideIndex.value + 1;
     };
 
     const switchTab = (tabId) => {
@@ -1368,7 +1438,7 @@ const app = createApp({
     };
 
     // Watcher to re-render lucide icons when important states change
-    watch([adminTab, activeTab, showWelcome, isAddingCard, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied, previewImageUrl, dishPhotoLightboxOpen, portfolioImagesCollapsed], () => {
+    watch([adminTab, activeTab, showWelcome, isAddingCard, isPortfolioListOpen, isAddingCertificate, selectedCategory, selectedDateFilter, selectedExperienceFilter, adminExperienceFilter, adminCategoryFilter, searchQuery, selectedDish, selectedCertificate, selectedCertificateCategory, isLoginModalOpen, isContactMenuOpen, cropModalOpen, linkCopied, previewImageUrl, dishPhotoLightboxOpen, portfolioImagesCollapsed], () => {
       refreshIcons();
     });
 
@@ -1391,9 +1461,10 @@ const app = createApp({
       experienceKey, getLinkedExperience,
       homeShapeLeftRef, homeCareerCardHeight,
       linkCopied, copyLink,
-      portfolioForm, isAddingCard, editingCardId, chefForm, homepageForm, 
-      adminExperienceFilter, adminFilteredPortfolio,
-      startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm, togglePortfolioPin,
+      portfolioForm, isAddingCard, isPortfolioListOpen, editingCardId, chefForm, homepageForm, 
+      adminExperienceFilter, adminCategoryFilter, adminFilteredPortfolio,
+      startEditCard, savePortfolioCard, deletePortfolioCard, cancelPortfolioForm, togglePortfolioPin, togglePortfolioStatus,
+      homeSlideMenu, pinnedPortfolioMenu, movePinnedProject,
       handleAddField, handleRemoveField, handleFieldChange, handleAddPoint, handleRemovePoint, adminTabs, activeAdminTab,
       portfolioImageUploading, handlePortfolioImageUpload, handlePortfolioImageRemove, setPortfolioCoverImage,
       draggedImageIndex, dragOverImageIndex, handlePortfolioImageDragStart, handlePortfolioImageDragOver, handlePortfolioImageDrop, handlePortfolioImageDragEnd, previewImageUrl,
