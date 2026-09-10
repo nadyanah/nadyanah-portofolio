@@ -107,8 +107,8 @@
         <div v-if="showWelcome" @click="showWelcome = false"
              class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
           <div class="max-w-xl mx-auto px-2">
-            <p class="font-hack font-semibold text-sm sm:text-base leading-relaxed sm:leading-normal text-black rich-text-content" v-html="mainPageContent.welcomeQuote"></p>
-            <p v-if="mainPageContent.alertMessage" class="font-sans italic font-normal text-[11px] sm:text-sm leading-snug text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 mt-6 sm:mt-5 inline-block" style="white-space: pre-line;">
+            <p class="font-sans font-semibold text-base sm:text-lg leading-relaxed sm:leading-normal text-black rich-text-content" v-html="mainPageContent.welcomeQuote"></p>
+            <p v-if="mainPageContent.alertMessage" class="font-sans italic font-normal text-[10px] sm:text-xs leading-snug text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 mt-6 sm:mt-5 inline-block" style="white-space: pre-line;">
               ⚠️ {{ mainPageContent.alertMessage }}
             </p>
           </div>
@@ -125,7 +125,7 @@
             </svg>
           </div>
 
-          <p class="absolute bottom-10 right-6 sm:right-8 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-brand-muted/70">{{ mainPageContent.welcomeCta }}</p>
+          <p class="absolute bottom-10 right-6 sm:right-8 text-[10px] sm:text-xs font-sans uppercase tracking-widest text-brand-muted/70">{{ mainPageContent.welcomeCta }}</p>
         </div>
       </transition>
 
