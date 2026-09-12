@@ -622,6 +622,15 @@ body,
 .rich-text-content i,
 .rich-text-content em { font-style: italic; }
 
+/* WELCOME SCREEN QUOTE — forces every child (b, span, div, etc.) inside
+   the welcome quote to inherit the paragraph's own font-size, even if the
+   saved content has its own inline font-size baked in from earlier edits.
+   This guarantees the size set on .welcome-quote-text always wins. */
+.welcome-quote-text,
+.welcome-quote-text * {
+  font-size: inherit !important;
+}
+
 /* ==========================================================================
    SELECT-TO-TRANSLATE POPUP (translate-select.js)
    Tombol mengambang yang muncul waktu pengunjung nge-block/select teks di

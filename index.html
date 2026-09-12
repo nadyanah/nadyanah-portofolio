@@ -107,9 +107,9 @@
         <div v-if="showWelcome" @click="showWelcome = false"
              class="fixed inset-0 z-[100] bg-brand-cream/85 backdrop-blur-sm flex flex-col items-center justify-center px-6 text-center cursor-pointer select-none">
           <div class="max-w-xl mx-auto px-2">
-            <p class="font-sans font-semibold text-base sm:text-lg leading-relaxed sm:leading-normal text-black rich-text-content" v-html="mainPageContent.welcomeQuote"></p>
+            <p class="font-sans font-semibold text-xl sm:text-2xl leading-relaxed sm:leading-normal text-black rich-text-content welcome-quote-text" v-html="mainPageContent.welcomeQuote"></p>
             <p v-if="mainPageContent.alertMessage" class="font-sans italic font-normal text-[10px] sm:text-xs leading-snug text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 mt-6 sm:mt-5 inline-block" style="white-space: pre-line;">
-              ⚠️ {{ mainPageContent.alertMessage }}
+              {{ mainPageContent.alertMessage }}
             </p>
           </div>
 
@@ -584,7 +584,7 @@
                       </span>
                       <p class="text-base md:text-lg font-serif font-medium text-black">{{entry.heading}}</p>
                       <p class="text-xs text-brand-muted mt-0.5">{{entry.subheading}}</p>
-                      <p v-if="entry.description" class="text-xs md:text-sm text-brand-muted leading-relaxed italic mt-2.5 max-w-xl">
+                      <p v-if="entry.description" class="text-xs md:text-sm text-brand-muted leading-relaxed mt-2.5 max-w-xl">
                         {{entry.description}}
                       </p>
                     </div>
@@ -712,7 +712,7 @@
                           <span class="inline-block mt-1.5 px-2.5 py-0.5 rounded-full bg-brand-bone text-brand-gold-dark text-[10px] font-mono italic">{{entry.period}}</span>
                           <!-- Section "education": tampilkan sebagai cerita/deskripsi mengalir,
                                bukan daftar poin, karena isinya narasi perjalanan kuliah. -->
-                          <p v-if="section.id === 'education'" class="mt-2.5 text-xs md:text-sm text-brand-muted leading-relaxed text-justify md:text-left">{{ entry.description }}</p>
+                          <p v-if="section.id === 'education'" class="mt-2.5 text-xs md:text-sm text-brand-muted leading-relaxed text-justify md:text-left whitespace-pre-line">{{ entry.description }}</p>
                           <ul v-else-if="entry.bullets && entry.bullets.length" class="mt-2.5 space-y-1.5">
                             <li v-for="(bullet, bIdx) in entry.bullets" :key="'bullet'+bIdx" class="flex items-baseline gap-2 text-xs md:text-sm text-brand-muted leading-snug">
                               <span class="text-brand-gold font-bold leading-none flex-shrink-0">&bull;</span>
