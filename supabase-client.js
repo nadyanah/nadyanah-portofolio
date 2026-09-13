@@ -115,6 +115,18 @@ window.db = {
     return data.publicUrl;
   },
 
+  // ---- backup (dipakai tombol "Download Backup" & auto-backup sebelum reset) ----
+  async getAllContentRows() {
+    const { data, error } = await supabaseClient
+      .from("site_content")
+      .select("*");
+    if (error) {
+      console.error("Gagal memuat seluruh site_content untuk backup:", error);
+      return [];
+    }
+    return data;
+  },
+
   // ---- auth (admin) ----
   async signIn(password) {
     return supabaseClient.auth.signInWithPassword({ email: ADMIN_EMAIL, password });

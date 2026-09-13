@@ -1025,6 +1025,15 @@
                 </button>
 
                 <button
+                  @click="handleDownloadBackup"
+                  class="pill-press flex items-center gap-1.5 px-4 py-2 text-emerald-700 text-xs font-sans transition-all cursor-pointer font-bold"
+                  title="Download semua konten & guestbook sebagai file JSON"
+                >
+                  <i data-lucide="download" class="h-3.5 w-3.5"></i>
+                  <span>Backup Data</span>
+                </button>
+
+                <button
                   @click="handleResetToDefaults"
                   class="pill-press flex items-center gap-1.5 px-4 py-2 text-amber-800 text-xs font-sans transition-all cursor-pointer font-bold"
                   title="Reset all customized inputs back to initial template values"

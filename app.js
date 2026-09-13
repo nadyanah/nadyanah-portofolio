@@ -937,8 +937,57 @@ const app = createApp({
       alert("Highlight halaman Background disimpan!");
     };
 
+    const handleDownloadBackup = async () => {
+      try {
+        const [rows, guestbook] = await Promise.all([
+          window.db.getAllContentRows(),
+          window.db.getGuestbook()
+        ]);
+        const payload = {
+          exported_at: new Date().toISOString(),
+          site_content: rows,
+          guestbook
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const stamp = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `portfolio-backup-${stamp}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        return true;
+      } catch (err) {
+        alert("Gagal membuat backup: " + err.message);
+        return false;
+      }
+    };
+
     const handleResetToDefaults = async () => {
-      if (window.confirm("Apakah Anda yakin ingin mengembalikan semua data ke pengaturan awal bawaan? Seluruh perubahan inputan Anda akan dihapus.")) {
+      // FIX: konfirmasi diperkuat — bukan cuma 1 klik OK, harus ketik "RESET"
+      // persis, supaya tidak ada yang kepencet/kepencet tanpa sadar.
+      const typed = window.prompt(
+        "PERINGATAN: ini akan MENGHAPUS PERMANEN isi portfolio_menu, chef_profile, " +
+        "dan main_page_content saat ini, lalu menggantinya dengan data bawaan template.\n\n" +
+        "Backup otomatis akan didownload dulu sebelum reset dijalankan.\n\n" +
+        "Ketik RESET (huruf besar semua) untuk melanjutkan:"
+      );
+      if (typed !== "RESET") {
+        if (typed !== null) alert("Reset dibatalkan — teks yang diketik tidak sama dengan \"RESET\".");
+        return;
+      }
+
+      // FIX: auto-backup sebelum aksi destruktif dijalankan, supaya walau
+      // reset ini keliru dipicu, masih ada file JSON penyelamat di Downloads.
+      const backupOk = await handleDownloadBackup();
+      if (!backupOk) {
+        alert("Reset dibatalkan — backup otomatis gagal dibuat, jadi reset tidak dilanjutkan demi keamanan.");
+        return;
+      }
+
+      {
         const defaultMainPage = {
           name: "Nadya",
           title: "'Hiden Gem' Portofolio",
@@ -1478,7 +1527,7 @@ const app = createApp({
       sectionIcon, handleSectionAdd, handleSectionRemove, handleSectionMove,
       handleSectionTagAdd, handleSectionTagRemove,
       handleSectionEntryAdd, handleSectionEntryRemove, handleSectionEntryBulletAdd, handleSectionEntryBulletRemove,
-      handleHomepageSubmit, handleHomepagePhotoUpload, handleHomepagePhotoRemove, homepagePhotoUploading, handleChefFormSubmit, handleResetToDefaults,
+      handleHomepageSubmit, handleHomepagePhotoUpload, handleHomepagePhotoRemove, homepagePhotoUploading, handleChefFormSubmit, handleResetToDefaults, handleDownloadBackup,
       backgroundHighlight, backgroundHighlightForm, backgroundHighlightImageUploading,
       handleBackgroundHighlightPhotoUpload, handleBackgroundHighlightPhotoRemove, handleBackgroundHighlightSubmit,
       chefAvatarUploading, handleChefAvatarUpload, handleChefAvatarRemove,
