@@ -677,6 +677,10 @@
                       </div>
                     </div>
                   </div>
+                  <a v-if="chefProfileState.cvUrl" :href="chefProfileState.cvUrl" :download="chefProfileState.cvFileName || 'CV.pdf'" target="_blank" rel="noopener"
+                     class="absolute top-4 right-4 md:top-6 md:right-8 inline-flex items-center gap-2 px-4 py-2 bg-brand-gold-dark text-white rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md hover:bg-black transition-all active:scale-[0.98]">
+                    <i data-lucide="download" class="h-3.5 w-3.5"></i> <span class="hidden sm:inline">Download CV (PDF)</span><span class="sm:hidden">CV</span>
+                  </a>
                 </div>
 
                 <!-- BODY: DYNAMIC ATS CV SECTIONS (admin-customizable: tambah / ganti nama / hapus section) -->
@@ -1651,6 +1655,24 @@
                           </div>
                         </div>
                         <span class="text-[9px] text-neutral-400 block mt-1">Opsional. Kalau tidak diisi, background polos krem bawaan yang dipakai. Jangan lupa klik Simpan Profil setelah memilih.</span>
+                      </div>
+                      <div class="space-y-1 md:col-span-2 border-t border-neutral-100 pt-3">
+                        <label class="text-sm font-bold text-black block">CV / Resume (PDF, format ATS)</label>
+                        <div class="flex items-center gap-3 flex-wrap">
+                          <div v-if="chefForm.cvUrl" class="flex items-center gap-2 px-3 py-2 bg-brand-bone/60 border border-neutral-200 rounded-xl">
+                            <i data-lucide="file-text" class="h-4 w-4 text-brand-gold-dark shrink-0"></i>
+                            <span class="text-[11px] font-semibold text-black truncate max-w-[180px]">{{ chefForm.cvFileName || 'CV.pdf' }}</span>
+                            <a :href="chefForm.cvUrl" target="_blank" rel="noopener" class="text-[10px] text-brand-gold-dark underline underline-offset-2 shrink-0">Lihat</a>
+                          </div>
+                          <div class="flex flex-col gap-1.5">
+                            <label class="chip-raised px-3 py-1.5 text-black rounded-full text-[11px] font-semibold cursor-pointer hover:text-brand-gold-dark transition-all w-fit">
+                              {{ chefCvUploading ? 'Mengupload...' : (chefForm.cvUrl ? 'Ganti File PDF' : 'Pilih File PDF') }}
+                              <input type="file" accept="application/pdf" :disabled="chefCvUploading" @change="handleChefCvUpload" class="hidden" />
+                            </label>
+                            <button type="button" v-if="chefForm.cvUrl" @click="handleChefCvRemove" class="text-[11px] text-red-500 hover:text-red-600 font-semibold text-left cursor-pointer">Hapus CV</button>
+                          </div>
+                        </div>
+                        <p class="text-[10px] text-brand-muted mt-1">File ini yang akan diunduh pengunjung/recruiter lewat tombol "Download CV" di halaman Profil. Maks. 8MB, format PDF. Jangan lupa klik Simpan Profil setelah memilih.</p>
                       </div>
                       <div class="space-y-1">
                         <label class="text-sm font-bold text-black">Nomor Telepon</label>

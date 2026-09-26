@@ -104,6 +104,7 @@ const app = createApp({
     const homepagePhotoUploading = ref(false);
     const chefAvatarUploading = ref(false);
     const chefHeaderBgUploading = ref(false);
+    const chefCvUploading = ref(false);
 
     // BACKGROUND PAGE — HIGHLIGHT PORTOFOLIO MENU (foto + 3 section deskripsi
     // gaya "WHY / HOW / WHAT", admin-editable per section)
@@ -831,6 +832,41 @@ const app = createApp({
     const handleChefHeaderBgRemove = () => {
       chefForm.value.headerBackground = "";
     };
+    // Upload CV/resume (PDF) — beda dari upload foto lain: tidak lewat crop
+    // modal (bukan gambar), langsung diupload ke Supabase Storage lewat
+    // window.db.uploadImage (namanya "uploadImage" tapi fungsinya generik,
+    // bisa dipakai untuk file apapun termasuk PDF).
+    const handleChefCvUpload = async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+      if (!isPdf) {
+        alert("File CV harus berformat PDF.");
+        e.target.value = "";
+        return;
+      }
+      const maxSizeMb = 8;
+      if (file.size > maxSizeMb * 1024 * 1024) {
+        alert(`Ukuran file PDF maksimal ${maxSizeMb}MB.`);
+        e.target.value = "";
+        return;
+      }
+      chefCvUploading.value = true;
+      try {
+        const url = await window.db.uploadImage(file, "cv");
+        chefForm.value.cvUrl = url;
+        chefForm.value.cvFileName = file.name;
+      } catch (err) {
+        alert("Gagal upload CV. Cek koneksi internet kamu, atau cek pengaturan bucket Storage di Supabase (pastikan tipe file PDF diizinkan di bucket \"portfolio-images\").");
+      } finally {
+        chefCvUploading.value = false;
+        e.target.value = "";
+      }
+    };
+    const handleChefCvRemove = () => {
+      chefForm.value.cvUrl = "";
+      chefForm.value.cvFileName = "";
+    };
     const handleChefArrayAddField = (field) => {
       if (!Array.isArray(chefForm.value[field])) chefForm.value[field] = [];
       chefForm.value[field].push("");
@@ -1532,6 +1568,7 @@ const app = createApp({
       handleBackgroundHighlightPhotoUpload, handleBackgroundHighlightPhotoRemove, handleBackgroundHighlightSubmit,
       chefAvatarUploading, handleChefAvatarUpload, handleChefAvatarRemove,
       chefHeaderBgUploading, handleChefHeaderBgUpload, handleChefHeaderBgRemove,
+      chefCvUploading, handleChefCvUpload, handleChefCvRemove,
       cropModalOpen, cropImageUrl, cropZoomValue, closeCropModal, setCropZoom, cropZoomStep, confirmCrop,
       formName, formRole, formMessage, formStars, formDishLiked, guestbookSuccess, handleAddGuestbook, handleLikeEntry,
       password, showPassword, loginError, loginSuccess, handleLogin, handleLogout,
