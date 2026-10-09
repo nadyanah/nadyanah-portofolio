@@ -1,0 +1,787 @@
+{
+  "exported_at": "2026-10-09T01:21:26.249Z",
+  "site_content": [
+    {
+      "key": "main_page_content",
+      "value": {
+        "body": "I believe every individual and organization has a “<b>why</b>”.<div>\nIn this portfolio, my 'why' is built through the 'fertilizer' of daily work—from my experience in Engineering to Administration, where I found my deep interest in people. This led me to HR People Operations and Employer Branding, where I build L&amp;D programs for the organization, while growing alongside it every single day.\n\nMy focus is to make today’s contributions meaningful for the future, and I am committed to making my cross-functional background my greatest strength on this career path.\n\n<b>Thank you for visiting my garden of continuous growth. \nI hope you enjoy exploring, and I would be so happy to collaborate!</b></div><div>\n— Nadya.</div>",
+        "name": "Hello, I’m Nadyanah ",
+        "title": "My ‘Hidden Gems’ Portfolio",
+        "slogan": "Bridging people, culture, and branding in alignment with a company’s ‘why’",
+        "photoUrl": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/homepage/1785665153138-3no1qdju479.jpg",
+        "drawerDesc": "Bridging people, culture, and branding in alignment with a company’s ‘why’",
+        "welcomeCta": "[ Step inside the garden of growth → ]",
+        "linkedinUrl": "https://www.linkedin.com/in/nadyanah/",
+        "mobileQuote": "Bridging people, culture, and branding in alignment with a company’s ‘why’",
+        "alertMessage": "[MY PORTFOLIO UNDER CONSTRUCTION] \n I am currently updating my portfolio to showcase my latest projects. Thank you for visiting.",
+        "welcomeQuote": "🌱\nWelcome to my garden of continuous growth.\n\n<span style=\"font-size: 0.875rem;\">Every project here started as a small seed—watered&nbsp;&nbsp;</span><span style=\"font-size: 0.875rem;\">through </span><span style=\"font-size: 0.875rem;\">daily hands-on practice</span><span style=\"font-size: 0.875rem;\">,&nbsp;</span><span style=\"font-size: 0.875rem;\">fertilized</span><span style=\"font-size: 0.875rem;\"> by strategic, high-value initiatives, and c</span><span style=\"font-size: 0.875rem;\">ultivated to deliver meaningful impact</span><span style=\"font-size: 0.875rem;\">.</span>",
+        "whatsappNumber": "6285624141119",
+        "backgroundCaption": "vvvv"
+      },
+      "updated_at": "2026-09-12T09:03:28.343+00:00"
+    },
+    {
+      "key": "background_highlight",
+      "value": {
+        "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/background-highlight/1785836382706-70sjtapr7ji.jpg",
+        "visible": true,
+        "sections": [
+          {
+            "body": ".",
+            "label": "WHY",
+            "title": "THE PURPOSE"
+          },
+          {
+            "body": ".",
+            "label": "HOW",
+            "title": "THE METHOD"
+          },
+          {
+            "body": ".",
+            "label": "WHAT",
+            "title": "THE DELIVERABLES"
+          }
+        ]
+      },
+      "updated_at": "2026-08-17T15:10:41.91+00:00"
+    },
+    {
+      "key": "chef_profile",
+      "value": {
+        "name": "Nadya Nanda Adisty Hadian",
+        "cvUrl": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/cv/1790412418000-lgmh0fxzk2d.pdf",
+        "title": "Selected Works in People Ops, Talent Lifecycles, HRIS Internal Automation, L&D, Strategic EVP, and Employer Branding",
+        "avatar": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/chef/1785647698355-eb0jghqntcg.jpg",
+        "tagline": "Bridging people, culture, and branding in alignment with a company’s ‘why’",
+        "sections": [
+          {
+            "id": "summary",
+            "type": "paragraph",
+            "title": "Summary",
+            "content": "People-first People Operations Specialist with a Tech & Analytical Agility background, dedicated to bridging people, culture, and branding while specializing in Strategic HR, Culture Enablement, Employee Experience, and Talent Ecosystems Driven by continuous adaptation and proactive initiatives to shape Organizational Development, designing 4-tier talent lifecycles, peer-to-peer upskilling, 1-on-1 mentoring for 100+ personnel, and high-impact L&D programs. Pioneered Employer Branding and well-being initiatives, while maintaining organized HR systems and building a centralized internal HRIS platform to cut manual bureaucracy by 85% and embedding strategic EVP across Talent Management, remaining adaptable to align people strategies with long-term organizational goals.",
+            "visible": false
+          },
+          {
+            "id": "experience",
+            "type": "timeline",
+            "title": "Professional Experience",
+            "entries": [
+              {
+                "period": " May 2025 - Present",
+                "bullets": [
+                  "Initiated and led the end-to-end development of a multi-functional HRIS platform to centralize core HR operations and remote monitoring, cutting manual bureaucracy by 95% through HR workflow automation.",
+                  "Co-designed workplace culture and HR systems by bridging internal rules with Gen Z preferences through structured Flexible Working Arrangements (FWA) and standardized communication protocols, establishing team accountability and foundational work policies.",
+                  "Managed end-to-end talent acquisition for 100+ applicants and pioneered a KSA-based assessment framework, improving recruitment system effectiveness and role-fit alignment with organizational needs.",
+                  "Designed and implemented an end-to-end 4-tier Talent Lifecycle framework (Attraction, Engagement, Development, Regeneration), laying the foundation for a sustainable talent ecosystem and driving long-term organizational growth.",
+                  "Spearheaded a 4-session Learning & Development program for 30+ candidates and 15 mentors aligned with organizational skill-mapping; secured a 93% satisfaction rate (4.51/5.00 overall score), peaking at 4.59/5.00 specifically for learning value-add.",
+                  "Embedded the Employer Value Proposition (EVP) across the entire talent lifecycle from structured orientation and onboarding to seamless offboarding, achieving a 90% satisfaction rate and fostering strong organizational commitment.",
+                  "Applied a methodical problem-solving approach in 1-on-1 mentoring sessions with 80+ research assistants, resolving individual concerns and team dynamics to achieve a 93% talent retention rate.",
+                  "Strengthened employer branding initiatives through university talent attraction programs under the 'Golden Gate Candidate' initiative, leveraging strong campus relations to attract 200+ student applicants while delivering a high-quality candidate experience for early-career talent."
+                ],
+                "heading": "Staff Administrator - People Operations & Employer Branding",
+                "subheading": "CoE STAS-RG, Telkom University",
+                "description": "My non-traditional background became my greatest strength. Building on a solid foundation, I now let strategic initiatives act as fertilizer, from automating HRIS workflows to designing 4-tier talent lifecycle frameworks, leading L&D programs, mentoring 80+ researchers to sustain a 93% retention rate, and delivering meaningful impact wherever I stand."
+              },
+              {
+                "period": "Jun 2023 – Mar 2025",
+                "bullets": [
+                  "Leveraged strong documentation expertise to manage operational workflows across 10+ concurrent projects (3–5 handled daily), maintaining document accuracy and confidentiality to achieve full compliance and deliver final project reports to key stakeholders.",
+                  "Managed digital filing and HR database systems for 70+ research assistants using Microsoft Office and OneDrive, establishing a structured database for contracts, attendance, and leave records that optimized daily operations.",
+                  "Coordinated cross-functional alignment between internal teams and 5+ external stakeholders, preparing visual presentation decks to facilitate meeting agendas, field testing updates, and final report delivery.",
+                  "Organized development and training programs for 20+ of the organization’s personnel, successfully aligning research capabilities with current skill demands and emerging AI tools for organization’s personnel.",
+                  "Pioneered the organization’s employer branding from scratch by establishing brand guidelines and producing 100+ high-impact visuals, videos, and animations, translating complex technical research to elevate organizational visibility and talent attraction.",
+                  "Spearheaded a social media team of 10 research assistants to execute 300+ social media assets through strategic branding, standardizing brand identity across 15+ research projects to maximize audience engagement."
+                ],
+                "heading": "Research Assistant – Project Administrator, Social Media and Publications",
+                "subheading": "CoE STAS-RG, Telkom University",
+                "description": "Watered through daily hands-on practice. Entrusted with human-centered responsibilities and working closely with research students unlocked my true calling in People & Culture, Organizational Development, and People Analytics. I realized my engineering discipline wasn't lost, it was a unique cross-functional strength."
+              },
+              {
+                "period": "Aug 2022 - June 2023",
+                "bullets": [
+                  "Co-developed an end-to-end sensory system with PT Pindad to analyze human-centric comfort and safety metrics; co-authored 1 published research paper and registered 3 Intellectual Properties (Patent, Copyright, Industrial Design) on human-factor evaluation and workplace wellbeing.",
+                  "Collaborated with a cross-functional team of 10+ research assistants on system troubleshooting and alignment across 5+ military field trials, delivering strategic progress reports that enhanced stakeholder trust and maintained a strategic alliance with PT Pindad.",
+                  "Analyzed and cleaned 60,000+ raw data points using Excel and MATLAB to model passenger dynamics, leveraging data-driven visualizations to evaluate potential safety and comfort impacts on personnel in high-risk environments."
+                ],
+                "heading": "Research and Development Engineer",
+                "subheading": "CoE STAS-RG, Telkom University",
+                "description": "Where it all began. Working on the technical side organically led me to a major revelation: no matter how advanced the technology, human talent is always the key. This phase built my solid analytical mindset and comfort with technology, the roots I still carry today."
+              },
+              {
+                "period": "",
+                "bullets": [
+                  ""
+                ],
+                "heading": "Early Seeds: The Rooted Origin",
+                "showOnHome": false,
+                "subheading": "",
+                "description": "It started in childhood with a dream to teach, which naturally evolved in high school as I became everyone’s go-to confidante, sparking a strong desire to study psychology. Looking back, this was my very first realization that my true 'why' lies in understanding people and helping them grow."
+              }
+            ]
+          },
+          {
+            "id": "skills",
+            "type": "tags",
+            "items": [
+              "People & Culture",
+              "HR Tech & Automation",
+              "HR People Operations",
+              "Employer Branding",
+              "Learning & Development (L&D)",
+              "Recruitment & Talent Acquisition"
+            ],
+            "title": "Skills"
+          },
+          {
+            "id": "education",
+            "type": "timeline",
+            "title": "Education",
+            "entries": [
+              {
+                "period": "Sep 2023 - Feb 2025",
+                "bullets": [
+                  ""
+                ],
+                "heading": "Bachelor of Applied Science in Multimedia Engineering Technology",
+                "subheading": "Telkom University",
+                "description": "Final Project Title: \"Development of Social Media Content Design to Enhance Research Visibility at CoE STAS-RG\"\nRole & Growth: Promoted to Research Assistant at CoE STAS-RG, taking full ownership of the Social Media & Publication team while coordinating multiple research initiatives and community service projects.\nAcademic & Industry Recognition: My active contributions earned academic course credit recognition, allowing me to bridge daily research operations, industry partner visits, and academic excellence leading up to my final project on research visibility."
+              },
+              {
+                "period": "Sep 2020 - Jul 2023",
+                "bullets": [
+                  ""
+                ],
+                "heading": "Associate's Degree in Computer Technology",
+                "subheading": "Telkom University",
+                "description": "Research Internship (2022): Selected as a Research Intern at CoE STAS-RG, kickstarting hands-on experience in research center ecosystem operations.\nKey Industry Project: Contributed to the Smart Mannequin Project in strategic partnership with PT Pindad, co-engineering a prototype system to monitor and measure ergonomics, comfort, and safety for combat vehicle passengers."
+              }
+            ]
+          }
+        ],
+        "cvFileName": "Nadya Nanda Adisty Hadian - People Operations - CV.pdf",
+        "philosophy": ".",
+        "contactEmail": "nadyahadian@gmail.com",
+        "contactPhone": "085624141119",
+        "experienceYears": "3+ years of experience",
+        "headerBackground": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/chef/1785663784624-r7kzr023bx.png",
+        "careerJourneyTitle": "Career Journey",
+        "careerJourneySubtitle": "My path has not been a straight line, but the common thread remains the same: a deep interest in people and the impact I can create. I realized that the essence of a dream is not about the job title itself, but the 'why' behind it.",
+        "careerJourneyHomeIntro": "My Non-traditional Background Shaped Who Nadya is Today"
+      },
+      "updated_at": "2026-10-08T07:33:59.22+00:00"
+    },
+    {
+      "key": "visitor_stats",
+      "value": {
+        "count": 59
+      },
+      "updated_at": "2026-10-09T00:54:44.758+00:00"
+    },
+    {
+      "key": "portfolio_menu",
+      "value": [
+        {
+          "id": "building-a-sustainable-talent-ecosystem",
+          "name": "Building a Sustainable Talent Ecosystem",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786600158587-z0lnoddeeqa.jpg",
+          "price": "2025-12",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786600158587-z0lnoddeeqa.jpg",
+              "caption": "Swipe through to go behind the scenes and discover what made this initiative so special"
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786677791655-r1u4o1p9sj.jpg",
+              "caption": "Step inside 'Golden Gate'—our cozy little corner created to connect with future researchers."
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786600372814-7kt4ejupqrc.jpg",
+              "caption": "A quick session inviting everyone to our Golden Gate booth—so excited to share all the amazing perks awaiting them!"
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786686152793-j5cefcwpr0p.jpg",
+              "caption": "Watching excited participants fill out the Interest Form to officially start their candidate journey."
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786685919883-zpoapork05.jpg",
+              "caption": "Loved every second of answering deep questions from curious minds eager to explore CoE STAS-RG!"
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786685925788-jy48f6u80cc.jpg",
+              "caption": ""
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786600262230-6y0eqnzuymo.jpg",
+              "caption": "Kickstarting our talent attraction journey at Open Mind 2025—so excited to welcome new faces!"
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786685646893-xpxezon7ego.jpg",
+              "caption": "That genuine spark when someone asks, \"Kak, what are the benefits?\"—pure excitement explaining their growth path!"
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786685722281-nlt45995dj9.jpg",
+              "caption": "Hello, it’s me! Wrapping up the day with a grateful heart—so happy and fulfilled seeing everyone’s genuine curiosity and eagerness to join CoE STAS-RG!"
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "employer-branding",
+          "prepTime": "",
+          "allergens": [
+            "dkjandln fhafnsalkdn ifnaKFNlKSNls"
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "<b>Talent Attraction</b>: Spearheaded Open Mind 2025, attracting 250+ registrants.",
+                "points": []
+              },
+              {
+                "text": "<b>Interactive On-Site Engagement</b>: Designed and initiated a \"Golden Gate\" discussion-first booth experience at Open Mind 2025, serving as a space for in-depth discussions that allowed participants to explore CoE STAS-RG more deeply.",
+                "points": []
+              },
+              {
+                "text": "<b>Pipeline Nurturing</b>: Captured early sign-ups via an Interest Form, onboarded candidates into a centralized Talent Pool Database, and granted them exclusive \"Golden Candidate\" status with special privileges.",
+                "points": []
+              },
+              {
+                "text": "<b>Implementation &amp; Value Proposition (Golden Candidate Perks)</b> :",
+                "points": [
+                  "Exclusive WA Group Community: Enabled direct, in-depth interactions and discussions with CoE STAS-RG admins, fostering a sense of exclusivity and belonging.",
+                  "Priority Recruitment Access: Granted early access to recruitment announcements prior to public releases (successfully deployed for the February 2026 hiring wave).",
+                  "Targeted Training Opportunities: Delivered tailored skill-building programs based on student interest areas."
+                ]
+              }
+            ],
+            "results": [
+              {
+                "text": "Established an exclusive talent pool with a 40% interest rate.",
+                "points": []
+              },
+              {
+                "text": "Designed an End-to-End Talent Lifecycle Framework: Attraction – Engagement – Development – Regeneration.",
+                "points": []
+              },
+              {
+                "text": "Laid the foundation for a Sustainable Talent Ecosystem at CoE STAS-RG.",
+                "points": []
+              }
+            ],
+            "challenge": "talent attraction >  golden gate > rekrutmen",
+            "background": "Limited student involvement in key pillar projects due to short graduation timelines (1–2 years max), creating challenges in sustaining the continuity of ongoing and future research projects.",
+            "philosophy": "A talent attraction event does not end on the day it happens; it can serve as the foundation for building a regeneration system that sustains organizational continuity. This experience taught me to view events not merely as standalone activities, but as strategic investments with long-term impact."
+          },
+          "ingredients": [
+            "Employer Branding Strategy",
+            "Recruitment & Talent Acquisition",
+            "Fast-Track Recruitment System",
+            "Candidate Engagement",
+            "Talent Ecosystem"
+          ],
+          "impactMetric": ">250 Registrants, 40% Interest Rate, Exclusive Talent Pool",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Behind the Scenes of CoE STAS-RG: How the 'Golden Gate Candidate' Shaped Our Talent Ecosystem?"
+        },
+        {
+          "id": "30-conversations-4-talent-stage-1-single-day-navigating-full-spectrum-people-operations",
+          "name": "30+ Conversations, 4 Talent Stage, 1 Single Day: Navigating Full-Spectrum People Operations",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1788634183737-su5a8y06fcc.jpg",
+          "price": "2026-08",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1788634183737-su5a8y06fcc.jpg",
+              "caption": ""
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1788634936227-8y8mc34ooje.jpg",
+              "caption": ""
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1788634947037-x5z5l5lznyo.jpg",
+              "caption": ""
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "hr-people-operations",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "🌱 The Seedlings (Onboarding): Allocated morning hours for high school interns to review their first-week progress, check in on well-being, and organizational compliance management.",
+                "points": []
+              },
+              {
+                "text": "🎓 The Harvest (Offboarding): Transitioned midday to guide graduating research students through Web HRIS administrative clearances for a smooth exit experience.",
+                "points": []
+              },
+              {
+                "text": "🔍 The Selection (Talent Attraction): Dedicated afternoon slots to align recruitment pipelines and review interview evaluation insights with the hiring team.",
+                "points": []
+              },
+              {
+                "text": "🌙 The Ecosystem Alignment (Culture &amp; EVP): Wrapped up the evening with an interactive group session for 30+ research students to align on culture, share updates, and genuinely listen to their experiences.",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "Operational Execution: Successfully delivered tailored touchpoints across 4 lifecycle stages and 30+ talents in just one day.",
+                "points": []
+              },
+              {
+                "text": "Context-Switching: Proved the ability to pivot mindsets instantly, ensuring the right message reached the right person at the right time.",
+                "points": []
+              },
+              {
+                "text": "Learning by Doing with a Full Heart: Turned a draining, high-intensity sprint into the ultimate hands-on masterclass, reinforcing my deep passion for building a human-centered ecosystem.",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "People Operations is never \"one-size-fits-all.\" The real test was mastering rapid context-switching: delivering 4 entirely different employee lifecycle stages to 30+ talents within a single 12-hour window. I needed to ensure that every individual received the exact message and empathetic support tailored to their specific phase, without losing operational focus.",
+            "philosophy": "I learned (📝) that this work requires high adaptability, active listening, and seamless context-switching. Beyond the processes, it’s about holding space for people at every phase of their journey."
+          },
+          "ingredients": [
+            "People Operations",
+            "Talent Management"
+          ],
+          "impactMetric": "People Operations, 30+ Talents, Rapid Context-Switching",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "How Nadya Delivered Tailored Touchpoints Across 4 Lifecycle Stages for 30+ Talents in a Single Day"
+        },
+        {
+          "id": "digitizing-hr-operations-95-bureaucracy-cut",
+          "name": "Digitizing HR Operations: 95% Bureaucracy Cut",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1789203364922-3f9eiuk747m.jpg",
+          "price": "2026-04",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1789203364922-3f9eiuk747m.jpg",
+              "caption": ""
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "hr-people-operations",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "Another seed planted! Currently cultivating the full story for this project—stay tuned.",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "Another seed planted! Currently cultivating the full story for this project—stay tuned.",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "Another seed planted! Currently cultivating the full story for this project—stay tuned.",
+            "philosophy": "[Case Study Under Construction]"
+          },
+          "ingredients": [
+            ""
+          ],
+          "impactMetric": "[Case Study Under Construction]",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+        },
+        {
+          "id": "harmonizing-gen-z-work-culture-with-90-accountability",
+          "name": "Harmonizing Gen Z Work Culture with 90% Accountability",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786978854501-av95lm0zo.jpg",
+          "price": "2026-02",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786978854501-av95lm0zo.jpg",
+              "caption": "⌛ Full Story Dropping Soon...⌛"
+            }
+          ],
+          "pinned": false,
+          "status": "published",
+          "category": "people-culture",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "Another seed planted! Currently cultivating the full story for this project—stay tuned.",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "Another seed planted! Currently cultivating the full story for this project—stay tuned.",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "Another seed planted! Currently cultivating the full story for this project—stay tuned.",
+            "philosophy": "🌱 Case Study in the Work🌱"
+          },
+          "ingredients": [
+            ""
+          ],
+          "impactMetric": "Coming soon...",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+        },
+        {
+          "id": "evp-in-action-human-centric-candidate-journey",
+          "name": "EVP in Action: Human-Centric Candidate Journey",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786962965351-xnimauyco4.jpg",
+          "price": "2026-01",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786962965351-xnimauyco4.jpg",
+              "caption": "⌛ Full Story Dropping Soon...⌛"
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786979312416-3c5swml7qr7.jpg",
+              "caption": ""
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "people-culture",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "[Case Study Under Construction]",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "[Case Study Under Construction]",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "[Case Study Under Construction]",
+            "philosophy": "[Case Study Under Construction]"
+          },
+          "ingredients": [
+            "[Case Study Under Construction]"
+          ],
+          "impactMetric": "[Case Study Under Construction]",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+        },
+        {
+          "id": "organized-a-talent-attraction-event-aligning-people-focused-corrective-actions-driving-progress-persiapan-from-20-to-70-in-one-week-while-ensuring-employer-branding-goals-were-achieved",
+          "name": "Organized a talent attraction event, aligning people-focused corrective actions, driving progress persiapan from 20% to 70% in one week while ensuring employer branding goals were achieved.  ",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786686780375-mf9azqhmv7m.jpg",
+          "price": "2025-12",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786686780375-mf9azqhmv7m.jpg",
+              "caption": ""
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "people-culture",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "[Case Study Under Construction]",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "[Case Study Under Construction]",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "[Case Study Under Construction]",
+            "philosophy": "[Case Study Under Construction]"
+          },
+          "ingredients": [
+            ""
+          ],
+          "impactMetric": "Coming soon...",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+        },
+        {
+          "id": "skill-acceleration-4-session-high-value-l-d-program",
+          "name": "Skill Acceleration: 4-Session High-Value L&D Program",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786978955958-aah4t0u69pd.jpg",
+          "price": "2026-05",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786978955958-aah4t0u69pd.jpg",
+              "caption": "🌱Full Story Dropping Soon..."
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "people-culture",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "Full case study in the works, data &amp; documentation currently being polished. Coming soon...",
+            "philosophy": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+          },
+          "ingredients": [
+            ""
+          ],
+          "impactMetric": "Coming soon...",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+        },
+        {
+          "id": "sustaining-retention-1-on-1-mentoring-for-80-researchers",
+          "name": "Sustaining Retention: 1-on-1 Mentoring for 80+ Researchers",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786978995653-7b6vx3mv1pp.jpg",
+          "price": "2026-01",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786978995653-7b6vx3mv1pp.jpg",
+              "caption": "🌱 Case Study in the Work🌱"
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786979006052-13zs58kpwjg.jpg",
+              "caption": "🌱 Case Study in the Work🌱"
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "people-culture",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "[Case Study Under Construction]",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "[Case Study Under Construction]",
+            "philosophy": "[Case Study Under Construction]"
+          },
+          "ingredients": [
+            "[Case Study Under Construction]"
+          ],
+          "impactMetric": "Coming soon...",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+        },
+        {
+          "id": "onboarding-intern-and-research-student",
+          "name": "Onboarding Intern and Research Student",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786979248096-1sgy6lpx1uf.jpg",
+          "price": "2026-07",
+          "images": [
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786979248096-1sgy6lpx1uf.jpg",
+              "caption": ""
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1786979257980-cuybj1nw1hr.jpg",
+              "caption": ""
+            },
+            {
+              "url": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/portfolio/1789203107928-5wy5dtli1nh.jpg",
+              "caption": ""
+            }
+          ],
+          "pinned": true,
+          "status": "published",
+          "category": "people-culture",
+          "prepTime": "",
+          "allergens": [
+            ""
+          ],
+          "chefNotes": {
+            "recipe": [
+              {
+                "text": "[Case Study Under Construction]",
+                "points": []
+              }
+            ],
+            "results": [
+              {
+                "text": "[Case Study Under Construction]",
+                "points": []
+              }
+            ],
+            "challenge": "",
+            "background": "[Case Study Under Construction]",
+            "philosophy": "[Case Study Under Construction]"
+          },
+          "ingredients": [
+            ""
+          ],
+          "impactMetric": "Coming soon...",
+          "satisfaction": "",
+          "categoryLabel": "",
+          "experienceLink": "Staff Administrator - People Operations & Employer Branding|| May 2025 - Present",
+          "shortDescription": "Full case study in the works, data &amp; documentation currently being polished. Coming soon..."
+        }
+      ],
+      "updated_at": "2026-09-12T08:56:06.624+00:00"
+    },
+    {
+      "key": "certificate_menu",
+      "value": [
+        {
+          "id": "learning-and-development",
+          "date": "January 2026",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1786035731229-eehq6k9bga.jpg",
+          "title": "Learning and Development",
+          "issuer": "HRCI - Coursera",
+          "category": "Learning and Development",
+          "credentialId": "KUBTYQZ5HRUW",
+          "credentialUrl": "https://coursera.org/share/ba7f5e40bac4d43461edc37fd8dec6ad"
+        },
+        {
+          "id": "manekin",
+          "date": "October 2023",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1786892205916-c6jr3wxahrm.jpg",
+          "title": "Manekin",
+          "issuer": "Directorate General of Intellectual Property (DJKI / DGIP), Indonesia",
+          "category": "Industrial Design",
+          "credentialId": "IDD000072695",
+          "credentialUrl": "https://drive.google.com/file/d/1CnguSTJVjfvb4tX22mg-4i3XOCGhy5LD/view?usp=sharing"
+        },
+        {
+          "id": "aplikasi-intellimice-classifier",
+          "date": "August 2024",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1786893168038-77hkwdqgzna.jpg",
+          "title": "APLIKASI INTELLIMICE CLASSIFIER",
+          "issuer": "Directorate General of Intellectual Property (DJKI / DGIP), Indonesia",
+          "category": "Copyright (Hak Cipta)",
+          "credentialId": "000662666",
+          "credentialUrl": "https://drive.google.com/file/d/1TGN-DylJfOJH5qcgEU3FB_CcjwpQqKBA/view?usp=sharing",
+          "supportingLinkUrl": "",
+          "supportingLinkLabel": ""
+        },
+        {
+          "id": "aplikasi-dashboard-smart-manekin",
+          "date": "February 2025",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1786893344392-u8arxtk1lz.jpg",
+          "title": "APLIKASI DASHBOARD SMART MANEKIN",
+          "issuer": "Directorate General of Intellectual Property (DJKI / DGIP), Indonesia",
+          "category": "Copyright (Hak Cipta)",
+          "credentialId": "000863836",
+          "credentialUrl": "https://drive.google.com/file/d/1oggo3Fc7MrIwRXt9uCxal-_XwMtonLyE/view?usp=sharing",
+          "supportingLinkUrl": "",
+          "supportingLinkLabel": ""
+        },
+        {
+          "id": "sistem-pemantau-kondisi-penumpang-pada-kendaraan-tempur-berbasis-iot",
+          "date": "January 2025",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1786893670297-nsa8s7ey2dh.jpg",
+          "title": "Sistem Pemantau Kondisi Penumpang pada Kendaraan Tempur berbasis IoT",
+          "issuer": "Directorate General of Intellectual Property (DJKI / DGIP), Indonesia",
+          "category": "Granted Patent",
+          "credentialId": "IDS000009654",
+          "credentialUrl": "https://drive.google.com/file/d/1m4WK0GUMS13xslbYdHt2qEqyD-aSLLr8/view?usp=sharing",
+          "supportingLinkUrl": "",
+          "supportingLinkLabel": ""
+        },
+        {
+          "id": "presenter-at-the-12th-international-conference-on-information-and-communication-technology-icoict-2024",
+          "date": "2024-08",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1786893832139-o2pbrn6hv5.jpg",
+          "title": "Presenter at The 12th International Conference on Information and Communication Technology (ICoICT) 2024",
+          "issuer": "ICoICT (International Conference on Information and Communication Technology)",
+          "category": "Conference",
+          "credentialId": "-",
+          "credentialUrl": "https://drive.google.com/file/d/1NOpG7FZwV-jGWCWc_fA2V6wPlAOq3yO-/view?usp=sharing",
+          "supportingLinkUrl": "https://ieeexplore.ieee.org/document/10698569",
+          "supportingLinkLabel": "Full Paper"
+        },
+        {
+          "id": "integrated-sensor-based-smart-mannequin-for-injury-detection-in-armored-vehicle",
+          "date": "2023-07",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1786895316987-5g3tzg2qgjd.jpg",
+          "title": "Integrated Sensor-Based Smart Mannequin for Injury Detection in Armored Vehicle",
+          "issuer": "International Journal of Safety and Security Engineering",
+          "category": "Journals",
+          "credentialId": "https://doi.org/10.18280/ijsse.130404",
+          "credentialUrl": "https://www.iieta.org/journals/ijsse/paper/10.18280/ijsse.130404",
+          "supportingLinkUrl": "",
+          "supportingLinkLabel": ""
+        },
+        {
+          "id": "pengembangan-desain-konten-sosial-media-sebagai-upaya-meningkatkan-research-visibility-di-coe-stas-rg",
+          "date": "2025-04",
+          "image": "https://xafemxehfquoqfmvyqpj.supabase.co/storage/v1/object/public/portfolio-images/certificates/1789204418660-efznw6jt9k6.jpg",
+          "title": "Pengembangan Desain Konten Sosial Media Sebagai Upaya Meningkatkan Research Visibility di CoE STAS-RG",
+          "issuer": "eProceedings of Applied Science",
+          "category": "Journals",
+          "credentialId": "",
+          "credentialUrl": "https://openlibrarypublications.telkomuniversity.ac.id/index.php/appliedscience/en/article/view/26346",
+          "supportingLinkUrl": "",
+          "supportingLinkLabel": ""
+        }
+      ],
+      "updated_at": "2026-09-12T09:14:24.921+00:00"
+    }
+  ],
+  "guestbook": []
+}

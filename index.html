@@ -677,7 +677,7 @@
                       </div>
                     </div>
                   </div>
-                  <a v-if="chefProfileState.cvUrl" :href="chefProfileState.cvUrl" :download="chefProfileState.cvFileName || 'CV.pdf'" target="_blank" rel="noopener"
+                  <a v-if="chefProfileState.cvUrl && chefProfileState.cvUrl.trim()" :href="chefProfileState.cvUrl" :download="chefProfileState.cvFileName || 'CV.pdf'" target="_blank" rel="noopener"
                      class="absolute top-4 right-4 md:top-6 md:right-8 inline-flex items-center gap-2 px-4 py-2 bg-brand-gold-dark text-white rounded-full text-[11px] font-bold uppercase tracking-wider shadow-md hover:bg-black transition-all active:scale-[0.98]">
                     <i data-lucide="download" class="h-3.5 w-3.5"></i> <span class="hidden sm:inline">Download CV (PDF)</span><span class="sm:hidden">CV</span>
                   </a>

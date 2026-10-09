@@ -856,6 +856,10 @@ const app = createApp({
         const url = await window.db.uploadImage(file, "cv");
         chefForm.value.cvUrl = url;
         chefForm.value.cvFileName = file.name;
+        // Langsung disimpan ke Supabase (hanya field CV) supaya tombol
+        // "Download CV" di halaman Profil otomatis muncul tanpa perlu
+        // menekan "Simpan Profil" dulu.
+        await persistCvOnly(url, file.name);
       } catch (err) {
         alert("Gagal upload CV. Cek koneksi internet kamu, atau cek pengaturan bucket Storage di Supabase (pastikan tipe file PDF diizinkan di bucket \"portfolio-images\").");
       } finally {
@@ -863,9 +867,38 @@ const app = createApp({
         e.target.value = "";
       }
     };
-    const handleChefCvRemove = () => {
+    const handleChefCvRemove = async () => {
+      if (!window.confirm("Hapus CV? Tombol \"Download CV\" di halaman Profil akan hilang sampai kamu upload CV baru. (Data profil lainnya tidak berubah.)")) return;
+      const prevUrl = chefForm.value.cvUrl;
+      const prevName = chefForm.value.cvFileName;
       chefForm.value.cvUrl = "";
       chefForm.value.cvFileName = "";
+      try {
+        await persistCvOnly("", "");
+      } catch (err) {
+        chefForm.value.cvUrl = prevUrl;
+        chefForm.value.cvFileName = prevName;
+      }
+    };
+    // Menyimpan HANYA cvUrl & cvFileName ke chef_profile di Supabase.
+    // Cara kerjanya: ambil dulu versi terbaru chef_profile dari Supabase,
+    // ubah dua field itu saja, lalu simpan balik — jadi semua data profil
+    // lain (sections, tagline, dll) tetap persis seperti yang tersimpan,
+    // dan edit yang belum disimpan di form tidak ikut tersimpan/terhapus.
+    const persistCvOnly = async (cvUrl, cvFileName) => {
+      try {
+        const res = await window.db.getContent("chef_profile", chefProfileState.value);
+        if (res.error || !res.value || typeof res.value !== "object") {
+          throw res.error || new Error("chef_profile tidak terbaca");
+        }
+        const next = { ...res.value, cvUrl, cvFileName };
+        await window.db.saveContent("chef_profile", next);
+        chefProfileState.value = { ...chefProfileState.value, cvUrl, cvFileName };
+      } catch (err) {
+        console.error("Gagal menyimpan status CV:", err);
+        alert("Gagal menyimpan perubahan CV ke Supabase. Data lain tidak diubah. Cek koneksi internet kamu lalu coba lagi.");
+        throw err;
+      }
     };
     const handleChefArrayAddField = (field) => {
       if (!Array.isArray(chefForm.value[field])) chefForm.value[field] = [];
